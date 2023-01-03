@@ -21,7 +21,7 @@ whenDocumentReady(isReady = () => {
         //debug
         //console.log(res);
         //console.log(res.agreements.length);
-        formatCurencyUSD
+        //formatCurencyUSD
 
         //main property details
         let table = `<table class="table">`
@@ -135,8 +135,7 @@ whenDocumentReady(isReady = () => {
         document.getElementById("propertydiv").classList.remove("d-none");
 
     }
-    url = adminUrl + "properties/report?id=1"
-    xhrcall(1, url, "", "json", "", propertyDone, "")
+    xhrcall(1, apiUrl + "properties/report?id=1", "", "json", "", propertyDone, "")
 
 
 

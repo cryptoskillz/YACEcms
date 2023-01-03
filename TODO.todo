@@ -5,11 +5,13 @@ GENERAL
  ☐ create an upstream script to remove non core files
  ☐ add a view button to each index
  ☐ move the reusable crypto functions to app.js
+ ☐ trap the token decoder (in image have to apply to the other endpoints)
 
 IMAGES
 
  ☐ delete image deletes from cloudflare (may have to do this with a worker)
  ☐ when you delete a property delete the images we need a way to remove from look up tables on delete
+ ☐ require a token
 
 
  PROPERTY TOKEN NEW

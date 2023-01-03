@@ -33,7 +33,7 @@ whenDocumentReady(isReady = () => {
      //get the table results for this level.
     let getTableData = () => {
         //call the data
-        url = adminUrl + `database/table?tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=1`
+        url = apiUrl + `database/table?tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=1`
         xhrcall(1, url, "", "json", "", getTableDone, token);
     }
 
@@ -43,12 +43,10 @@ whenDocumentReady(isReady = () => {
         getTableData();
     }
 
-    console.log(lookUps)
     if (lookUps != "") {
         lookUps = JSON.stringify(lookUps);
         //call the data
-        url = adminUrl + `database/lookUp?theData=${lookUps}`
-        xhrcall(1, url, "", "json", "", getLookUpDone, token);
+        xhrcall(1, apiUrl + `database/lookUp?theData=${lookUps}`, "", "json", "", getLookUpDone, token);
     }
     else
     {

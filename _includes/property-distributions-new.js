@@ -301,7 +301,7 @@ document.getElementById('btn-pay').addEventListener('click', async function() {
                 showAlert(res.message, 1, 0, 1);
             }
             //post the record
-            xhrcall(0, `api/database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(0, apiUrl +`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
     }
     //document.getElementById('btn-pay').disabled = false;
@@ -328,6 +328,6 @@ whenDocumentReady(isReady = () => {
     }
     document.getElementById("spinner").classList.remove("d-none");
     showAlert('Please be patient we doing Blockchain stuff', 1)
-    url = adminUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
+    url = apiUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
     xhrcall(1, url, "", "json", "", getMainTableDone, token);
 });
