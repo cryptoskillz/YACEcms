@@ -17,6 +17,8 @@ wipeOutOldBuild () {
 #delete the files in the site dir
 wipeOutOldBuild
 #run eleventy
+#pkill -9 esbuild
+
 npx @11ty/eleventy 
 
 echo "killing rouge wrangler"

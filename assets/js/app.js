@@ -440,11 +440,7 @@ if (checkElement("btn-create") == true) {
                 tableData: theJson,
             }
             let bodyObjectJson = JSON.stringify(bodyObj);
-
-            //check we have valid data to submit
-
-            //post the record
-            xhrcall(0, `api/database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(0, apiUrl+`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
 
     })
@@ -475,7 +471,7 @@ if (checkElement("btn-update") == true) {
             let bodyObjectJson = JSON.stringify(bodyObj);
             //check we have valid data to submit
             //post the record
-            xhrcall(4, `api/database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(4, apiUrl+`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
 
     })
@@ -621,7 +617,7 @@ let deleteTableItem = (dId, method, tTableName) => {
     deleteTableName = tTableName;
     $('#confirmation-modal').modal('toggle');
     let tmpTable = $('#dataTable').DataTable();
-    console.log(tmpTable.data().count())
+    //console.log(tmpTable.data().count())
 }
 
 //todo : make this work with multipile fields and values.

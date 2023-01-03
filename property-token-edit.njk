@@ -10,7 +10,6 @@ permalink: /property/token/edit/
     //set the primary table id
     let foreignKeys = {"id":"propertyId"}
     //set the loop up table
-    let lookUps = [{"table":"agent","key":"agentId","foreignKey":"","value":""},{"table":"tenant","key":"tenantId","foreignKey":"id","value":window.localStorage.currentDataItemId}]
-    var loadMessage = {"message":"Changing the detials here will results in differences from the ones in the blockchain","type":2,"timeout":1}
+      var loadMessage = {"message":"Changing the detials here will results in differences from the ones in the blockchain","type":2,"timeout":1}
 </script>
 {% include "admin/table-edit.njk" %}

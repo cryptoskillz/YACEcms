@@ -9,7 +9,6 @@
 if (typeof loadMessage != 'undefined') 
     showAlert(loadMessage.message,loadMessage.type,loadMessage.timeout)
 
-
      let getTableDone = (res) => {
          //parse the repsonse
          res = JSON.parse(res)
@@ -48,7 +47,7 @@ if (typeof loadMessage != 'undefined')
          lookUpData = res;
          getTableData();
      }
-
+   
      if (lookUps != "") {
          lookUps = JSON.stringify(lookUps);
          //call the data

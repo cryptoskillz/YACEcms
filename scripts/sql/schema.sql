@@ -11,6 +11,9 @@ DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS userAccess;
 DROP TABLE IF EXISTS payment_types;
 DROP TABLE IF EXISTS yesno_lookup;
+DROP TABLE IF EXISTS property_images;
+
+
 
 CREATE TABLE "property" (
 	"id"	INTEGER,
@@ -36,6 +39,10 @@ CREATE TABLE "property" (
 	"localCost" REAL,
 	"currentlyRented" INTEGER,
 	"adminId" INTEGER,
+	"state" INTEGER DEFAULT 0,
+	"tranchePrice" REAL,
+	"tranches" INTEGER,
+	"tranchesSold" INTEGER,
 	"isDeleted" INTEGER DEFAULT 0,
 	"createdAt" TEXT DEFAULT CURRENT_TIMESTAMP,
 	"updatedAt" TEXT,
@@ -47,6 +54,18 @@ CREATE TABLE "property" (
 
 INSERT INTO "property" ("name","paymentAddress","address_1", "address_2","address_3", "address_4", "address_5", "address_6","bathrooms","bedrooms","localCurrency","internationalCurrency","localCost","internationalCost","LocalTaxesCost","internationalTaxesCost","adminId","localSuggestedRentalPrice","internationalSuggestedRentalPrice","currentlyRented") VALUES ('DCONDO', '0x960f470cE20Bfb519facA30b770474BBCdF78ef8','address 1', 'address 2', 'address 3', 'address 4', 'address 5', 'address 6',1,2,'฿','$',1800000,52087,40000,1157,1,8000,231,1);
 INSERT INTO "property" ("name","paymentAddress","address_1", "address_2","address_3", "address_4", "address_5", "address_6","bathrooms","bedrooms","localCurrency","internationalCurrency","localCost","internationalCost","LocalTaxesCost","internationalTaxesCost","adminId","localSuggestedRentalPrice","internationalSuggestedRentalPrice","currentlyRented") VALUES ('DCONDO 2', '0x960f470cE20Bfb519facA30b770474BBCdF78ef8','address 1', 'address 2', 'address 3', 'address 4','address 5','address 6',1,2,'฿','$',1800000,52087,40000,1157,1,8000,231,1);
+
+CREATE TABLE "property_images" (
+	"id"	INTEGER,
+	"propertyId" INTEGER,
+	"cfid"	INTEGER,
+	"filename"	TEXT,
+	"url" TEXT,
+	"draft" INTEGER DEFAULT 1,
+	"isDeleted" INTEGER DEFAULT 0,
+	"deletedAt" TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
 
 CREATE TABLE "property_token" (
 	"id"	INTEGER,
@@ -66,6 +85,8 @@ CREATE TABLE "property_token" (
 	"deletedAt" TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+
 
 INSERT INTO "property_token" ("name","contractAddress","blockExplorerUrl","mintedAddress","mintedUserId","contractSymbol","totalSupply","propertyId") VALUES ('dcondo001Token','0x97690a5c72122A6Ae11e5e702368774cf636E0d3','https://testnet.bscscan.com/token/0x97690a5c72122A6Ae11e5e702368774cf636E0d3','0x960f470cE20Bfb519facA30b770474BBCdF78ef8','1','DC1',1800000.00,1);
 
@@ -342,7 +363,7 @@ CREATE TABLE "user" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
-INSERT INTO "user" ("name","email","phone","cryptoAddress","username","password","apiSecret","confirmed","isBlocked","isAdmin","isDeleted","adminId") VALUES ('cryptoskillz','cryptoskillz@protonmail.com','123456789','0x1521a6B56fFF63c9e97b9adA59716efF9D3A60eB','cryptoskillz','test','a7fd098f-79cf-4c37-a527-2c9079a6e6a1',1,0,1,0,0);
+INSERT INTO "user" ("name","email","phone","cryptoAddress","username","password","apiSecret","confirmed","isBlocked","isAdmin","isDeleted","adminId") VALUES ('cryptoskillz','test@orbitlabs.xyz','123456789','0x1521a6B56fFF63c9e97b9adA59716efF9D3A60eB','cryptoskillz','test','a7fd098f-79cf-4c37-a527-2c9079a6e6a1',1,0,1,0,0);
 INSERT INTO "user" ("name","email","phone","cryptoAddress","username","password","apiSecret","confirmed","isBlocked","isAdmin","isDeleted","adminId") VALUES ('seller 2','test@test.com','123456789','0x060A17B831BFB09Fe95B244aaf4982ae7E8662B7','test','test','a7fd098f-79cf-4c37-a527-2c9079a6e6a1',1,0,0,0,1);
 
 

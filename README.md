@@ -83,3 +83,6 @@ click add and add the following details
 
 
 ## USING 
+
+
+wrangler d1 execute DB --local  --file=./scripts/sql/schema.sql

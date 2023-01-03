@@ -21,6 +21,7 @@ title :
     let customSelect = `
             <select onchange="propertySelectChange([id],this)" class="form-select" aria-label="Property select" name="propertySelect-[counter]" id="propertySelect-[counter]">
                 <option value="0">Please select</option>
+                <option value="/property/images?id=[id]">Images</option>
                 <option value="/property/report?id=[id]">Report</option>
                 <option value="/property/rental-agreements/">Rental agreements</option>
                 <option value="/property/tokens/">Token</option>

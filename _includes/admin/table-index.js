@@ -26,12 +26,21 @@ let propertySelectChange = (id, theElement) => {
 
 whenDocumentReady(isReady = () => {
 
+    
+
+    if (typeof allowOnlyOne === 'undefined') {
+        var allowOnlyOne = 0;
+    }
+
+     if (typeof foreignKeys === 'undefined') {
+        var foreignKeys = "";
+    }
+
     if (typeof lookUps === 'undefined') {
         var lookUps = "";
     } else {
         lookUps = JSON.stringify(lookUps);
     }
-    console.log(lookUps);
 
     let getTableDone = (res) => {
 
@@ -100,7 +109,7 @@ whenDocumentReady(isReady = () => {
             //check if its an admin
             if (user.isAdmin == 1) {
                 editButton = `<a href="${theCrumb}edit?id=${theData.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>`
-                deleteButton = `<a href="javascript:deleteTableItem(${theData.id},'api/database/table/','${theTable}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
+                deleteButton = `<a href="javascript:deleteTableItem(${theData.id},'database/table/','${theTable}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
                 if (hideEdit == 1)
                     editButton = "";
                 if (hideDelete == 1)

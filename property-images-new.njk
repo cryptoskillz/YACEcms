@@ -1,0 +1,39 @@
+---
+layout: layout.njk
+permalink: /{{env.LEVEL2NAME}}/images/new/
+---
+{% set theJs %}
+    {% include 'property-images-new.js' %}
+{% endset %}
+
+   <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" id="data-header"></h1>
+        <a href="javascript:history.back()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-backward fa-sm text-white-50"></i> Back</a>
+    </div>
+    
+    
+   
+
+
+     <div id="formInputs">
+        <div class="form-group">
+            <label>Chose an image</label>
+           <input type="file" class="filepond" id="file-input"> 
+           <a href="javascript:uploadIt()">Upload</a>
+        </div>
+         <div class="form-group d-none"  id="image-preview-div">
+            <div>Image Preview</div>
+            <div>
+             <img src=""  id="image-preview"/>
+             </div>
+        </div>          
+    </div>
+
+
+
+{% if env.ENVIRONMENT == 'local' %}
+    <script type="text/javascript">{{theJs | safe}}</script>
+{% else %}
+    <script type="text/javascript">{{theJs | jsmin | safe}}</script>
+{% endif %}
