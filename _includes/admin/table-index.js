@@ -66,10 +66,6 @@ whenDocumentReady(isReady = () => {
             localLookUp = "";
         }
 
-        if (typeof localLookupField === 'undefined') {
-            localLookupField = "";
-        }
-
         if (typeof hideEdit === 'undefined') {
             hideEdit = "";
         }
@@ -137,17 +133,24 @@ whenDocumentReady(isReady = () => {
                     tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
                 }
 
-                //check if it is a local look up
-                if (key == localLookupField) {
-                    //loop through the local url
-                    for (var i2 = 0; i2 < localLookUp.length; ++i2) {
-                        let tData2 = localLookUp[i2];
-                        if (tData2.lookValue = tmpValue)
-                            tmpValue = tData2.replaceValue
-                        //console.log(tData2)
+
+                for (var i2 = 0; i2 < localLookUp.length; ++i2) {
+                     //check if it is a local look up
+                    
+                    if (key == localLookUp[i2].field) {
+                        for (var i3 = 0; i3 < localLookUp[i2].values.length; ++i3) {
+                            let localTmpValue = tmpValue
+                            let valueData = localLookUp[i2].values[i3];
+                            if (valueData.lookValue == localTmpValue)
+                            {
+                                localTmpValue = valueData.replaceValue
+                                 tmpValue = localTmpValue
+                                 break;
+
+                            }                           
+                        }
                     }
                 }
-
 
 
                 for (var i2 = 0; i2 < formatFields.length; ++i2) {
@@ -159,6 +162,7 @@ whenDocumentReady(isReady = () => {
 
 
                 tableRow.push(tmpValue);
+                tmpvalue = "";
             }
 
             buildColumn = 1;

@@ -2,8 +2,8 @@
 layout: layout.njk
 permalink: /{{env.LEVEL1NAME}}/
 crumb : /property/
-fields : ["id","name","currentlyRented","createdAt"]
-headerFields : ["id","Name","Currently Rented","Created At"]
+fields : ["id","name","currentlyRented","state","createdAt"]
+headerFields : ["id","Name","Currently Rented","State","Created At"]
 
 title :
 ---
@@ -30,8 +30,28 @@ title :
                 <option value="/property/costs/">Costs</option>
                 <option value="/property/payments/">Payments</option>
         </select>`;
-    let localLookupField = "currentlyRented";
-    let localLookUp = [{"lookValue":0,"replaceValue":"no"},{"lookValue":1,"replaceValue":"yes"}]
+
+    let localLookUp = [{
+        "field": "state",
+        "values": [{
+            "lookValue": 0,
+            "replaceValue": "crowdfund"
+        }, {
+            "lookValue": 1,
+            "replaceValue": "sold"
+        }]
+    },{
+        "field": "currentlyRented",
+        "values": [{
+            "lookValue": 0,
+            "replaceValue": "no"
+        }, {
+            "lookValue": 1,
+            "replaceValue": "yes"
+        }]
+    }
+    
+]
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

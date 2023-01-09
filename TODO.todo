@@ -1,6 +1,6 @@
 GENERAL 
 
- ☐ update the readme 
+ ✔ update the readme @done (23-01-04 00:04)
  ☐ fix the title for tenants / agents
  ☐ create an upstream script to remove non core files
  ☐ add a view button to each index
@@ -70,7 +70,7 @@ CRYPTO
 
  TABLE INDEX JS
 
- ☐ add look up to render out the foreign data
+ ✔ add look up to render out the foreign data @done (23-01-08 21:58)
 
 
  
@@ -82,12 +82,12 @@ next version
 
   CROWDFUND
 
-  ☐ add the index 
-  ☐ add the view
-  ☐ add the edit
-  ☐ when we create a new property it has a crownd fund, bought or live field
-  ☐ add tranch price, tranches sold to the property database 
-  ☐ create and endpoint that sends out the property info for crowdfund frontend
+  ✔ add the index @done (23-01-08 21:58)
+  ✔ add the view @done (23-01-08 21:58)
+  ✔ add the edit @done (23-01-08 21:58)
+  ✔ when we create a new property it has a crownd fund, bought or live field (state) @done (23-01-08 21:16)
+  ✔ add tranch price, tranches sold to the property database @done (23-01-08 21:16)
+  ✔ create and endpoint that sends out the property info for crowdfund frontend @done (23-01-08 21:19)
 
 
 

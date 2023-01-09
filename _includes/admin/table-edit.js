@@ -5,11 +5,16 @@
 
  let lookUpData = [];
 
+
  whenDocumentReady(isReady = () => {
-if (typeof loadMessage != 'undefined') 
-    showAlert(loadMessage.message,loadMessage.type,loadMessage.timeout)
+     if (typeof loadMessage != 'undefined')
+         showAlert(loadMessage.message, loadMessage.type, loadMessage.timeout)
 
      let getTableDone = (res) => {
+
+
+
+
          //parse the repsonse
          res = JSON.parse(res)
          //set the form html
@@ -28,6 +33,7 @@ if (typeof loadMessage != 'undefined')
          //show the body div
          document.getElementById('showBody').classList.remove('d-none');
      }
+
      //get the id
      let id = getUrlParamater('id');
 
@@ -47,7 +53,7 @@ if (typeof loadMessage != 'undefined')
          lookUpData = res;
          getTableData();
      }
-   
+
      if (lookUps != "") {
          lookUps = JSON.stringify(lookUps);
          //call the data

@@ -267,11 +267,10 @@ let buildFormElement = (theData, theValues = "") => {
     let renderInp = 1;
     //set an options var
     let theOptions;
+    //store the selected field
+    let selected = "";
     //check if we have look up ids
     if (lookUpData.length > 0) {
-
-        //store the selected field
-        let selected = "";
         //loop through the lookups
         for (var i = 0; i < lookUpData.length; ++i) {
             if (theData.name == lookUpData[i].key) {
@@ -291,6 +290,26 @@ let buildFormElement = (theData, theValues = "") => {
                     theOptions = theOptions + `<option value="${tmpData.id}" ${selected}>${tmpData.name}</option>`
 
                 }
+            }
+        }
+    }
+    //check for do local lookups
+    if (typeof localLookUp != 'undefined') {
+        if (localLookUp.length > 0) {
+            for (var i = 0; i < localLookUp.length; ++i) {
+                if (theData.name == localLookUp[i].field) {
+                    renderInp = 2;
+
+                    for (var i2 = 0; i2 < localLookUp[i].values.length; ++i2) {
+                        let valueData = localLookUp[i].values[i2];
+                        if (valueData.lookValue == theValue)
+                            selected = "selected";
+                        else
+                            selected = "";
+                        theOptions = theOptions + `<option value="${valueData.lookValue}" ${selected}>${valueData.replaceValue}</option>`
+                    }
+                }
+
             }
         }
     }
@@ -440,7 +459,7 @@ if (checkElement("btn-create") == true) {
                 tableData: theJson,
             }
             let bodyObjectJson = JSON.stringify(bodyObj);
-            xhrcall(0, apiUrl+`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(0, apiUrl + `database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
 
     })
@@ -471,7 +490,7 @@ if (checkElement("btn-update") == true) {
             let bodyObjectJson = JSON.stringify(bodyObj);
             //check we have valid data to submit
             //post the record
-            xhrcall(4, apiUrl+`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(4, apiUrl + `database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
 
     })
