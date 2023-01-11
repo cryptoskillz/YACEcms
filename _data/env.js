@@ -26,5 +26,7 @@ module.exports = {
     FACTORYCONTRACTADDRESS: process.env.FACTORYCONTRACTADDRESS,
     CRYPTOSALT: process.env.CRYPTOSALT,
     BLOCKEXPLORER: process.env.BLOCKEXPLORER,
-    NETWORK: process.env.NETWORK
+    NETWORK: process.env.NETWORK,
+    CROWDFUNDURL: process.env.CROWDFUNDURL
+
 }

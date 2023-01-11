@@ -1,3 +1,4 @@
+
 GENERAL 
 
  ✔ update the readme @done (23-01-04 00:04)
@@ -7,11 +8,25 @@ GENERAL
  ☐ move the reusable crypto functions to app.js
  ☐ trap the token decoder (in image have to apply to the other endpoints)
 
+
+AMENETIES
+
+ ☐ add amenties index
+ ☐ add amenities edit
+ ☐ add amenities new 
+
+PROPERTY LEADS
+
+ ☐ show the property leads 
+ 
+
 IMAGES
 
  ☐ delete image deletes from cloudflare (may have to do this with a worker)
  ☐ when you delete a property delete the images we need a way to remove from look up tables on delete
  ☐ require a token
+ ☐ delete the preview when you uplaod a second image
+ ☐ allow multipile uploads
 
 
  PROPERTY TOKEN NEW

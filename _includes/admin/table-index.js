@@ -20,7 +20,22 @@ let propertySelectChange = (id, theElement) => {
     window.localStorage.mainTable = theTable;
     //load the URL
     if (theElement.value != 0)
-        window.location.href = theElement.value;
+    {
+        //check if we want it in a new window
+        if (theElement.value.indexOf("&target=_blank") > 0)
+        {
+            //remove the blank
+            const result =  theElement.value.replace("&target=_blank","");
+            //open it
+            window.open(result, '_blank');
+        }
+        else
+        {
+            //set the href
+            window.location.href = theElement.value;
+        }
+        
+    }
 }
 
 

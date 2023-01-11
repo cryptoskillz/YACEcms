@@ -413,21 +413,21 @@ let getFormData = (smartValidate = 0) => {
 }
 
 
-let formatCurencyBaht = (code) => {
+let formatCurencyBaht = (code,digits=2) => {
     const formatter = new Intl.NumberFormat('th-TH', {
         style: 'currency',
         currency: 'THB',
-        minimumFractionDigits: 2
+        minimumFractionDigits: digits
     })
     let currency = formatter.format(code)
     return (currency)
 }
 
-let formatCurencyUSD = (code) => {
+let formatCurencyUSD = (code,digits=2) => {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-        minimumFractionDigits: 2
+        minimumFractionDigits: digits
     })
     let currency = formatter.format(code)
     return (currency)

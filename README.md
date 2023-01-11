@@ -86,3 +86,5 @@ click add and add the following details
 
 
 wrangler d1 execute DB --local  --file=./scripts/sql/schema.sql
+sudo wrangler d1 execute DB --file=./scripts/sql/schema.sql
+

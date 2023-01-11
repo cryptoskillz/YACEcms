@@ -33,10 +33,11 @@
 
                  }
                  //get the id
-                 let id = getUrlParamater('id');
+                 let currentItem = JSON.parse(window.localStorage.currentDataItem);
+
                  //build the JSON
                  let theJson = {
-                     propertyId: id,
+                     propertyId: currentItem.id,
                      filename: response.result.filename,
                      cfid: response.result.id,
                      url: response.result.variants[0],
@@ -47,6 +48,7 @@
                      tableData: theJson
                  }
                  let bodyObjectJson = JSON.stringify(bodyObj);
+                 console.log(bodyObjectJson)
                  //check we have valid data to submit
                  //post the record
                  xhrcall(0, apiUrl + `database/table/`, bodyObjectJson, "json", "", xhrDone, token)
