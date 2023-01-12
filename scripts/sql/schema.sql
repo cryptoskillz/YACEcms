@@ -71,12 +71,16 @@ CREATE TABLE "property_leads" (
 	"propertyId" INTEGER,
 	"email" TEXT,
 	"tranchesRequested" INTEGER DEFAULT 0,
+	"isDeleted" INTEGER DEFAULT 0,
 	"createdAt" TEXT DEFAULT CURRENT_TIMESTAMP,
 	"updatedAt" TEXT,
 	"publishedAt" TEXT DEFAULT CURRENT_TIMESTAMP,
 	"deletedAt" TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+INSERT INTO "property_leads" ("propertyId","email","tranchesRequested") VALUES(1, 'test@test.com','3');
+
 
 CREATE TABLE "property_amenities" (
 	"id"	INTEGER,

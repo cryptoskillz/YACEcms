@@ -314,6 +314,29 @@ let buildFormElement = (theData, theValues = "") => {
         }
     }
 
+    //local dropdown
+    if (typeof localDropDown != 'undefined') {
+        if (localDropDown.length > 0) {
+            for (var i = 0; i < localDropDown.length; ++i) {
+                for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
+                    let valueData = localDropDown[i].values[i2];
+                    if (theData.name == localDropDown[i].field) {
+                        renderInp = 2;
+                        if (valueData == theValue)
+                            selected = "selected";
+                        else
+                            selected = "";
+                        theOptions = theOptions + `<option value="${valueData}" ${selected}>${valueData}</option>`
+
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
     switch (renderInp) {
         case 1:
             inpHtml = `<div class="form-group ${visible}">
@@ -413,7 +436,7 @@ let getFormData = (smartValidate = 0) => {
 }
 
 
-let formatCurencyBaht = (code,digits=2) => {
+let formatCurencyBaht = (code, digits = 2) => {
     const formatter = new Intl.NumberFormat('th-TH', {
         style: 'currency',
         currency: 'THB',
@@ -423,7 +446,7 @@ let formatCurencyBaht = (code,digits=2) => {
     return (currency)
 }
 
-let formatCurencyUSD = (code,digits=2) => {
+let formatCurencyUSD = (code, digits = 2) => {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',

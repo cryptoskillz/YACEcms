@@ -1,0 +1,14 @@
+---
+layout: layout.njk
+permalink: /property/amenity/edit/
+---
+<script>
+    let overRideTitle = "Add a new amenity"
+  	let theTable = "property_amenities";
+    let theFields = "id,propertyId,name"
+    let foreignKeys = {"id":"propertyId"}
+    let localDropDown = [{
+        "field": "name",
+        "values": ['Balcony','Deck','Fully Furnished','24 Hour Security','Air Conditioning','Private Pool','Communial Pool','Gym','Key Card Access','Internet Available']}]
+</script>
+{% include "admin/table-edit.njk" %}

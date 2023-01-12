@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+permalink: /property/lead/edit/
+---
+<script>
+    let overRideTitle = "edit lead"
+  	let theTable = "property_leads";
+    let theFields = "id,propertyId,email,tranchesRequested"
+    let foreignKeys = {"id":"propertyId"}
+ </script>
+{% include "admin/table-edit.njk" %}

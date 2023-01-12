@@ -1,0 +1,29 @@
+---
+layout: layout.njk
+permalink: /property/leads/
+crumb : /property/lead/
+fields : ["id","email","tranchesRequested","createdAt"]
+headerFields : ["id","Email","Tranches Requested",Created At"]
+
+title :
+---
+<script>
+    //store the crumb 
+    let theCrumb = "{{ crumb }}";
+    let theTable = "property_leads";
+    let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
+    //set the primary table id
+    let foreignKeys = "";
+    let checkAdmin = 0;
+    let getOnlyTableSchema = 0;
+    let allowOnlyOne = 1;
+    let customButton = "";
+</script>
+{% set theJs %}
+    {% include 'admin/table-index.js' %}
+{% endset %}
+<script>
+    //clear the currentDataItem
+    window.localStorage.currentDataItemId = "";
+</script>
+{%  include "admin/table-index.njk" %}

@@ -98,6 +98,7 @@ whenDocumentReady(isReady = () => {
         } else {
             document.getElementById('btn-create-cy').classList.remove('d-none');
         }
+        
         //get the datatable
         table = $('#dataTable').DataTable();
         //process the results

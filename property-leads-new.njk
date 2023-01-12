@@ -1,0 +1,12 @@
+---
+layout: layout.njk
+permalink: /property/lead/new/
+---
+<script>
+    let overRideTitle = "Add a new lead"
+    let theTable = "property_leads";
+    let theFields = "propertyId,email,tranchesRequested"
+    let foreignKeys = {"id":"propertyId"}
+</script>
+
+{% include "admin/table-new.njk" %}

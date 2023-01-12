@@ -1,0 +1,29 @@
+---
+layout: layout.njk
+permalink: /property/amenities/
+crumb : /property/amenity/
+fields : ["id","name","createdAt"]
+headerFields : ["id","Name","Created At"]
+
+title :
+---
+<script>
+    //store the crumb 
+    let theCrumb = "{{ crumb }}";
+    let theTable = "property_amenities";
+    let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
+    //set the primary table id
+    let foreignKeys = "";
+    let checkAdmin = 0;
+    let getOnlyTableSchema = 0;
+    let allowOnlyOne = 0;
+    let customButton = "";
+</script>
+{% set theJs %}
+    {% include 'admin/table-index.js' %}
+{% endset %}
+<script>
+    //clear the currentDataItem
+    window.localStorage.currentDataItemId = "";
+</script>
+{%  include "admin/table-index.njk" %}

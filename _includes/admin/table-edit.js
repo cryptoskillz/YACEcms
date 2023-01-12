@@ -37,10 +37,14 @@
      //get the id
      let id = getUrlParamater('id');
 
-     //set the tmpName
-     let tmpName = theTable.replace("_", " ");
-     document.getElementById('data-header').innerHTML = `edit ${tmpName}`
-
+     //set table header
+     if (typeof overRideTitle != 'undefined') {
+         document.getElementById('data-header').innerHTML = overRideTitle;
+     } else {
+         //set the tmpName
+         let tmpName = theTable.replace("_", " ");
+         document.getElementById('data-header').innerHTML = `add a new ${tmpName}`
+     }
      //get the table results for this level.
      let getTableData = () => {
          //call the data
@@ -53,7 +57,10 @@
          lookUpData = res;
          getTableData();
      }
-
+    if (typeof lookUps === 'undefined') {
+        var lookUps = "";
+    }
+    
      if (lookUps != "") {
          lookUps = JSON.stringify(lookUps);
          //call the data

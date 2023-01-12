@@ -7,7 +7,7 @@ let lookUpData = [];
 
 whenDocumentReady(isReady = () => {
 
-   
+
     //process the result from the table API call.
     let getTableDone = (res) => {
         res = JSON.parse(res);
@@ -26,11 +26,18 @@ whenDocumentReady(isReady = () => {
         document.getElementById('showBody').classList.remove('d-none');
     }
 
-    //set the tmpName
-    let tmpName = theTable.replace("_", " ");
-    document.getElementById('data-header').innerHTML = `add a new ${tmpName}`
+    //set table header
+    if (typeof overRideTitle != 'undefined')
+    {
+        document.getElementById('data-header').innerHTML  = overRideTitle;
+    }
+    else {
+        //set the tmpName
+        let tmpName = theTable.replace("_", " ");
+        document.getElementById('data-header').innerHTML = `add a new ${tmpName}`
+    }
 
-     //get the table results for this level.
+    //get the table results for this level.
     let getTableData = () => {
         //call the data
         url = apiUrl + `database/table?tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=1`
@@ -42,17 +49,18 @@ whenDocumentReady(isReady = () => {
         lookUpData = res;
         getTableData();
     }
+    if (typeof lookUps === 'undefined') {
+        var lookUps = "";
+    }
 
     if (lookUps != "") {
         lookUps = JSON.stringify(lookUps);
         //call the data
         xhrcall(1, apiUrl + `database/lookUp?theData=${lookUps}`, "", "json", "", getLookUpDone, token);
-    }
-    else
-    {
+    } else {
         getTableData();
     }
 
-    
+
 
 });
