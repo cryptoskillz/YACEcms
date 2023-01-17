@@ -15,8 +15,6 @@ let whenDocumentReady = (f) => {
 
 
 whenDocumentReady(isReady = () => {
-
-
     //show it.
     //document.getElementById('showBody').classList.remove('d-none')
 
@@ -249,18 +247,12 @@ whenDocumentReady(isReady = () => {
     if (checkElement("btn-forgot-password") == true) {
 
         document.getElementById('btn-forgot-password').addEventListener('click', function() {
-
             //set the valid var
             let valid = 1;
             //get the details
             let email = document.getElementById('inp-forgot-email');
-            //reset errors
-            let alert = document.getElementById('accountsAlert')
-            alert.innerHTML = ""
-            alert.classList.add('d-none')
-            document.getElementById('accountsSuccess').classList.add('d-none')
-            document.getElementById('accountsAlert').classList.add('d-none')
-            document.getElementById('error-email').classList.add('d-none')
+
+
             //validate the email
             if (validateEmail(email.value)) {
                 //its valid we don't really have to do anything but we may extend this so no harm done leaving it.
@@ -272,27 +264,32 @@ whenDocumentReady(isReady = () => {
                 let error = document.getElementById('error-email');
                 error.innerHTML = "Invalid Email Address"
                 error.classList.remove('d-none')
+                showAlert("Error resetting your password please try again", 2)
             }
 
             if (valid == 1) {
+
+                let forgotDone = (response) => {
+                    response = JSON.parse(response);
+                    if (response.status == "ok")
+                        showAlert('We have sent you an email to reset your password', 1, 0)
+
+                }
+
                 //build the json
                 let bodyobj = {
                     email: email.value,
-                    url: 'http:/localhost:1337/admin/plugins/users-permissions/auth/reset-password',
                     action: "3",
                 }
                 //string it 
                 var bodyobjectjson = JSON.stringify(bodyobj);
-                //done function
-                let forgotPasswordDone = () => {
-                    let alert = document.getElementById('accountsAlert')
-                    alert.innerHTML = "you will recieve an email (when we code this part)"
-                    alert.classList.remove('d-none');
-                }
-                xhrcall(0,  apiUrl + "admin/account", bodyobjectjson, "json", "", forgotPasswordDone)
-            }
+                //call the create account endpoint
+                xhrcall(0, apiUrl + "admin/account", bodyobjectjson, "json", "", forgotDone)
+                return;
 
+            }
         });
+
     }
 
 
@@ -311,6 +308,32 @@ whenDocumentReady(isReady = () => {
         clearCache(1);
         showAlert('You are now logged out', 1, 0)
     }
+
+    //verify 
+    let verifycode = getUrlParamater('verifycode')
+    if (verifycode != "") {
+        let verifyDone = (response) => {
+            response = JSON.parse(response);
+            if (response.status == "ok") {
+                showAlert('you are now verified', 1, 0)
+                document.getElementById('btn-verify').classList.remove('d-none');
+            } else {
+                showAlert("Error verifying account please try again", 2)
+            }
+        }
+
+        //build the json
+        let bodyobj = {
+            verifycode: verifycode,
+            action: "4",
+        }
+        //string it 
+        var bodyobjectjson = JSON.stringify(bodyobj);
+        //call the create account endpoint
+        xhrcall(0, apiUrl + "admin/account", bodyobjectjson, "json", "", verifyDone)
+        return;
+    }
+
 
     if (checkElement("btn-profile-update") == true) {
         document.getElementById('btn-profile-update').addEventListener('click', function() {
@@ -364,14 +387,7 @@ whenDocumentReady(isReady = () => {
             let password1 = document.getElementById('inp-password1');
             let password2 = document.getElementById('inp-password2');
 
-            //reset errors
-            let alert = document.getElementById('accountsAlert')
-            alert.innerHTML = ""
-            alert.classList.add('d-none')
-            document.getElementById('accountsSuccess').classList.add('d-none')
-            document.getElementById('accountsAlert').classList.add('d-none')
-            document.getElementById('error-password1').classList.add('d-none')
-            document.getElementById('error-password2').classList.add('d-none')
+
 
             //validate the password
             if (password1.value == "") {
@@ -394,6 +410,34 @@ whenDocumentReady(isReady = () => {
             }
 
             if (valid == 1) {
+
+                //reset the password  
+                let resetcode = getUrlParamater('resetcode')
+                if (resetcode != "") {
+                    let resetDone = (response) => {
+                        response = JSON.parse(response);
+                        if (response.status == "ok") {
+                            showAlert('password has been reset', 1, 0)
+                        } else {
+                            showAlert("Error resetting please try again", 2)
+                        }
+                    }
+
+                    //build the json
+                    let bodyobj = {
+                        resetcode: resetcode,
+                        password: password1.value,
+                        action: "5",
+                    }
+                    //string it 
+                    var bodyobjectjson = JSON.stringify(bodyobj);
+                    //call the create account endpoint
+                    xhrcall(0, apiUrl + "admin/account", bodyobjectjson, "json", "", resetDone)
+                    return;
+                }
+
+                /*
+                use this if you want to use strapi js
                 //todo : get the private code
 
                 let privateCode = "12345"
@@ -414,7 +458,7 @@ whenDocumentReady(isReady = () => {
                 }
                 //call the create account endpoint
                 xhrcall(0, "auth/reset-password", bodyobjectjson, "json", "", resetPasswordDone)
-
+                */
 
 
             }

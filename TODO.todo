@@ -42,8 +42,9 @@ TABLES
 
 ACCOUNT
 
- ☐ refactor forgot password
- ☐ refactor reset password
+ ✔ refactor forgot password @done (23-01-17 14:18)
+ ✔ refactor reset password @done (23-01-17 14:18)
+ ☐ encrypt password
 
 SETTINGS
 
@@ -56,8 +57,6 @@ API
 
 FUNCTIONS API
 
- ☐ does login / settings / regsiter.js stay in the root of api it kind of makes sense to move them to a frontend folder as thats what uses them  
- ☐ check the table is set in api calls
  
 SECOND LEVEL CREATES (PROPERTY COSTS)
 
@@ -98,14 +97,6 @@ next version
  ☐ trap the amount if it is too small
 
   CROWDFUND
-
-  ✔ add the index @done (23-01-08 21:58)
-  ✔ add the view @done (23-01-08 21:58)
-  ✔ add the edit @done (23-01-08 21:58)
-  ✔ when we create a new property it has a crownd fund, bought or live field (state) @done (23-01-08 21:16)
-  ✔ add tranch price, tranches sold to the property database @done (23-01-08 21:16)
-  ✔ create and endpoint that sends out the property info for crowdfund frontend @done (23-01-08 21:19)
-
 
 
 
