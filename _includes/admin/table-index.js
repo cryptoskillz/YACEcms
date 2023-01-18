@@ -16,37 +16,34 @@ let propertySelectChange = (id, theElement) => {
     window.localStorage.currentDataItem = "";
     //store the ID
     window.localStorage.currentDataItemId = id;
+    console.log(window.localStorage.currentDataItemId)
     //store the table
     window.localStorage.mainTable = theTable;
     //load the URL
-    if (theElement.value != 0)
-    {
+    if (theElement.value != 0) {
         //check if we want it in a new window
-        if (theElement.value.indexOf("&target=_blank") > 0)
-        {
+        if (theElement.value.indexOf("&target=_blank") > 0) {
             //remove the blank
-            const result =  theElement.value.replace("&target=_blank","");
+            const result = theElement.value.replace("&target=_blank", "");
             //open it
             window.open(result, '_blank');
-        }
-        else
-        {
+        } else {
             //set the href
             window.location.href = theElement.value;
         }
-        
+
     }
 }
 
 
 whenDocumentReady(isReady = () => {
 
-    
+
 
     if (typeof allowOnlyOne === 'undefined') {
         var allowOnlyOne = 0;
     }
-   
+
 
     if (typeof lookUps === 'undefined') {
         var lookUps = "";
@@ -95,7 +92,7 @@ whenDocumentReady(isReady = () => {
         } else {
             document.getElementById('btn-create-cy').classList.remove('d-none');
         }
-        
+
         //get the datatable
         table = $('#dataTable').DataTable();
 
@@ -150,19 +147,18 @@ whenDocumentReady(isReady = () => {
 
 
                 for (var i2 = 0; i2 < localLookUp.length; ++i2) {
-                     //check if it is a local look up
-                    
+                    //check if it is a local look up
+
                     if (key == localLookUp[i2].field) {
                         for (var i3 = 0; i3 < localLookUp[i2].values.length; ++i3) {
                             let localTmpValue = tmpValue
                             let valueData = localLookUp[i2].values[i3];
-                            if (valueData.lookValue == localTmpValue)
-                            {
+                            if (valueData.lookValue == localTmpValue) {
                                 localTmpValue = valueData.replaceValue
-                                 tmpValue = localTmpValue
-                                 break;
+                                tmpValue = localTmpValue
+                                break;
 
-                            }                           
+                            }
                         }
                     }
                 }
@@ -202,8 +198,7 @@ whenDocumentReady(isReady = () => {
 
     //get the table results for this level.
     let getTableData = () => {
-      
-        
+
         if (foreignKeys == "")
             url = apiUrl + `database/table?checkAdmin=${checkAdmin}&tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=${getOnlyTableSchema}&theData=${lookUps}`
         else
@@ -213,6 +208,8 @@ whenDocumentReady(isReady = () => {
 
     //process the data item.
     let getMainTableDone = (res) => {
+        console.log("cdi")
+        console.log(window.localStorage.currentDataItem)
         //store it
         res = JSON.parse(res);
         //console.log(res.data)
@@ -221,6 +218,7 @@ whenDocumentReady(isReady = () => {
     }
 
     //check if we have a current data item 
+
     if (window.localStorage.currentDataItem == "") {
         //build the json to get the main record from the main table so we can get the foreign ids.
         url = apiUrl + `database/table?tablename=${window.localStorage.mainTable}&fields=&getOnlyTableSchema=${getOnlyTableSchema}&id=${window.localStorage.currentDataItemId}&foreignId=&theData=${lookUps}`

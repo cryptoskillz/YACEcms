@@ -8,6 +8,8 @@ export async function onRequestGet(context) {
         next, // used for middleware or to fetch assets
         data, // arbitrary space for passing data between middlewares
     } = context;
+    //build the result
+    let result = {}
     //get the search paramaters
     const { searchParams } = new URL(request.url);
     //get the id
@@ -22,18 +24,25 @@ export async function onRequestGet(context) {
     //check we have a result
     if (propertyresult == undefined)
         return new Response(JSON.stringify({ error: "no property found with that id" }), { status: 400 });
-    
+
     //get the token for the property
     const token = context.env.DB.prepare(`SELECT * from property_token where propertyId = ${id}`);
     const tokenresult = await token.first();
     //get the owners for the property
 
-    const owners = context.env.DB.prepare(`SELECT property_owner.id,property_owner.tokenAmount,user.name,user.email from property_owner LEFT JOIN user ON property_owner.userId = user.id where property_owner.propertyTokenId = ${tokenresult.id}`);
-    const ownersresults = await owners.all();
-    //get the owners for the  distributions
-    const distributions = context.env.DB.prepare(`SELECT * from property_distribution where propertyId = ${id}`);
-    const distributionsresults = await distributions.all();
-
+    console.log(tokenresult)
+    if (tokenresult != undefined) {
+        const owners = context.env.DB.prepare(`SELECT property_owner.id,property_owner.tokenAmount,user.name,user.email from property_owner LEFT JOIN user ON property_owner.userId = user.id where property_owner.propertyTokenId = ${tokenresult.id}`);
+        const ownersresults = await owners.all();
+        //get the owners for the  distributions
+        const distributions = context.env.DB.prepare(`SELECT * from property_distribution where propertyId = ${id}`);
+        const distributionsresults = await distributions.all();
+        result.owners = ownersresults.results;
+        result.distributions = distributionsresults.results;
+    } else {
+        result.owners = {}
+        result.distributions = {}
+    }
     //get the agreement
     const agreement = context.env.DB.prepare(`SELECT * from rental_agreement where propertyId = ${id}`);
     const agreementresults = await agreement.all();
@@ -49,12 +58,9 @@ export async function onRequestGet(context) {
     //console.log(costsresults);
     //console.log(paymentsresults.results);
 
-    //build the result
-    let result = {}
+
     result.property = propertyresult;
     result.token = tokenresult;
-    result.owners = ownersresults.results;
-    result.distributions = distributionsresults.results;
     result.agreements = agreementresults.results;
     result.costs = costsresults.results;
     result.payments = paymentsresults.results;

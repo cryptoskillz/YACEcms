@@ -28,8 +28,11 @@ whenDocumentReady(isReady = () => {
         table = addTableRow("Name", res.property.name, table);
         table = addTableRow("Cost", formatCurencyUSD(res.property.internationalCost), table);
         table = addTableRow("Taxes", formatCurencyUSD(res.property.internationalTaxesCost), table);
-        table = addTableRow("Currency",res.property.internationalCurrency, table);
-        table = addTableRow("Contract", `<a href="${res.token.blockExplorerUrl}" target="_blank">${res.token.contractAddress}</a>`, table);
+        table = addTableRow("Currency", res.property.internationalCurrency, table);
+        if (res.token == undefined)
+            table = addTableRow("Contract", `N/A`, table);
+        else
+            table = addTableRow("Contract", `<a href="${res.token.blockExplorerUrl}" target="_blank">${res.token.contractAddress}</a>`, table);
         table = table + "</table>";
         table = table + "</table>";
         //console.log(table)
@@ -46,7 +49,7 @@ whenDocumentReady(isReady = () => {
                 isActive = "No"
             //add a table
             var rowNode = table
-                .row.add([tmp.id, tmp.name, tmp.amount,tmp.deposit,tmp.startDate,tmp.endDate,isActive])
+                .row.add([tmp.id, tmp.name, tmp.amount, tmp.deposit, tmp.startDate, tmp.endDate, isActive])
                 .draw()
                 .node().id = tmp.id;
         }
@@ -59,7 +62,7 @@ whenDocumentReady(isReady = () => {
             let owner = res.owners[i];
             //set the percentage
             let per = owner.tokenAmount / res.token.totalSupply;
-            per = per *100
+            per = per * 100
             per = Math.round(per);
             //build the address
             let address = `<a href="${owner.address}" target="_blank">view</a>`
@@ -69,7 +72,7 @@ whenDocumentReady(isReady = () => {
             let amount = `${famount} (${per}%)`
             //add the table row
             var rowNode = table
-                .row.add([owner.id, owner.name, owner.email,address,amount])
+                .row.add([owner.id, owner.name, owner.email, address, amount])
                 .draw()
                 .node().id = owner.id;
         }
@@ -84,7 +87,7 @@ whenDocumentReady(isReady = () => {
             total = total + tmp.amountInternational;
             let famount = formatCurencyUSD(tmp.amountInternational);
             var rowNode = table
-                .row.add([tmp.id, tmp.type, tmp.name,famount,tmp.datePaid])
+                .row.add([tmp.id, tmp.type, tmp.name, famount, tmp.datePaid])
                 .draw()
                 .node().id = tmp.id;
         }
@@ -101,14 +104,14 @@ whenDocumentReady(isReady = () => {
             total = total + tmp.amountInternational;
             let famount = formatCurencyUSD(tmp.amountInternational);
             var rowNode = table
-                .row.add([tmp.id, tmp.type, tmp.name,famount,tmp.datePaid])
+                .row.add([tmp.id, tmp.type, tmp.name, famount, tmp.datePaid])
                 .draw()
                 .node().id = tmp.id;
         }
         table.columns.adjust();
         //update the total
         document.getElementById("paidouttotal").innerHTML = formatCurencyUSD(total);
-        nettotal = nettotal-total;
+        nettotal = nettotal - total;
         total = 0;
 
         //distribution
@@ -122,7 +125,7 @@ whenDocumentReady(isReady = () => {
             total = total + tmp.amountInternational;
             let famount = formatCurencyUSD(tmp.amountInternational);
             var rowNode = table
-                .row.add([tmp.id, tmp.name, tmp.description,famount,tmp.datePaid])
+                .row.add([tmp.id, tmp.name, tmp.description, famount, tmp.datePaid])
                 .draw()
                 .node().id = tmp.id;
         }
@@ -135,7 +138,7 @@ whenDocumentReady(isReady = () => {
         document.getElementById("propertydiv").classList.remove("d-none");
 
     }
-    xhrcall(1, apiUrl + "properties/report?id=1", "", "json", "", propertyDone, "")
+    xhrcall(1, apiUrl + `properties/report?id=${window.localStorage.currentDataItemId}`, "", "json", "", propertyDone, "")
 
 
 
