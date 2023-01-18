@@ -205,7 +205,7 @@ export async function onRequestGet(context) {
         if (searchParams.get('checkAdmin') != null) {
             checkAdmin = searchParams.get('checkAdmin');
         }
-        console.log(searchParams.get('lookUps'))
+        //console.log(searchParams.get('lookUps'))
         if ((searchParams.get('lookUps') != null) && (searchParams.get('lookUps') != "")){
             lookUps = searchParams.get('lookUps');
             console.log(lookUps);
@@ -221,6 +221,7 @@ export async function onRequestGet(context) {
         let recordId = "";
         if (searchParams.get('id') != null)
             recordId = searchParams.get('id');
+
         //get the foreign id 
         let foreignId = "";
         if (searchParams.get('foreignId') != null)
@@ -285,6 +286,8 @@ export async function onRequestGet(context) {
         if (searchParams.get('getOnlyTableSchema') == 0) {
             //build the where statement if they sent up and id
             let sqlWhere = `where ${tableName}.isDeleted = 0 `;
+        
+            //if ((recordId != "") && (foreignId == ""))
             if ((recordId != "") && (foreignId == ""))
                 sqlWhere = sqlWhere + `and id = ${recordId}`
             else {
@@ -296,8 +299,8 @@ export async function onRequestGet(context) {
                 sqlWhere = sqlWhere + `and ${tableName}.adminId = ${theToken.payload.id}`
             }
             //debug
-            //console.log(recordId)
-            //console.log(foreignId)
+            console.log(recordId)
+            console.log(foreignId)
             console.log(`SELECT ${fieldsFull} from ${tableName} ${theJoin} ${sqlWhere}`)
             //process the fields
             let tmp = fields.split(",");

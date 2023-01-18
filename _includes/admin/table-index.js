@@ -46,10 +46,7 @@ whenDocumentReady(isReady = () => {
     if (typeof allowOnlyOne === 'undefined') {
         var allowOnlyOne = 0;
     }
-
-     if (typeof foreignKeys === 'undefined') {
-        var foreignKeys = "";
-    }
+   
 
     if (typeof lookUps === 'undefined') {
         var lookUps = "";
@@ -101,6 +98,7 @@ whenDocumentReady(isReady = () => {
         
         //get the datatable
         table = $('#dataTable').DataTable();
+
         //process the results
         for (var i = 0; i < res.data.length; ++i) {
             //set the data 
@@ -108,14 +106,15 @@ whenDocumentReady(isReady = () => {
             //build the buttons
             deleteButton = "";
             editButton = "";
+            let tmpCustomSelect = customSelect;
             //parse the custom button
-            customButton = customButton.replaceAll("[id]", theData.id);
-            customButton = customButton.replaceAll("[name]", theData.name);
+            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
+            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
             customButton = customButton.replaceAll("[counter]", i);
             //parse the custom select
-            customSelect = customSelect.replaceAll("[id]", theData.id);
-            customSelect = customSelect.replaceAll("[name]", theData.name);
-            customSelect = customSelect.replaceAll("[counter]", i);
+            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
+            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
+            tmpCustomSelect = tmpCustomSelect.replaceAll("[counter]", i);
 
 
             //check if its an admin
@@ -182,7 +181,7 @@ whenDocumentReady(isReady = () => {
             }
 
             buildColumn = 1;
-            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${customSelect} `);
+            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${tmpCustomSelect} `);
             //add the table rows
             var rowNode = table
                 .row.add(tableRow)
@@ -203,8 +202,8 @@ whenDocumentReady(isReady = () => {
 
     //get the table results for this level.
     let getTableData = () => {
-
-
+      
+        
         if (foreignKeys == "")
             url = apiUrl + `database/table?checkAdmin=${checkAdmin}&tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=${getOnlyTableSchema}&theData=${lookUps}`
         else
@@ -239,6 +238,7 @@ whenDocumentReady(isReady = () => {
             //console.log(tmpJson.name)
             document.getElementById('recordTitle').innerHTML = tmpJson.name;
         }
+
     }
 
 })

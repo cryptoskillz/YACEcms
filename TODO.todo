@@ -11,9 +11,20 @@ GENERAL
 
 AMENETIES
 
- ✔ add amenties index @done (23-01-12 15:24)
- ✔ add amenities edit @done (23-01-12 15:24)
- ✔ add amenities new @done (23-01-12 15:24)
+PROPERTY
+
+  ☐ local currency, drop down to new 
+  ☐ local currency, drop down to edit
+  ☐ add internationalCurrency 
+  ☐ internationalCurrency, drop down to new 
+  ☐ internationalCurrency, drop down to edit
+  ☐ make tranche price / amount fill in automtically from the price on new
+  ✔ images have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
+  ✔ amenities have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
+  ✔ report have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
+
+
+
 
 PROPERTY LEADS
 
