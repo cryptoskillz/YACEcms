@@ -128,29 +128,35 @@ let getTodatsDate = () => {
     return (`${d.getFullYear()}-${theMonth}-${theDay} ${theHours}:${theMinutes} ${theSeconds}`)
 }
 
-let processlocalDropDown = (theData, localLookUp, theValue) => {
+let processlocalDropDown = (theData, localDropDown, theValue) => {
     let theOptions = "";
-    if (localLookUp != "") {
-        console.log(theValue)
-        for (var i = 0; i < localLookUp.length; ++i) {
+    //console.log(localDropDown)
+    if (localDropDown != "") {
+        //console.log(theValue)
+        for (var i = 0; i < localDropDown.length; ++i) {
 
-            if (theData.name == localLookUp[i].field) {
+            if (theData.name == localDropDown[i].field) {
                 //renderInp = 2;
                 //console.log(localLookUp[i])
-                for (var i2 = 0; i2 < localLookUp[i].values.length; ++i2) {
-                    let valueData = localLookUp[i].values[i2];
-                    //console.log(localLookUp[i].values[i2])
-                    if (i2 == theValue)
+                for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
+                    let valueData = localDropDown[i].values[i2];
+                    let dispalyData = localDropDown[i].displayValues[i2];
+                    
+                    //console.log(valueData)
+                    //console.log(theValue)
+                    //console.log(dispalyData)
+
+                    if (valueData == theValue)
                         selected = "selected";
                     else
                         selected = "";
-                    theOptions = theOptions + `<option value="${i2}" ${selected}>${valueData}</option>`
+                    theOptions = theOptions + `<option value="${valueData}" ${selected}>${dispalyData}</option>`
                 }
             }
 
         }
     }
-    console.log(theOptions)
+    //console.log(theOptions)
     return (theOptions)
 
 }
@@ -321,7 +327,7 @@ let buildFormElement = (theData, theValues = "") => {
         }
     }
     //check for do local lookups
-    theOptions = processlocalDropDown(theData, theSettings.localLookUp, theValue);
+    theOptions = processlocalDropDown(theData, theSettings.localDropDown, theValue);
 
 /*
     if (theOptions == "") {

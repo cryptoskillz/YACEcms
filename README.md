@@ -4,7 +4,7 @@
 
 
 wrangler d1 execute DB --local --command='SELECT * from property_amenities where property_amenities.isDeleted = 0  and id = 1 '
-
+wrangler d1 execute DB --local --command='SELECT currentlyRented from property'
 
 ## ABOUT
 
