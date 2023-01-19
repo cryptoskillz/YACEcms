@@ -7,16 +7,13 @@ headerFields :  ["id","Name","Contract Address","Created At"]
 title : token
 ---
 <script>
-    //store the crumb 
-    let theCrumb = "{{ crumb }}";
-    //set the table you want to insert for
-    let theTable = "property_token";
+    let lookUps = "";
+    let customSelect = "";
+    let localLookUp = "";
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
     let foreignKeys = {"id":"propertyId"};
-    let checkAdmin = 0;
-    let getOnlyTableSchema = 0;
-    let allowOnlyOne = 1;
-    let customButton = "";
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":1,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property_token","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps}    
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

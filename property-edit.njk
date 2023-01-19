@@ -3,29 +3,21 @@ layout: layout.njk
 permalink: /property/edit/
 ---
 <script>
+    let customSelect = "";
+    let lookUps = "";
+    let localLookUp = "";
     let theTable = "property";
-    let theFields = "id,adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice"
-    let foreignKeys = "";
-    //set the loop up table
-    let lookUps = []
-    let localLookUp = [{
-        "field": "state",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "crowdfund"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "sold"
-        }]
-    },{
-        "field": "currentlyRented",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "no"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "yes"
-        }]
-    }]
+    let theFields = "id,adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
+    let localDropDown =  [
+        {"field": "bathrooms",
+        "values": ['1','2','3','4','5']},
+        {"field": "bedrooms",
+        "values": ['1','2','3','4','5','6','7','8','9','10']}
+    ]
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps}
+  
+    
+    
 </script>
 {% include "admin/table-edit.njk" %}

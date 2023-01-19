@@ -128,6 +128,33 @@ let getTodatsDate = () => {
     return (`${d.getFullYear()}-${theMonth}-${theDay} ${theHours}:${theMinutes} ${theSeconds}`)
 }
 
+let processlocalDropDown = (theData, localLookUp, theValue) => {
+    let theOptions = "";
+    if (localLookUp != "") {
+        console.log(theValue)
+        for (var i = 0; i < localLookUp.length; ++i) {
+
+            if (theData.name == localLookUp[i].field) {
+                //renderInp = 2;
+                //console.log(localLookUp[i])
+                for (var i2 = 0; i2 < localLookUp[i].values.length; ++i2) {
+                    let valueData = localLookUp[i].values[i2];
+                    //console.log(localLookUp[i].values[i2])
+                    if (i2 == theValue)
+                        selected = "selected";
+                    else
+                        selected = "";
+                    theOptions = theOptions + `<option value="${i2}" ${selected}>${valueData}</option>`
+                }
+            }
+
+        }
+    }
+    console.log(theOptions)
+    return (theOptions)
+
+}
+
 /*
 This funtion handles the building of the form
 */
@@ -294,44 +321,34 @@ let buildFormElement = (theData, theValues = "") => {
         }
     }
     //check for do local lookups
-    if (typeof localLookUp != 'undefined') {
-        if (localLookUp.length > 0) {
-            for (var i = 0; i < localLookUp.length; ++i) {
-                if (theData.name == localLookUp[i].field) {
-                    renderInp = 2;
+    theOptions = processlocalDropDown(theData, theSettings.localLookUp, theValue);
 
-                    for (var i2 = 0; i2 < localLookUp[i].values.length; ++i2) {
-                        let valueData = localLookUp[i].values[i2];
-                        if (valueData.lookValue == theValue)
-                            selected = "selected";
-                        else
-                            selected = "";
-                        theOptions = theOptions + `<option value="${valueData.lookValue}" ${selected}>${valueData.replaceValue}</option>`
+/*
+    if (theOptions == "") {
+        //local dropdown
+        if (typeof localDropDown != 'undefined') {
+            if (localDropDown.length > 0) {
+                for (var i = 0; i < localDropDown.length; ++i) {
+                    for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
+                        let valueData = localDropDown[i].values[i2];
+                        if (theData.name == localDropDown[i].field) {
+                            renderInp = 2;
+                            if (valueData == theValue)
+                                selected = "selected";
+                            else
+                                selected = "";
+                            theOptions = theOptions + `<option value="${valueData}" ${selected}>${valueData}</option>`
+
+                        }
                     }
                 }
-
             }
         }
     }
+    */
 
-    //local dropdown
-    if (typeof localDropDown != 'undefined') {
-        if (localDropDown.length > 0) {
-            for (var i = 0; i < localDropDown.length; ++i) {
-                for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
-                    let valueData = localDropDown[i].values[i2];
-                    if (theData.name == localDropDown[i].field) {
-                        renderInp = 2;
-                        if (valueData == theValue)
-                            selected = "selected";
-                        else
-                            selected = "";
-                        theOptions = theOptions + `<option value="${valueData}" ${selected}>${valueData}</option>`
-
-                    }
-                }
-            }
-        }
+    if (theOptions != "") {
+        renderInp = 2
     }
 
 
@@ -435,6 +452,11 @@ let getFormData = (smartValidate = 0) => {
 
 }
 
+
+let formatNumber = (code) => {
+    let theNumber = code.toLocaleString();
+    return (theNumber)
+}
 
 let formatCurencyBaht = (code, digits = 2) => {
     const formatter = new Intl.NumberFormat('th-TH', {
@@ -825,7 +847,9 @@ let getUrlParamater = (param) => {
 
 
 //this function makes the XHR calls.
-let xhrcall = (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "", callback = '', auth = "") => {
+//let init = async () => { }
+
+let xhrcall = async (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "", callback = '', auth = "") => {
     //debug
     //console.log(apiUrl)
     //console.log(bodyObj)
@@ -936,11 +960,7 @@ let xhrcall = (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "",
                 //console.log(res)
                 eval(callback(res));
             }
-
         }
-
-
-
     }
 };
 

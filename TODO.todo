@@ -7,6 +7,14 @@ GENERAL
  ☐ add a view button to each index
  ☐ move the reusable crypto functions to app.js
  ☐ trap the token decoder (in image have to apply to the other endpoints)
+ ☐ dropdown select to have a simple counter to make the settings array a little more efficient.
+ ☐ chnage the name of localdropdown in table-index.js to something that makes more sense (it is replacing data)
+ ☐ add lookup to table new 
+ ☐ add lookup to table edit
+ ☐ make sure they are all using theSettings vars
+ ☐ get it working for property-index, new and edit then apply it to the rest of the dropdowns
+ ☐ apply replace title to all of theSettings
+ 
 
 
 AMENETIES
@@ -23,7 +31,10 @@ PROPERTY
   ✔ amenities have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
   ✔ report have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
 
+PROPERTY OWNER
 
+  ☐ user id lookup
+  ☐ property token lookup
 
 
 PROPERTY LEADS

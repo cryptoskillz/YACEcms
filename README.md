@@ -1,6 +1,11 @@
 # BUILDING BLOCKS
 
 
+
+
+wrangler d1 execute DB --local --command='SELECT * from property_amenities where property_amenities.isDeleted = 0  and id = 1 '
+
+
 ## ABOUT
 
 BUILDING BLOCKS is open sourced framework to use (any) crypto to manage ownership of a property.
@@ -11,7 +16,7 @@ BUILDING BLOCKS is open sourced framework to use (any) crypto to manage ownershi
 
 clone BUILDING BLOCKS into your directory
 
-git clone https://github.com/cryptoskillz/YACEcms.git
+git clone  https://github.com/OrbitLabsDAO/buildingblocksreporting.git 
 
 run  the following 2 commands
 
@@ -30,6 +35,33 @@ rename _.env to .env to allow dotenv to see the local environment variables
 API = The API is set to the local host but you should change it to your domain route in most cases
 SECRET = Change the secret to something else, this is the Key that JWT uses. 
 CANCREATEACCOUNT = 1 on 2 off.  This allows you to disable the create account
+CLOUDFLAREURL=https://api.cloudflare.com/client/v4/accounts/8851e575353a23f4511fbe2d1a74505e/images/v2/direct_upload
+BEARERTOKEN=PbgI1GP3zctBx7U6rV1xlWzdJvzvg64X6EPuZBd9
+EMAILAPIURL=http://127.0.0.1:8787
+PRODUCTNAME=Building Blocks
+ADMINURL=http://localhost:8789/
+SENDEREMAILNAME=cryptoskillz
+SIGNUPEMAILTEMPLATEID=30429839
+FORGOTPASSWORDEMAILTEMPLATEID=30458239
+ADMINURL=http://localhost:8789/
+SECRET=974this is the stupid secret that no will ever be able to guess344342!
+CANCREATEACCOUNT=0
+APIURL=http://localhost:8789/api/
+COMPLEXPASSWORD=0
+RPCURL=https://bsc-dataseed.binance.org
+FACTORYCONTRACTADDRESS=0xbf86927f6ce7946608b3e64c91775e4845bc78dd
+FACTORYCONTRACTABI=[{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"bytes32","name":"_salt","type":"bytes32"}],"name":"deploy","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"payable","type":"function"}]
+BLOCKCHAINNETWORK=BNB
+CRYPTOSALT=fdsfhsjdfhsdufysdufyu8ewyfefwefe
+BLOCKEXPLORER=https://testnet.bscscan.com/
+NETWORK=testnet
+CROWDFUNDURL=http://localhost:8788/
+EMAILAPIURL=https://email.cryptoskillz.workers.dev
+PRODUCTNAME=Building Blocks
+SIGNUPEMAILTEMPLATEID=30429839
+SENDEREMAILNAME=cryptoskillz
+SIGNUPEMAILTEMPLATEID=30429839
+FORGOTPASSWORDEMAILTEMPLATEID=30458239
 
 ### Javascript
 
@@ -87,4 +119,118 @@ click add and add the following details
 
 wrangler d1 execute DB --local  --file=./scripts/sql/schema.sql
 sudo wrangler d1 execute DB --file=./scripts/sql/schema.sql
+
+## SETTINGS OBJECT
+
+The settings object is what controls the rendering of the index / add and edit pages and its basic structure is as shown below.
+
+ const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":""}
+
+### checkAdmin : boolean
+
+This adds a isAdmin = 1 to any SQL query 
+
+### tableSchema : boolean
+
+This returns the table Schema so we can build edit form etc. 
+
+### allowOnlyOne : boolean
+
+This hides or shows the create new button 
+
+### editButton : boolean
+
+Show or hide the edit button
+
+### deleteButton : boolean
+
+Show or hide the delete button
+
+### customButton : HTML
+
+A custom html button that renders out in the actions column it also accepts 3 variabels [id],[name],[counter] which will be replaced with the data
+
+### customSelect : HTML
+
+A custom html select that renders out in the actions column it also accepts 3 variabels [id],[name],[counter] which will be replaced with the data
+
+### localLookUp : JSON Object
+
+This will replace data with something that makes more sense ie 0 = no and 1 = yes
+
+example object
+
+ [{
+    "field": "state",
+    "values": [{
+        "lookValue": 0,
+        "replaceValue": "crowdfund"
+    }, {
+        "lookValue": 1,
+        "replaceValue": "sold"
+    }]
+},{
+    "field": "currentlyRented",
+    "values": [{
+        "lookValue": 0,
+        "replaceValue": "no"
+    }, {
+        "lookValue": 1,
+        "replaceValue": "yes"
+    }]
+}]
+
+### table : text
+
+The table to get the data from
+
+formatFields : JSON object
+
+This will call a custom function on a field in the data 
+
+example object
+
+[
+{"field":"amountInternational",
+"function":"formatCurencyUSD(tmpValue)"}
+]
+
+function it calls 
+
+let formatCurencyUSD = (code, digits = 2) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: digits
+    })
+    let currency = formatter.format(code)
+    return (currency)
+}
+
+### foreignKey : foreign id
+
+This function allows us to to get fields that match the level 1 data
+
+### lookUps :JSON object
+
+This function calls the look up endpoint to get the foreign data
+
+example object
+
+[{
+    "table":"user",
+    "key":"userId",
+    "foreignKey":"",
+    "value":""
+},
+{
+    "table":"property_token",
+    "key":"propertyTokenId",
+    "foreignKey":"",
+    "value":""
+}]
+
+
+
+
 

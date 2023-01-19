@@ -192,142 +192,90 @@ export async function onRequestGet(context) {
         next, // used for middleware or to fetch assets
         data, // arbitrary space for passing data between middlewares
     } = context;
+
     let theToken = await decodeJwt(request.headers, env.SECRET);
     //console.log(theToken)
     //check they are an admin
     if (theToken.payload.isAdmin == 1) {
         let query;
         let queryResults;
-        let lookUps = "";
         //get the search paramaters
         const { searchParams } = new URL(request.url);
         let checkAdmin = 0;
         if (searchParams.get('checkAdmin') != null) {
             checkAdmin = searchParams.get('checkAdmin');
         }
-        //console.log(searchParams.get('lookUps'))
-        if ((searchParams.get('lookUps') != null) && (searchParams.get('lookUps') != "")){
-            lookUps = searchParams.get('lookUps');
-            console.log(lookUps);
-            lookUps = JSON.parse(lookUps);
+        let foreignKey = "";
+        if (searchParams.get('foreignKey') != null) {
+            foreignKey = searchParams.get('foreignKey');
         }
-        //store the join
-        let theJoin = "";
+        
         //get the table name
         let tableName = searchParams.get('tablename');
         //get the table name
         let fields = searchParams.get('fields');
         //get the table id
         let recordId = "";
-        if (searchParams.get('id') != null)
-            recordId = searchParams.get('id');
+        if (searchParams.get('recordId') != null)
+            recordId = searchParams.get('recordId');
 
-        //get the foreign id 
-        let foreignId = "";
-        if (searchParams.get('foreignId') != null)
-            foreignId = searchParams.get('foreignId')
+        
         //set an array for the results
         let schemaResults = [];
         //create the data array we are going to send back to the frontend.
         let queryFin = {};
-        //get the table schema
-        query = context.env.DB.prepare(`PRAGMA table_info(${tableName});`);
-        //get them all
-        queryResults = await query.all();
-        //we may only want a few fields and if so then they front end would have passed them up
-        let tmp = fields.split(",");
-        let fieldsFull = [];
-        
-        for (var i = 0; i < tmp.length; ++i) {
 
-            //check if its in the look up
-            //if (tmp[i] == )
-            let foundLookUp = "";
-            let tmpField = `${tableName}.${tmp[i]}`
-            for (var i2 = 0; i2 < lookUps.length; ++i2) {
-                //console.log(i2)
-                //console.log(lookUps[i2])
-                //console.log(tmp[i])
-                if (tmp[i] == lookUps[i2].key)
-                {
-                    //this is not working
-                    //tmpField = `${lookUps[i2].table}.name as ${tmp[i]}`;
-                    theJoin = `LEFT JOIN ${lookUps[i2].table} ON ${tableName}.${tmp[i]} = ${lookUps[i2].table}.id`
-                    //console.log(theJoin);
-                    break;
-                }
-            }
-            //console.log(tmpField)
-            fieldsFull.push(tmpField)
-            
-        }
-        fieldsFull = fieldsFull.toString();
-        //build the schema
-        //check if there are no fields
-        if (tmp.length == 1) {
-            //set the schema
-            queryFin.schema = queryResults.results;
-        } else {
-            //loop through the fields that where passed up
-            for (var i = 0; i < tmp.length; ++i) {
-                //loop through the query results
-                for (var i2 = 0; i2 < queryResults.results.length; ++i2) {
-                    //check if it is a match
-                    if (queryResults.results[i2].name == tmp[i])
-                        //add it to the array
-                        schemaResults.push(queryResults.results[i2])
-                }
-            }
-            //add cheks to the return array
-            queryFin.schema = schemaResults;
-        }
-        
+
         //check if they also want the data
-        if (searchParams.get('getOnlyTableSchema') == 0) {
-            //build the where statement if they sent up and id
-            let sqlWhere = `where ${tableName}.isDeleted = 0 `;
+        //build the where statement if they sent up and id
+        let sqlWhere = `where ${tableName}.isDeleted = 0 `;
+
+        //if ((recordId != "") && (foreignId == ""))
+        console.log(recordId)
+        //check if we have a record ID but not a foreign Id the we just want to check against the id.
+        if ((recordId != "") && (foreignKey == ""))
+            sqlWhere = sqlWhere + ` and id = ${recordId}`
         
-            //if ((recordId != "") && (foreignId == ""))
-            if ((recordId != "") && (foreignId == ""))
-                sqlWhere = sqlWhere + `and id = ${recordId}`
-            else {
-                if (foreignId != "")
-                    sqlWhere = sqlWhere + `and ${tableName}.${foreignId} = ${recordId}`
-            }
 
-            if (checkAdmin != 0) {
-                sqlWhere = sqlWhere + `and ${tableName}.adminId = ${theToken.payload.id}`
-            }
-            //debug
-            console.log(recordId)
-            console.log(foreignId)
-            console.log(`SELECT ${fieldsFull} from ${tableName} ${theJoin} ${sqlWhere}`)
-            //process the fields
-            let tmp = fields.split(",");
-            //not we dont want to show the isDeleted flag if there. 
-            //console.log(tmp.length)
-            if (tmp.length == 1) {
-                //console.log(`SELECT * from ${tableName} ${sqlWhere}`)
-                query = context.env.DB.prepare(`SELECT * from ${tableName} ${theJoin} ${sqlWhere} `);
-            } else {
-                let fields = "";
-                for (var i = 0; i < tmp.length; ++i) {
-                    if (fields == "")
-                        fields = tmp[i];
-                    else
-                        fields = fields + "," + tmp[i]
-                }
-
-                let sql = `SELECT ${fieldsFull} from ${tableName} ${sqlWhere}`
-                query = context.env.DB.prepare(sql);
-            }
-
-            queryResults = await query.all();
-            //console.log(queryResults.results)
-            queryFin.data = queryResults.results;
+        if (checkAdmin != 0) {
+            sqlWhere = sqlWhere + ` and ${tableName}.adminId = ${theToken.payload.id}`
         }
 
+        //we have  a foreign Id and a record Id so check against the foreign id. 
+        if ((foreignKey != "") && (recordId != ""))
+        {
+            sqlWhere = sqlWhere + ` and ${foreignKey} = ${recordId}`
+        }
+        
+        //process the fields
+        let tmp = fields.split(",");
+        //not we dont want to show the isDeleted flag if there. 
+        //console.log(tmp.length)
+        let theQuery = ""
+        if (tmp.length == 1) {
+            theQuery = `SELECT * from ${tableName} ${sqlWhere} `
+            console.log("theQuery a")
+            console.log(theQuery)
+            query = context.env.DB.prepare(theQuery);
+        } else {
+            let fields = "";
+            for (var i = 0; i < tmp.length; ++i) {
+                if (fields == "")
+                    fields = tmp[i];
+                else
+                    fields = fields + "," + tmp[i]
+            }
 
+            theQuery = `SELECT ${fields} from ${tableName} ${sqlWhere}`
+                        console.log("theQuery b")
+
+            console.log(theQuery)
+            query = context.env.DB.prepare(theQuery);
+        }
+
+        queryResults = await query.all();
+        console.log(queryResults.results)
+        queryFin.data = queryResults.results;
 
         return new Response(JSON.stringify(queryFin), { status: 200 });
     } else {

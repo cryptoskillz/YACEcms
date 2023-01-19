@@ -3,6 +3,7 @@ layout: layout.njk
 permalink: /property/amenity/edit/
 ---
 <script>
+/*
     let overRideTitle = "Add a new amenity"
   	let theTable = "property_amenities";
     let theFields = "id,propertyId,name"
@@ -10,5 +11,17 @@ permalink: /property/amenity/edit/
     let localDropDown = [{
         "field": "name",
         "values": ['Balcony','Deck','Fully Furnished','24 Hour Security','Air Conditioning','Private Pool','Communial Pool','Gym','Key Card Access','Internet Available']}]
+*/
+    let customSelect = "";
+    let localLookUp =  [{
+        "field": "id,propertyId,name",
+        "values": ['Balcony','Deck','Fully Furnished','24 Hour Security','Air Conditioning','Private Pool','Communial Pool','Gym','Key Card Access','Internet Available']}]
+    let lookUps = "";
+    let theFields = "name"
+    let foreignKeys = {"id":"propertyId"};
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":0,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property_amenities","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps}
+
+
 </script>
 {% include "admin/table-edit.njk" %}

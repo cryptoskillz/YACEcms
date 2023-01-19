@@ -8,22 +8,16 @@ headerFields : ["id","Name","Currently Rented","State","Created At"]
 title :
 ---
 <script>
-    //store the crumb 
-    let theCrumb = "{{ crumb }}";
-    let theTable = "property";
-    let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
-    //set the primary table id
-    let foreignKeys = "";
-    let checkAdmin = 1;
-    let getOnlyTableSchema = 0;
-    let allowOnlyOne = 0;
-    let customButton = "";
+
+    /*
+    This custom select is used to render a drop down of options items. Currenlty is it only used on level 1 index
+    */
     let customSelect = `
             <select onchange="propertySelectChange([id],this)" class="form-select" aria-label="Property select" name="propertySelect-[counter]" id="propertySelect-[counter]">
                 <option value="0">Please select</option>
-                <option value="/property/images?id=[id]">Images</option>
-                <option value="/property/amenities?id=[id]">Amenities</option>
-                <option value="/property/report?id=[id]">Report</option>
+                <option value="/property/images">Images</option>
+                <option value="/property/amenities">Amenities</option>
+                <option value="/property/report">Report</option>
                 <option value="/property/rental-agreements/">Rental agreements</option>
                 <option value="/property/tokens/">Token</option>
                 <option value="/property/owners/">Owners</option>
@@ -31,31 +25,42 @@ title :
                 <option value="/property/costs/">Costs</option>
                 <option value="/property/payments/">Payments</option>
                 <option value="${crowdFundUrl}?id=[id]&target=_blank">Crowdfund Url</option>
-                <option value="/property/leads/?id=[id]">Leads</option>
+                <option value="/property/leads/">Leads</option>
 
         </select>`;
+        //Local look up takes a field from the returned API call and replaces with something that is easier to understand
+         let localLookUp = [{
+            "field": "state",
+            "values": [{
+                "lookValue": 0,
+                "replaceValue": "crowdfund"
+            }, {
+                "lookValue": 1,
+                "replaceValue": "sold"
+            }]
+        },{
+            "field": "currentlyRented",
+            "values": [{
+                "lookValue": 0,
+                "replaceValue": "no"
+            }, {
+                "lookValue": 1,
+                "replaceValue": "yes"
+            }]
+        }]
 
-    let localLookUp = [{
-        "field": "state",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "crowdfund"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "sold"
-        }]
-    },{
-        "field": "currentlyRented",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "no"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "yes"
-        }]
-    }
+        let lookUps = "";
+
+        //these are the fields that we want to return, it gets this from the front matter data at the top of this file. 
+        //note : we could do this cleaner
+        let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
+        //main settings array to handle all the variations of rendering.
+        const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps}
+  
     
-]
+    
+
+   
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}
