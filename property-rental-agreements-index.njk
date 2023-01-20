@@ -8,15 +8,8 @@ headerFields : ["id","Name","Amount","Active","Created At"]
 title : rental agreements
 ---
 <script>
-    let lookUps = "";
-    let customSelect = "";
-    let localLookUp = "";
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
-    let foreignKeys = {"id":"propertyId"};
-    //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"rental_agreement","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps}
-
-
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localReplace":"","table":"rental_agreement","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

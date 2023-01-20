@@ -4,7 +4,7 @@
 
 
 wrangler d1 execute DB --local --command='SELECT * from property_amenities where property_amenities.isDeleted = 0  and id = 1 '
-wrangler d1 execute DB --local --command='SELECT currentlyRented from property'
+wrangler d1 execute DB --local --command='SELECT * from property_amenities'
 
 ## ABOUT
 
@@ -154,31 +154,21 @@ A custom html button that renders out in the actions column it also accepts 3 va
 
 A custom html select that renders out in the actions column it also accepts 3 variabels [id],[name],[counter] which will be replaced with the data
 
-### localLookUp : JSON Object
+### localReplace : JSON Object
 
 This will replace data with something that makes more sense ie 0 = no and 1 = yes
 
 example object
 
- [{
-    "field": "state",
-    "values": [{
-        "lookValue": 0,
-        "replaceValue": "crowdfund"
-    }, {
-        "lookValue": 1,
-        "replaceValue": "sold"
-    }]
-},{
-    "field": "currentlyRented",
-    "values": [{
-        "lookValue": 0,
-        "replaceValue": "no"
-    }, {
-        "lookValue": 1,
-        "replaceValue": "yes"
-    }]
-}]
+    [
+        {"field": "state",
+        "values": ['0','1','2'],
+        "replaceValues": ['Crowdfund','Sold','Rented']},
+        {"field": "currentlyRented",
+        "values": ['0','1'],
+        "replaceValues": ['No','Yes']}
+    ]
+
 
 ### table : text
 
@@ -229,6 +219,10 @@ example object
     "foreignKey":"",
     "value":""
 }]
+
+### overRideTitle : Text
+
+hold a new title so we dont use the dynamic one
 
 
 

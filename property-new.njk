@@ -4,122 +4,22 @@ permalink: /{{env.LEVEL2NAME}}/new/
 ---
 <script>
 
-    let customSelect = "";
-    let lookUps = "";
-    let theTable = "property";
-    let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
-   
- 
-
- let localLookUp =  [{
-        "field": "state",
-        "values": ['crowdfund','sold','Rented']},
-        {"field": "currentlyRented",
-        "values": ['Yes','No']},
+  let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
+  let localDropDown =  [
         {"field": "bathrooms",
-        "values": ['1','2','3','4','5']}
-        ,
+        "values": ['1','2','3','4','5'],
+        "displayValues": ['1','2','3','4','5']},
         {"field": "bedrooms",
-        "values": ['1','2','3','4','5','6','7','8','9','10']}
+        "values": ['1','2','3','4','5','6','7','8','9','10'],
+         "displayValues": ['1','2','3','4','5','6','7','8','9','10']},
+        {"field": "currentlyRented",
+        "values": ['0','1'],
+        "displayValues": ['No','Yes']},
+        {"field": "state",
+        "values": ['0','1','2'],
+        "displayValues": ['Crowdfund','Sold','Rented']}
     ]
-
-/*
-    let localLookUp = [{
-        "field": "state",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "crowdfund"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "sold"
-        }]
-    },{
-        "field": "currentlyRented",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "no"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "yes"
-        }]
-    },{
-        "field": "bathrooms",
-        "values": [{
-            "lookValue": 1,
-            "replaceValue": "1"
-        }, {
-            "lookValue": 2,
-            "replaceValue": "2"
-        }, {
-            "lookValue": 3,
-            "replaceValue": "3"
-        }, {
-            "lookValue": 4,
-            "replaceValue": "4"
-        }, {
-            "lookValue": 5,
-            "replaceValue": "5"
-        }, {
-            "lookValue": 6,
-            "replaceValue": "6"
-        }, {
-            "lookValue": 7,
-            "replaceValue": "7"
-        }, {
-            "lookValue": 8,
-            "replaceValue": "8"
-        }, {
-            "lookValue": 9,
-            "replaceValue": "9"
-        }, {
-            "lookValue": 10,
-            "replaceValue": "10"
-        }]
-
-    }
-    ,{
-        "field": "bedrooms",
-        "values": [{
-            "lookValue": 1,
-            "replaceValue": "1"
-        }, {
-            "lookValue": 2,
-            "replaceValue": "2"
-        }, {
-            "lookValue": 3,
-            "replaceValue": "3"
-        }, {
-            "lookValue": 4,
-            "replaceValue": "4"
-        }, {
-            "lookValue": 5,
-            "replaceValue": "5"
-        }, {
-            "lookValue": 6,
-            "replaceValue": "6"
-        }, {
-            "lookValue": 7,
-            "replaceValue": "7"
-        }, {
-            "lookValue": 8,
-            "replaceValue": "8"
-        }, {
-            "lookValue": 9,
-            "replaceValue": "9"
-        }, {
-            "lookValue": 10,
-            "replaceValue": "10"
-        }]
-        
-    }]
-*/
-
     //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps}
-  
-    
-    
-
-
+    const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","overRideTitle":""}
 </script>
 {% include "admin/table-new.njk" %}

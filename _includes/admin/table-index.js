@@ -1,7 +1,6 @@
 /*
 todo 
 
-
 */
 //add a ready function
 let whenDocumentReady = (f) => {
@@ -43,6 +42,12 @@ whenDocumentReady(isReady = () => {
         //set the edit and delete buttons
         let deleteButton = "";
         let editButton = "";
+
+        //replace the title 
+        if (theSettings.overRideTitle != "")
+        {
+            document.getElementById('recordTitle').innerHTML = theSettings.overRideTitle
+        }
 
         //parse json results
         res = JSON.parse(res)
@@ -106,23 +111,8 @@ whenDocumentReady(isReady = () => {
                     tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
                 }
 
-                //check the local look up
-                for (var i2 = 0; i2 < theSettings.localLookUp.length; ++i2) {
-                    //check if it is a local look up
-                    if (key == theSettings.localLookUp[i2].field) {
-                        for (var i3 = 0; i3 < theSettings.localLookUp[i2].values.length; ++i3) {
-                            let localTmpValue = tmpValue
-                            let valueData = theSettings.localLookUp[i2].values[i3];
-                            if (valueData.lookValue == localTmpValue) {
-                                localTmpValue = valueData.replaceValue
-                                tmpValue = localTmpValue
-                                break;
-
-                            }
-                        }
-                    }
-                }
-
+                tmpValue = processlocalReplace(key,theSettings.localReplace,tmpValue)
+                 
                 //check if it is a look up
                 if (lookUpData != "") {
                     //loop through the look up data
@@ -215,9 +205,11 @@ whenDocumentReady(isReady = () => {
         //tmpUrl = tmpUrl + `getOnlyTableSchema=${getOnlyTableSchema}&`
         //set the id
         if (theSettings.foreignKey == "")
-            tmpUrl = tmpUrl + `id=${window.localStorage.currentDataItemId}`
+            tmpUrl = tmpUrl + `recordId=${window.localStorage.currentDataItemId}`
         else
+        {
             tmpUrl = tmpUrl + `foreignKey=${theSettings.foreignKey}&recordId=${window.localStorage.currentDataItemId}`
+        }
 
         const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getTableDone", "xhrType": 1 }
         //add it to the url array

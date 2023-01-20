@@ -30,25 +30,15 @@ title :
 
         </select>`;
         //Local look up takes a field from the returned API call and replaces with something that is easier to understand
-         let localLookUp = [{
-            "field": "state",
-            "values": [{
-                "lookValue": 0,
-                "replaceValue": "crowdfund"
-            }, {
-                "lookValue": 1,
-                "replaceValue": "sold"
-            }]
-        },{
-            "field": "currentlyRented",
-            "values": [{
-                "lookValue": 0,
-                "replaceValue": "no"
-            }, {
-                "lookValue": 1,
-                "replaceValue": "yes"
-            }]
-        }]
+         
+        let localReplace =  [
+        {"field": "state",
+        "values": ['0','1','2'],
+        "replaceValues": ['Crowdfund','Sold','Rented']},
+        {"field": "currentlyRented",
+        "values": ['0','1'],
+        "replaceValues": ['No','Yes']}
+    ]
 
         let lookUps = "";
 
@@ -56,7 +46,7 @@ title :
         //note : we could do this cleaner
         let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
         //main settings array to handle all the variations of rendering.
-        const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps}
+        const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localDropDown":"","localReplace":localReplace,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps,"overRideTitle":""}
   
     
     

@@ -7,14 +7,10 @@ headerFields : ["id","Name","Amount","Date Paid","Created At"]
 title : distributions
 ---
 <script>
-    let customSelect = "";
-    let localLookUp = "";
-    let lookUps = "";
-    let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
-    let formatFields = [{"field":"amountInternational","function":"formatCurencyUSD(tmpValue)"}]
 
-       //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":0,"deleteButton":0,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property_distribution","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps}
+    let formatFields = [{"field":"amountInternational","function":"formatCurencyUSD(tmpValue)"}]
+    let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":0,"deleteButton":0,"customButton":"","customSelect":"","localReplace":"","table":"property_distribution","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
 
 </script>
 {% set theJs %}

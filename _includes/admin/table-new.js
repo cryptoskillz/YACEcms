@@ -2,8 +2,7 @@
 let whenDocumentReady = (f) => {
     /in/.test(document.readyState) ? setTimeout('whenDocumentReady(' + f + ')', 9) : f()
 }
-
-let lookUpData = [];
+let lookUpData;
 let schemaData;
 
 whenDocumentReady(isReady = () => {
@@ -29,14 +28,23 @@ whenDocumentReady(isReady = () => {
     //process the look up 
     //note: not sure if this is required in the add new page. 
     let lookUpDone = (res) => {
-        console.log(res)
+        lookUpData = JSON.parse(res);
+        //console.log(lookUpData);
     }
 
 
     let init = async (theSettings) => {
+
+        if (theSettings.overRideTitle != '') {
+            document.getElementById('data-header').innerHTML = theSettings.overRideTitle;
+        } else {
+            //set the tmpName
+            let tmpName = theSettings.table.replace("_", " ");
+            document.getElementById('data-header').innerHTML = `add a new ${tmpName}`
+        }
         //build the look up url
         //let tmpLookUpUrl = "";
-        if ((theSettings.lookUps != undefined) && (theSettings.lookUps != "")) {
+        if (theSettings.lookUps != "") {
             //turn it into a string
             const lookUps = JSON.stringify(theSettings.lookUps)
             //build the url

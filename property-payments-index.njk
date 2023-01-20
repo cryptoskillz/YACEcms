@@ -13,7 +13,7 @@ title : payments
     let localLookUp = "";
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
     //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":0,"deleteButton":0,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"rental_payment","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps}
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"rental_payment","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

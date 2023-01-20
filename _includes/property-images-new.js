@@ -32,12 +32,10 @@
                      showAlert(res.message, 1, 0, 1);
 
                  }
-                 //get the id
-                 let currentItem = JSON.parse(window.localStorage.currentDataItem);
-
+            
                  //build the JSON
                  let theJson = {
-                     propertyId: currentItem.id,
+                     propertyId: window.localStorage.currentDataItemId,
                      filename: response.result.filename,
                      cfid: response.result.id,
                      url: response.result.variants[0],
