@@ -7,7 +7,6 @@ GENERAL
  ☐ add a view button to each index
  ☐ move the reusable crypto functions to app.js
  ☐ trap the token decoder (in image have to apply to the other endpoints)
- ☐ dropdown select to have a simple counter to make the settings array a little more efficient.
  ✔ chnage the name of localdropdown in table-index.js to something that makes more sense (it is replacing data) @done (23-01-20 13:39)
  ✔ add lookup to table new @done (23-01-20 13:39)
  ✔ add lookup to table edit @done (23-01-20 13:39)
@@ -15,13 +14,15 @@ GENERAL
  ✔ get it working for property-index, new and edit then apply it to the rest of the dropdowns @done (23-01-20 23:43)
  ✔ apply replace title to all of theSettings @done (23-01-20 16:02)
  ☐ add a date selector for date fields
- ☐ fix token new
- ☐ fix property distrbuation new
- ☐ fix look up on property cost index, payment index
- ☐ add a hide create new button function
+ ✔ fix token new @done (23-01-21 17:26)
+ ☐ fix property distrbuation new have to get the property from XHR
+ ☐ fix fornmat function on property cost index, payment index
+ ☐ add a hide create new button function (this is in adition to allowOnlyOne)
  ☐ fix agents
  ☐ fix tenants
  ☐ fix admin setting
+ ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
+
  
 
 

@@ -2,12 +2,11 @@
 layout: layout.njk
 permalink: /{{env.LEVEL1NAME}}/
 crumb : /property/
-fields : ["id","name","currentlyRented","state","createdAt"]
-headerFields : ["id","Name","Currently Rented","State","Created At"]
+fields : ["id","name","currentlyRented","state","internationalCost","createdAt"]
+headerFields : ["id","Name","Currently Rented","State","Cost",Created At"]
 
 title :
 ---
-
 <script>
 
     /*
@@ -40,13 +39,13 @@ title :
         "replaceValues": ['No','Yes']}
     ]
 
-        let lookUps = "";
+        let formatFields = [{"field":"internationalCost","function":"formatCurencyUSD(tmpValue)"}]
 
         //these are the fields that we want to return, it gets this from the front matter data at the top of this file. 
         //note : we could do this cleaner
         let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
         //main settings array to handle all the variations of rendering.
-        const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localDropDown":"","localReplace":localReplace,"table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":lookUps,"overRideTitle":""}
+        const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localDropDown":"","localReplace":localReplace,"table":"property","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","overRideTitle":""}
   
     
     

@@ -6,15 +6,27 @@ todo
 let whenDocumentReady = (f) => {
     /in/.test(document.readyState) ? setTimeout('whenDocumentReady(' + f + ')', 9) : f()
 }
-
+//hold the look up data
 let lookUpData = "";
+//hold the results
+let level1Data;
 
 /*
 This function handles the property select
 */
 let propertySelectChange = (id, theElement) => {
     //clear the current element
-    window.localStorage.currentDataItem = "";
+    //note : Not sure why we cleared it here previoulsy as we need it.  Could be related to the caching we used to do I will leave it here as a reminder
+    //       until iam sure I have not broken anything further down the chain.
+    //window.localStorage.currentDataItem = "";
+    console.log(level1Data);
+    for (var i = 0; i < level1Data.data.length; ++i) {
+
+        if (id == level1Data.data[i].id) {
+            window.localStorage.currentDataItem = JSON.stringify(level1Data.data[i])
+        }
+
+    }
     //store the ID
     window.localStorage.currentDataItemId = id;
     //console.log(window.localStorage.currentDataItemId)
@@ -39,18 +51,21 @@ let propertySelectChange = (id, theElement) => {
 whenDocumentReady(isReady = () => {
 
     let getTableDone = (res) => {
+
         //set the edit and delete buttons
         let deleteButton = "";
         let editButton = "";
+        let customSelect = "";
+        let customButton = ""
 
         //replace the title 
-        if (theSettings.overRideTitle != "")
-        {
+        if (theSettings.overRideTitle != "") {
             document.getElementById('recordTitle').innerHTML = theSettings.overRideTitle
         }
 
         //parse json results
         res = JSON.parse(res)
+        level1Data = res;
         //check if we want to display the create new button or not.
         if (theSettings.allowOnlyOne == 1) {
             if (res.data.length == 0)
@@ -68,17 +83,27 @@ whenDocumentReady(isReady = () => {
             //build the buttons
             deleteButton = "";
             editButton = "";
+            customSelect = "";
+            customButton = ""
+            ''
             //get the custom select
-            let tmpCustomSelect = theSettings.customSelect;
-            //parse the custom button
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
-            customButton = theSettings.customButton.replaceAll("[counter]", i);
-            //parse the custom select
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[counter]", i);
-
+            if (theSettings.customSelect != "") {
+                //parse the custom select
+                let tmpCustomSelect = theSettings.customSelect;
+                //parse the custom button
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[counter]", i);
+                customSelect = tmpCustomSelect;
+            }
+            if (theSettings.customButton != "") {
+                //parse the custom select
+                let tmpcustomButton = theSettings.customButton;
+                tmpcustomButton = tmpcustomButton.replaceAll("[id]", theData.id);
+                tmpcustomButton = tmpcustomButton.replaceAll("[name]", theData.name);
+                tmpcustomButton = tmpcustomButton.replaceAll("[counter]", i);
+                customButton = tmpcustomButton;
+            }
 
             //check if its an admin
             if (user.isAdmin == 1) {
@@ -111,8 +136,8 @@ whenDocumentReady(isReady = () => {
                     tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
                 }
 
-                tmpValue = processlocalReplace(key,theSettings.localReplace,tmpValue)
-                 
+                tmpValue = processlocalReplace(key, theSettings.localReplace, tmpValue)
+
                 //check if it is a look up
                 if (lookUpData != "") {
                     //loop through the look up data
@@ -150,7 +175,7 @@ whenDocumentReady(isReady = () => {
             }
             //add the buttons to the action row
             buildColumn = 1;
-            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${tmpCustomSelect} `);
+            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${customSelect} `);
             //add the table rows
             var rowNode = table
                 .row.add(tableRow)
@@ -206,8 +231,7 @@ whenDocumentReady(isReady = () => {
         //set the id
         if (theSettings.foreignKey == "")
             tmpUrl = tmpUrl + `recordId=${window.localStorage.currentDataItemId}`
-        else
-        {
+        else {
             tmpUrl = tmpUrl + `foreignKey=${theSettings.foreignKey}&recordId=${window.localStorage.currentDataItemId}`
         }
 

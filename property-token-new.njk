@@ -4,15 +4,9 @@ permalink: /property/token/new/
 crumb : /property/
 ---
 <script>
-    //set the table you want to insert for
-    let theTable = "property_token";
-    //set the fields you want to return, leave it blank for all.
-    let theFields = "propertyId,name,contractAddress,description,totalSupply,isDeployed";
-    //set the primary table id
-    let foreignKeys = {"id":"propertyId"}
-    //set the loop up table
-    let lookUps = []
-        //block chain stuff
+    let theFields = "id,name,contractSymbol,totalSupply,contractAddress,blockExplorerUrl,mintedAddress,isDeployed";
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localReplace":"","table":"property_token","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
+     //block chain stuff
     var factoryContractAddress = "{{env.FACTORYCONTRACTADDRESS}}";
     var blockchainNetwork = "{{env.BLOCKCHAINNETWORK}}";
     var network = "{{env.NETWORK}}";
@@ -20,9 +14,6 @@ crumb : /property/
     var cryptoSalt= "{{env.CRYPTOSALT}}"
     var blockExplorer = "{{env.BLOCKEXPLORER}}"
 </script>
-{% set theJs %}
-    {% include 'admin/table-new.js' %}
-{% endset %}
 {% set theJsExtend %}
     {% include 'property-token-new.js' %}
 {% endset %}
