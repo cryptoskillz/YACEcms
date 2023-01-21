@@ -7,8 +7,9 @@ headerFields :  ["id","Name","Contract Address","Created At"]
 title : token
 ---
 <script>
+    let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span>{{title}}</span>`;
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localReplace":"","table":"property_token","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localReplace":"","table":"property_token","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","title":title}
 
 </script>
 {% set theJs %}

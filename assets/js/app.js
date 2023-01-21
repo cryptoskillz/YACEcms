@@ -129,9 +129,10 @@ let getTodatsDate = () => {
 }
 
 let processlocalDropDown = (theData, localDropDown, theValue) => {
+
     let theOptions = "";
     //console.log(localDropDown)
-    if (localDropDown != "") {
+    if ((localDropDown != "") && (localDropDown != undefined)) {
         //console.log(theValue)
         for (var i = 0; i < localDropDown.length; ++i) {
 
@@ -328,7 +329,6 @@ let buildFormElement = (theData, theValues = "") => {
     let selected = "";
     //check if we have look up ids
     //todo : move this to its own function (new refactor)
-    console.log(lookUpData)
     if (lookUpData != undefined) {
         if (lookUpData.length > 0) {
             //loop through the lookups

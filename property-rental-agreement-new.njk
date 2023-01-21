@@ -12,7 +12,7 @@ crumb : /property/rental-agreement/
     let lookUps = [{"table":"agent","key":"agentId","foreignKey":"","value":""},{"table":"tenant","key":"tenantId","foreignKey":"","value":""}]
     let theFields = "propertyId,name,amount,deposit,contract,startDate,endDate,agentId,tenantId,active";
     //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"rental_agreement","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps,"overRideTitle":""}
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"rental_agreement","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps,"title":""}
 
 </script>
 {% include "admin/table-new.njk" %}

@@ -7,13 +7,14 @@ headerFields : ["id","Name","Amount","Paid By","Date Paid","Created At"]
 title : payments
 ---
 <script>
+    let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span>{{title}}</span>`;
     let lookUps = [{"table":"payment_types","key":"paidBy","foreignKey":"name","value":""}]
     let formatFields = [{"field":"amountInternational","function":"formatCurencyUSD(tmpValue)"}]
     let customSelect = "";
     let localLookUp = "";
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
     //main settings array to handle all the variations of rendering.
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"rental_payment","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"rental_payment","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","title":title}
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

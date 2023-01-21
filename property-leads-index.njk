@@ -3,14 +3,14 @@ layout: layout.njk
 permalink: /property/leads/
 crumb : /property/lead/
 fields : ["id","email","tranchesRequested","createdAt"]
-headerFields : ["id","Email","Tranches Requested",Created At"]
-
-title :
+headerFields : ["id","Email","Tranches Requested","Created At"]
+title : leads
 ---
 <script>
+    let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span>{{title}}</span>`;
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
     let formatFields = [{"field":"amountInternational","function":"formatCurencyUSD(tmpValue)"}]
-    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localLookUp":"","table":"property_leads","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","overRideTitle":""}
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localLookUp":"","localReplace":"","table":"property_leads","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","title":title}
 </script>
 {% set theJs %}
     {% include 'admin/table-index.js' %}

@@ -7,7 +7,6 @@
  let schemaData;
 
  whenDocumentReady(isReady = () => {
-
      //set a url array
      let urls = [];
      //process the schema
@@ -49,8 +48,8 @@
      }
 
      let init = async (theSettings) => {
-         if (theSettings.overRideTitle != '') {
-             document.getElementById('data-header').innerHTML = theSettings.overRideTitle;
+         if (theSettings.title != '') {
+             document.getElementById('data-header').innerHTML = theSettings.title;
          } else {
              //set the tmpName
              let tmpName = theSettings.table.replace("_", " ");

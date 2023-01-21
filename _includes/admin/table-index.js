@@ -19,13 +19,10 @@ let propertySelectChange = (id, theElement) => {
     //note : Not sure why we cleared it here previoulsy as we need it.  Could be related to the caching we used to do I will leave it here as a reminder
     //       until iam sure I have not broken anything further down the chain.
     //window.localStorage.currentDataItem = "";
-    console.log(level1Data);
     for (var i = 0; i < level1Data.data.length; ++i) {
-
         if (id == level1Data.data[i].id) {
             window.localStorage.currentDataItem = JSON.stringify(level1Data.data[i])
         }
-
     }
     //store the ID
     window.localStorage.currentDataItemId = id;
@@ -59,8 +56,8 @@ whenDocumentReady(isReady = () => {
         let customButton = ""
 
         //replace the title 
-        if (theSettings.overRideTitle != "") {
-            document.getElementById('recordTitle').innerHTML = theSettings.overRideTitle
+        if (theSettings.title != "") {
+            document.getElementById('recordTitle').innerHTML = theSettings.title
         }
 
         //parse json results

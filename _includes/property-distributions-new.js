@@ -1,9 +1,9 @@
 //set up web3
 let web3 = new Web3(Web3.givenProvider || RPCUrl);
 
+let currentProperty;
 let currentAccountAddress;
 let currentBalance = 0;
-let property;
 var disResults;
 
 const aggregatorV3InterfaceABI = [{
@@ -186,7 +186,7 @@ const isConnected = async (disResults) => {
     //note this has replaced get accounts
     currentAccountAddress = await ethRequest();
     //check it is the same address as stored for the property.
-    let tmpPaymentAddress = property.paymentAddress.toLowerCase();
+    let tmpPaymentAddress = currentProperty.paymentAddress.toLowerCase();
     currentAccountAddress = currentAccountAddress.toLowerCase();
     if (tmpPaymentAddress != currentAccountAddress) {
         showAlert('Payment address does not match connected Metamask', 2, 0);
@@ -253,10 +253,8 @@ document.getElementById('inp-perLeave').addEventListener('keyup', async function
         disResults = window.localStorage.distributions;
         disResults = JSON.parse(disResults)
         updateValues(disResults, document.getElementById('inp-customAmount').value);
-    }
-    else
-    {
-        showAlert('% to leave cannot be more than 100% come on now you know this.',2)
+    } else {
+        showAlert('% to leave cannot be more than 100% come on now you know this.', 2)
     }
 })
 
@@ -286,9 +284,9 @@ document.getElementById('btn-pay').addEventListener('click', async function() {
         let res = await ethRequestSend(toAddress, currentAccountAddress, theValue);
         //console.log(res)
         if (res.hash != "") {
-            property = JSON.parse(window.localStorage.currentDataItem);
+            //property = JSON.parse(window.localStorage.currentDataItem);
             theDate = getTodatsDate();
-            let theJson = { "name": `${disResults.owners[i].name}`, "amountInternational": `${disResults.owners[i].payAmountInternational}`, "amountCrypto": `${disResults.owners[i].payAmount}`, "hash": `${res.hash}`, "paidBy": 6, "propertyId": property.id, "propertyOwnerId": `${disResults.owners[i].id}`, "datePaid": theDate }
+            let theJson = { "name": `${disResults.owners[i].name}`, "amountInternational": `${disResults.owners[i].payAmountInternational}`, "amountCrypto": `${disResults.owners[i].payAmount}`, "hash": `${res.hash}`, "paidBy": 6, "propertyId": currentProperty.id, "propertyOwnerId": `${disResults.owners[i].id}`, "datePaid": theDate }
             let bodyObj = {
                 table: "property_distribution",
                 tableData: theJson,
@@ -301,7 +299,7 @@ document.getElementById('btn-pay').addEventListener('click', async function() {
                 showAlert(res.message, 1, 0, 1);
             }
             //post the record
-            xhrcall(0, apiUrl +`database/table/`, bodyObjectJson, "json", "", xhrDone, token)
+            xhrcall(0, apiUrl + `database/table/`, bodyObjectJson, "json", "", xhrDone, token)
         }
     }
     //document.getElementById('btn-pay').disabled = false;
@@ -311,13 +309,34 @@ document.getElementById('btn-pay').addEventListener('click', async function() {
 
 
 whenDocumentReady(isReady = () => {
+    //set a url array
+    let urls = [];
+    /*
+        //process the data item.
+        let getMainTableDone = (disResults) => {
+            //store it
+            disResults = JSON.parse(disResults);
+            //console.log(disResults);
+            property = JSON.parse(window.localStorage.currentDataItem);
+            if (typeof window.ethereum !== 'undefined') {
+                //console.log('MetaMask is installed!');
+                let res = isConnected(disResults);
 
-    //process the data item.
-    let getMainTableDone = (disResults) => {
+            } else {
+                showAlert('Please connect Metamask', 2, 1);
+            }
+        }
+        document.getElementById("spinner").classList.remove("d-none");
+        showAlert('Please be patient we doing Blockchain stuff', 1)
+        url = apiUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
+        xhrcall(1, url, "", "json", "", getMainTableDone, token);
+
+
+    */
+    let getDistDone = (res) => {
         //store it
-        disResults = JSON.parse(disResults);
+        disResults = JSON.parse(res);
         //console.log(disResults);
-        property = JSON.parse(window.localStorage.currentDataItem);
         if (typeof window.ethereum !== 'undefined') {
             //console.log('MetaMask is installed!');
             let res = isConnected(disResults);
@@ -326,8 +345,29 @@ whenDocumentReady(isReady = () => {
             showAlert('Please connect Metamask', 2, 1);
         }
     }
-    document.getElementById("spinner").classList.remove("d-none");
-    showAlert('Please be patient we doing Blockchain stuff', 1)
-    url = apiUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
-    xhrcall(1, url, "", "json", "", getMainTableDone, token);
+
+
+    let getTableDone = (res) => {
+        res = JSON.parse(res)
+        currentProperty = res.data[0];
+    }
+
+    let init = async (theSettings) => {
+        showAlert('Please be patient we doing Blockchain stuff', 1)
+        //build the table call
+        let recordId = window.localStorage.currentDataItemId
+        tmpUrl = apiUrl + `database/table?tablename=property&fields=&recordId=${recordId}`
+        tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getTableDone", "xhrType": 1 }
+        urls.push(tmpXhrCalls);
+        //built dist call
+        tmpUrl = apiUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
+        tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getDistDone", "xhrType": 1 }
+        urls.push(tmpXhrCalls);
+        //loop through the urls and call them
+        for (var i = 0; i < urls.length; ++i) {
+            console.log(`processing XHR call ${urls[i].url}`)
+            let xhrRes = await xhrcall(urls[i].xhrType, urls[i].url, "", "json", "", eval(urls[i].doneFunction), token)
+        }
+    }
+    init(theSettings);
 });
