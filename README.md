@@ -81,6 +81,11 @@ The build script is a script you can locally to test the CMS before you deploy i
 
 The first command will build a local version the second command will use production api and the cypress will run the tests
 
+Note you will have to modify build.js and add your cypress key and cypress.config.js to add your project it more information can be found here 
+
+https://www.cypress.io/
+
+
 ## API
 
 The API endpoints are all in the functions/API directory
