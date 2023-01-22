@@ -47,6 +47,13 @@ let propertySelectChange = (id, theElement) => {
 
 whenDocumentReady(isReady = () => {
 
+    //this is for testing 
+    if ((window.localStorage.currentDataItemId == "") || (window.localStorage.currentDataItemId == undefined))
+        if (envMode == "local")
+            window.localStorage.currentDataItemId = 1;
+
+
+
     let getTableDone = (res) => {
 
         //set the edit and delete buttons

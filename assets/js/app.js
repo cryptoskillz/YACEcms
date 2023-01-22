@@ -563,14 +563,14 @@ START OF LOCAL CACHE FUNCTIONS
 */
 
 let clearCache = (clearUser = 0) => {
-    window.localStorage.currentdataitem = ""
-    //window.localStorage.data = ""
-
-    window.localStorage.level1data = ""
-    window.localStorage.level2data = ""
-    window.localStorage.level1selecteditem = ""
-    window.localStorage.level1selecteditem = ""
-    window.localStorage.level1selectedid = ""
+    window.localStorage.currentDataItemId = ""
+    window.localStorage.currentDataItem = ""
+    //note : remove if this does not break anything
+    //window.localStorage.level1data = ""
+    //window.localStorage.level2data = ""
+    //window.localStorage.level1selecteditem = ""
+    //window.localStorage.level1selecteditem = ""
+    //window.localStorage.level1selectedid = ""
     window.localStorage.level2selectedid = ""
     if (clearUser == 1) {
         window.localStorage.token = ""

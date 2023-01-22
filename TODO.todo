@@ -15,7 +15,7 @@ GENERAL
  ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
  ☐ dist new make it switch connect on meta mask if you are on the wrong one.
  ☐ add a hide create new button function (this is in adition to allowOnlyOne)
- ☐ reset passsword click
+ ✔ reset passsword click @done (23-01-22 20:55)
 
 
 PROPERTY
