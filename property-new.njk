@@ -3,27 +3,23 @@ layout: layout.njk
 permalink: /{{env.LEVEL2NAME}}/new/
 ---
 <script>
-    let lookUps = "";
-    let theTable = "property";
-    let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
-    let localLookUp = [{
-        "field": "state",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "crowdfund"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "sold"
-        }]
-    },{
-        "field": "currentlyRented",
-        "values": [{
-            "lookValue": 0,
-            "replaceValue": "no"
-        }, {
-            "lookValue": 1,
-            "replaceValue": "yes"
-        }]
-    }]
+
+  let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
+  let localDropDown =  [
+        {"field": "bathrooms",
+        "values": ['1','2','3','4','5'],
+        "displayValues": ['1','2','3','4','5']},
+        {"field": "bedrooms",
+        "values": ['1','2','3','4','5','6','7','8','9','10'],
+         "displayValues": ['1','2','3','4','5','6','7','8','9','10']},
+        {"field": "currentlyRented",
+        "values": ['0','1'],
+        "displayValues": ['No','Yes']},
+        {"field": "state",
+        "values": ['0','1','2'],
+        "displayValues": ['Crowdfund','Sold','Rented']}
+    ]
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","title":""}
 </script>
 {% include "admin/table-new.njk" %}

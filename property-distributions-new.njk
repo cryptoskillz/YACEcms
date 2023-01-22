@@ -1,15 +1,16 @@
 ---
 layout: layout.njk
 permalink: /property/distribution/new/
+title : distributions
 ---
 <script>
-    let theTable = "property_distribution";
-    let theFields = "propertyId,name,description,amountInternational,datePaid,propertyOwnerId";
-    let foreignKeys = {"id":"propertyId"}
+   
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":0,"deleteButton":0,"customButton":"","customSelect":"","localReplace":"","table":"property_distribution","formatFields":"","fields":"","crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","title":""}
     var blockchainNetwork = "{{env.BLOCKCHAINNETWORK}}";
     var network = "{{env.NETWORK}}";
     var RPCUrl = "{{env.RPCURL}}";
     var blockExplorer = "{{env.BLOCKEXPLORER}}"
+
 </script>
 {% set theJs %}
     {% include 'admin/table-new.js' %}
@@ -20,7 +21,7 @@ permalink: /property/distribution/new/
 
 <!-- Page Heading -->
    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800" id="data-header"></h1>
+        <h1 class="h3 mb-0 text-gray-800" id="data-header"><a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span><a href="/property/distributions/">{{title}}</a> / new</span></h1>
         <a href="javascript:history.back()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-backward fa-sm text-white-50"></i> Back</a>
     </div>

@@ -34,7 +34,7 @@ then
 echo "wiping KV stores"
 rm -rf ./.mf/**
 echo "Running cypress tests"
-npx cypress run --record --key 86650f1f-8d3c-4c96-a862-58cf46101a5b
+npx cypress run --record --key 6f7af59a-6998-42b3-8a70-48f2e890566b
 exit
 fi
 

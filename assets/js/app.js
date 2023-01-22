@@ -128,6 +128,69 @@ let getTodatsDate = () => {
     return (`${d.getFullYear()}-${theMonth}-${theDay} ${theHours}:${theMinutes} ${theSeconds}`)
 }
 
+let processlocalDropDown = (theData, localDropDown, theValue) => {
+
+    let theOptions = "";
+    //console.log(localDropDown)
+    if ((localDropDown != "") && (localDropDown != undefined)) {
+        //console.log(theValue)
+        for (var i = 0; i < localDropDown.length; ++i) {
+
+            if (theData.name == localDropDown[i].field) {
+                //renderInp = 2;
+                //console.log(localLookUp[i])
+                for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
+                    let valueData = localDropDown[i].values[i2];
+                    let dispalyData = localDropDown[i].displayValues[i2];
+
+                    //console.log(valueData)
+                    //console.log(theValue)
+                    //console.log(dispalyData)
+
+                    if (valueData == theValue)
+                        selected = "selected";
+                    else
+                        selected = "";
+                    theOptions = theOptions + `<option value="${valueData}" ${selected}>${dispalyData}</option>`
+                }
+            }
+
+        }
+    }
+    //console.log(theOptions)
+    return (theOptions)
+}
+
+//replace the data from the server with the local data. 
+let processlocalReplace = (key, localReplace, theValue) => {
+    //check if it is a look up
+    if ((localReplace != "") && (localReplace != undefined)) {
+        //loop through the look up data
+        for (var i2 = 0; i2 < localReplace.length; ++i2) {
+            //check if it is the field we are being looked at
+            let theData = localReplace[i2];
+            //console.log(theData.field);
+            //console.log(key)
+            if (key == theData.field) {
+                //set the value for checking
+                let localTmpValue = theValue
+                //loop through the  data 
+                for (var i3 = 0; i3 < theData.values.length; ++i3) {
+                    ////check if the id matches the tempvalue we set
+                    if (theData.values[i3] == localTmpValue) {
+                        //replace it
+                        localTmpValue = theData.replaceValues[i3];
+                        //update the temp value so we can render it out.
+                        theValue = localTmpValue;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return (theValue)
+}
+
 /*
 This funtion handles the building of the form
 */
@@ -137,9 +200,7 @@ let buildFormElement = (theData, theValues = "") => {
     let theType = "text";
     let required = "required"
     let visible = "";
-    if (typeof foreignKeys === 'undefined') {
-        foreignKeys = "";
-    }
+
 
     //console.log(theData);
     //console.log(theValues)
@@ -215,6 +276,16 @@ let buildFormElement = (theData, theValues = "") => {
             theType = 'tel'
     }
 
+    //look for the foreing key and set the current data item. 
+    //note : this only works was level 1 data as the foreign key, they function below works with any foreign key
+    //       if it is required then we can add it back.
+    if (theSettings.foreignKey == theData.name) {
+        theValue = window.localStorage.currentDataItemId;
+        disabled = "disabled";
+        visible = "d-none";
+    }
+
+    /*
     //check if their are any foeign keys to set
     if (window.localStorage.currentDataItem != "") {
         let currentItem = window.localStorage.currentDataItem;
@@ -223,20 +294,6 @@ let buildFormElement = (theData, theValues = "") => {
             //console.log("KEY " + key);
             //console.log("FK " + foreignKeys[key]);
             for (const key2 in currentItem) {
-
-                //debug
-                /*
-                if (theData.name == "rentalId") {
-
-                    console.log("================")
-                    console.log(key)
-                    console.log(foreignKeys[key]);
-                    console.log(key2)
-                    console.log(currentItem[key2]);
-
-                }
-                */
-
                 if (theData.name == foreignKeys[key]) {
                     //debug
                     //console.log('found')
@@ -251,6 +308,7 @@ let buildFormElement = (theData, theValues = "") => {
         }
 
     }
+    */
 
     //add a space before each upper case as we use camel case in the sql 
     let theTitle = theData.name;
@@ -266,76 +324,44 @@ let buildFormElement = (theData, theValues = "") => {
     //2 = select
     let renderInp = 1;
     //set an options var
-    let theOptions;
+    let theOptions = "";
     //store the selected field
     let selected = "";
     //check if we have look up ids
-    if (lookUpData.length > 0) {
-        //loop through the lookups
-        for (var i = 0; i < lookUpData.length; ++i) {
-            if (theData.name == lookUpData[i].key) {
-                //console.log(lookUpData[i]);
-                //console.log(theData.name);
-                renderInp = 2;
-                for (var i2 = 0; i2 < lookUpData[i].theData.length; ++i2) {
-                    let tmpData = lookUpData[i].theData[i2];
-                    //debug
-                    //console.log(tmpData);
-                    //console.log(theValue);
+    //todo : move this to its own function (new refactor)
+    if (lookUpData != undefined) {
+        if (lookUpData.length > 0) {
+            //loop through the lookups
+            for (var i = 0; i < lookUpData.length; ++i) {
+                if (theData.name == lookUpData[i].key) {
+                    //console.log(lookUpData[i]);
                     //console.log(theData.name);
-                    if (tmpData.id == theValue)
-                        selected = "selected";
-                    else
-                        selected = "";
-                    theOptions = theOptions + `<option value="${tmpData.id}" ${selected}>${tmpData.name}</option>`
-
-                }
-            }
-        }
-    }
-    //check for do local lookups
-    if (typeof localLookUp != 'undefined') {
-        if (localLookUp.length > 0) {
-            for (var i = 0; i < localLookUp.length; ++i) {
-                if (theData.name == localLookUp[i].field) {
                     renderInp = 2;
-
-                    for (var i2 = 0; i2 < localLookUp[i].values.length; ++i2) {
-                        let valueData = localLookUp[i].values[i2];
-                        if (valueData.lookValue == theValue)
+                    for (var i2 = 0; i2 < lookUpData[i].theData.length; ++i2) {
+                        let tmpData = lookUpData[i].theData[i2];
+                        //debug
+                        //console.log(tmpData);
+                        //console.log(theValue);
+                        //console.log(theData.name);
+                        if (tmpData.id == theValue)
                             selected = "selected";
                         else
                             selected = "";
-                        theOptions = theOptions + `<option value="${valueData.lookValue}" ${selected}>${valueData.replaceValue}</option>`
-                    }
-                }
-
-            }
-        }
-    }
-
-    //local dropdown
-    if (typeof localDropDown != 'undefined') {
-        if (localDropDown.length > 0) {
-            for (var i = 0; i < localDropDown.length; ++i) {
-                for (var i2 = 0; i2 < localDropDown[i].values.length; ++i2) {
-                    let valueData = localDropDown[i].values[i2];
-                    if (theData.name == localDropDown[i].field) {
-                        renderInp = 2;
-                        if (valueData == theValue)
-                            selected = "selected";
-                        else
-                            selected = "";
-                        theOptions = theOptions + `<option value="${valueData}" ${selected}>${valueData}</option>`
+                        theOptions = theOptions + `<option value="${tmpData.id}" ${selected}>${tmpData.name}</option>`
 
                     }
                 }
             }
+
         }
     }
+    //check for local lookups
+    if (theOptions == "")
+        theOptions = processlocalDropDown(theData, theSettings.localDropDown, theValue);
 
-
-
+    if (theOptions != "") {
+        renderInp = 2
+    }
 
     switch (renderInp) {
         case 1:
@@ -436,6 +462,11 @@ let getFormData = (smartValidate = 0) => {
 }
 
 
+let formatNumber = (code) => {
+    let theNumber = code.toLocaleString();
+    return (theNumber)
+}
+
 let formatCurencyBaht = (code, digits = 2) => {
     const formatter = new Intl.NumberFormat('th-TH', {
         style: 'currency',
@@ -532,14 +563,14 @@ START OF LOCAL CACHE FUNCTIONS
 */
 
 let clearCache = (clearUser = 0) => {
-    window.localStorage.currentdataitem = ""
-    //window.localStorage.data = ""
-
-    window.localStorage.level1data = ""
-    window.localStorage.level2data = ""
-    window.localStorage.level1selecteditem = ""
-    window.localStorage.level1selecteditem = ""
-    window.localStorage.level1selectedid = ""
+    window.localStorage.currentDataItemId = ""
+    window.localStorage.currentDataItem = ""
+    //note : remove if this does not break anything
+    //window.localStorage.level1data = ""
+    //window.localStorage.level2data = ""
+    //window.localStorage.level1selecteditem = ""
+    //window.localStorage.level1selecteditem = ""
+    //window.localStorage.level1selectedid = ""
     window.localStorage.level2selectedid = ""
     if (clearUser == 1) {
         window.localStorage.token = ""
@@ -825,7 +856,9 @@ let getUrlParamater = (param) => {
 
 
 //this function makes the XHR calls.
-let xhrcall = (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "", callback = '', auth = "") => {
+//let init = async () => { }
+
+let xhrcall = async (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "", callback = '', auth = "") => {
     //debug
     //console.log(apiUrl)
     //console.log(bodyObj)
@@ -936,11 +969,7 @@ let xhrcall = (type = 1, method, bodyObj = "", setHeader = "", redirectUrl = "",
                 //console.log(res)
                 eval(callback(res));
             }
-
         }
-
-
-
     }
 };
 

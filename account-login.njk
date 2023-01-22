@@ -44,9 +44,7 @@ permalink: /login/
                                             Login
                                         </button>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="/forgot-password/">Forgot Password?</a>
-                                    </div>
+                                    {% include 'inc_forgotpassword.njk' %}
                                     {% if env.CANCREATEACCOUNT == 1 %}
                                         <div class="text-center">
                                             <a class="small" href="/create-account/">Create an Account!</a>

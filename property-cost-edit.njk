@@ -3,9 +3,10 @@ layout: layout.njk
 permalink: /property/cost/edit/
 ---
 <script>
-    let theTable = "rental_cost";
-    let theFields = "id,name,amountInternational,datePaid,paidBy,BTCExchangeRate,ETHExchangeRate,BNBExchnageRate,rentalId";
-    let foreignKeys = "";
+    let foreignKeys = {"id":"propertyId"}
     let lookUps = [{"table":"rental_agreement","key":"rentalId","foreignKey":"propertyId","value":window.localStorage.currentDataItemId},{"table":"payment_types","key":"paidBy","foreignKey":"","value":""}]
+    let theFields = "id,propertyId,name,amountInternational,datePaid,paidBy,BTCExchangeRate,ETHExchangeRate,BNBExchnageRate,rentalId";//main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":"","localReplace":"","table":"rental_cost","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":lookUps,"title":""}
+
 </script>
 {% include "admin/table-edit.njk" %}

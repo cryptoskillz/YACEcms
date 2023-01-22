@@ -1,24 +1,34 @@
 /*
 todo 
 
-
 */
 //add a ready function
 let whenDocumentReady = (f) => {
     /in/.test(document.readyState) ? setTimeout('whenDocumentReady(' + f + ')', 9) : f()
 }
+//hold the look up data
+let lookUpData = "";
+//hold the results
+let level1Data;
 
 /*
 This function handles the property select
 */
 let propertySelectChange = (id, theElement) => {
     //clear the current element
-    window.localStorage.currentDataItem = "";
+    //note : Not sure why we cleared it here previoulsy as we need it.  Could be related to the caching we used to do I will leave it here as a reminder
+    //       until iam sure I have not broken anything further down the chain.
+    //window.localStorage.currentDataItem = "";
+    for (var i = 0; i < level1Data.data.length; ++i) {
+        if (id == level1Data.data[i].id) {
+            window.localStorage.currentDataItem = JSON.stringify(level1Data.data[i])
+        }
+    }
     //store the ID
     window.localStorage.currentDataItemId = id;
-    console.log(window.localStorage.currentDataItemId)
+    //console.log(window.localStorage.currentDataItemId)
     //store the table
-    window.localStorage.mainTable = theTable;
+    window.localStorage.mainTable = theSettings.table;
     //load the URL
     if (theElement.value != 0) {
         //check if we want it in a new window
@@ -35,64 +45,38 @@ let propertySelectChange = (id, theElement) => {
     }
 }
 
-
 whenDocumentReady(isReady = () => {
 
+    //this is for testing 
+    if ((window.localStorage.currentDataItemId == "") || (window.localStorage.currentDataItemId == undefined))
+        if (envMode == "local")
+            window.localStorage.currentDataItemId = 1;
 
 
-    if (typeof allowOnlyOne === 'undefined') {
-        var allowOnlyOne = 0;
-    }
-
-
-    if (typeof lookUps === 'undefined') {
-        var lookUps = "";
-    } else {
-        lookUps = JSON.stringify(lookUps);
-    }
 
     let getTableDone = (res) => {
 
+        //set the edit and delete buttons
         let deleteButton = "";
         let editButton = "";
+        let customSelect = "";
+        let customButton = ""
 
-        if (typeof formatFields === 'undefined') {
-            formatFields = "";
+        //replace the title 
+        if (theSettings.title != "") {
+            document.getElementById('recordTitle').innerHTML = theSettings.title
         }
 
-        if (typeof customSelect === 'undefined') {
-            customSelect = "";
-        }
-
-        if (typeof customButton === 'undefined') {
-            customButton = "";
-        }
-        if (typeof customSelect === 'undefined') {
-            customSelect = "";
-        }
-
-        if (typeof localLookUp === 'undefined') {
-            localLookUp = "";
-        }
-
-        if (typeof hideEdit === 'undefined') {
-            hideEdit = "";
-        }
-
-        if (typeof hideDelete === 'undefined') {
-            hideDelete = "";
-        }
-
-        // customButton = "";
-        //parse json
+        //parse json results
         res = JSON.parse(res)
-        if (allowOnlyOne == 1) {
+        level1Data = res;
+        //check if we want to display the create new button or not.
+        if (theSettings.allowOnlyOne == 1) {
             if (res.data.length == 0)
                 document.getElementById('btn-create-cy').classList.remove('d-none');
         } else {
             document.getElementById('btn-create-cy').classList.remove('d-none');
         }
-
         //get the datatable
         table = $('#dataTable').DataTable();
 
@@ -103,26 +87,38 @@ whenDocumentReady(isReady = () => {
             //build the buttons
             deleteButton = "";
             editButton = "";
-            let tmpCustomSelect = customSelect;
-            //parse the custom button
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
-            customButton = customButton.replaceAll("[counter]", i);
-            //parse the custom select
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
-            tmpCustomSelect = tmpCustomSelect.replaceAll("[counter]", i);
-
+            customSelect = "";
+            customButton = ""
+            ''
+            //get the custom select
+            if (theSettings.customSelect != "") {
+                //parse the custom select
+                let tmpCustomSelect = theSettings.customSelect;
+                //parse the custom button
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[id]", theData.id);
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[name]", theData.name);
+                tmpCustomSelect = tmpCustomSelect.replaceAll("[counter]", i);
+                customSelect = tmpCustomSelect;
+            }
+            if (theSettings.customButton != "") {
+                //parse the custom select
+                let tmpcustomButton = theSettings.customButton;
+                tmpcustomButton = tmpcustomButton.replaceAll("[id]", theData.id);
+                tmpcustomButton = tmpcustomButton.replaceAll("[name]", theData.name);
+                tmpcustomButton = tmpcustomButton.replaceAll("[counter]", i);
+                customButton = tmpcustomButton;
+            }
 
             //check if its an admin
             if (user.isAdmin == 1) {
-                editButton = `<a href="${theCrumb}edit?id=${theData.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>`
-                deleteButton = `<a href="javascript:deleteTableItem(${theData.id},'database/table/','${theTable}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
-                if (hideEdit == 1)
+                //build the edit and delete button
+                //note now we have the hide delete and hide edit buttpn we may not require this admin check
+                editButton = `<a id="edit-${i}-cy" href="${theSettings.crumb}edit?id=${theData.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>`
+                deleteButton = `<a id="delete-${i}-cy" href="javascript:deleteTableItem(${theData.id},'database/table/','${theSettings.table}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
+                if (theSettings.editButton == 0)
                     editButton = "";
-                if (hideDelete == 1)
+                if (theSettings.deleteButton == 0)
                     deleteButton = "";
-
 
             }
 
@@ -138,46 +134,52 @@ whenDocumentReady(isReady = () => {
                 let tmpValue = tData[key];
                 //check if we have to format it
                 //note this is checking the field name we could use the scheam and check if it is real 
-
                 //check if its a hyperlink 
                 let res = isValidHttpUrl(tmpValue);
                 if (res == true) {
                     tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
                 }
 
+                tmpValue = processlocalReplace(key, theSettings.localReplace, tmpValue)
 
-                for (var i2 = 0; i2 < localLookUp.length; ++i2) {
-                    //check if it is a local look up
-
-                    if (key == localLookUp[i2].field) {
-                        for (var i3 = 0; i3 < localLookUp[i2].values.length; ++i3) {
+                //check if it is a look up
+                if (lookUpData != "") {
+                    //loop through the look up data
+                    for (var i2 = 0; i2 < lookUpData.length; ++i2) {
+                        //check if it is the field we are being looked at
+                        if (key == lookUpData[i2].key) {
+                            //set the value for checking
                             let localTmpValue = tmpValue
-                            let valueData = localLookUp[i2].values[i3];
-                            if (valueData.lookValue == localTmpValue) {
-                                localTmpValue = valueData.replaceValue
-                                tmpValue = localTmpValue
-                                break;
-
+                            //loop through the look up data 
+                            for (var i3 = 0; i3 < lookUpData[i2].theData.length; ++i3) {
+                                //check if the id matches the tempvalue we set
+                                if (lookUpData[i2].theData[i3].id == localTmpValue) {
+                                    //replace it
+                                    localTmpValue = lookUpData[i2].theData[i3].name;
+                                    //update the temp value so we can render it out.
+                                    tmpValue = localTmpValue;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
 
-
-                for (var i2 = 0; i2 < formatFields.length; ++i2) {
-                    if (key == formatFields[i2].field) {
+                //check if we have to fomat any of the fields
+                for (var i2 = 0; i2 < theSettings.formatFields.length; ++i2) {
+                    if (key == theSettings.formatFields[i2].field) {
                         //console.log(formatFields[i2])
-                        tmpValue = eval(formatFields[i2].function)
+                        tmpValue = eval(theSettings.formatFields[i2].function)
                     }
                 }
 
-
+                //add the table row
                 tableRow.push(tmpValue);
                 tmpvalue = "";
             }
-
+            //add the buttons to the action row
             buildColumn = 1;
-            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${tmpCustomSelect} `);
+            tableRow.push(`${editButton} ${deleteButton} ${customButton} ${customSelect} `);
             //add the table rows
             var rowNode = table
                 .row.add(tableRow)
@@ -185,58 +187,78 @@ whenDocumentReady(isReady = () => {
                 .node().id = theData.id;
 
         }
-        //var head_item = table.columns(1).header();
-        //console.log(head_item)
-        //document.getElementById(head_item).innerHTML = 'sss'
-        //table.column( 0 ).header().text( 'My title' ); 
-
+        //if there are no actions hide the action column
         if ((editButton == "") && (deleteButton == "") && (customButton == "") && (customSelect == "")) {
             table.column(table.columns().nodes().length - 1).visible(false)
             table.columns.adjust();
         }
     }
 
-    //get the table results for this level.
-    let getTableData = () => {
 
-        if (foreignKeys == "")
-            url = apiUrl + `database/table?checkAdmin=${checkAdmin}&tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=${getOnlyTableSchema}&theData=${lookUps}`
-        else
-            url = apiUrl + `database/table?checkAdmin=${checkAdmin}&tablename=${theTable}&fields=${theFields}&getOnlyTableSchema=${getOnlyTableSchema}&id=${window.localStorage.currentDataItemId}&foreignId=${foreignKeys.id}&lookUps=${lookUps}`;
-        xhrcall(1, url, "", "json", "", getTableDone, token);
-    }
 
-    //process the data item.
-    let getMainTableDone = (res) => {
-        console.log("cdi")
-        console.log(window.localStorage.currentDataItem)
-        //store it
-        res = JSON.parse(res);
-        //console.log(res.data)
-        window.localStorage.currentDataItem = JSON.stringify(res.data[0]);
-        getTableData();
-    }
 
-    //check if we have a current data item 
+    let init = async (theSettings) => {
 
-    if (window.localStorage.currentDataItem == "") {
-        //build the json to get the main record from the main table so we can get the foreign ids.
-        url = apiUrl + `database/table?tablename=${window.localStorage.mainTable}&fields=&getOnlyTableSchema=${getOnlyTableSchema}&id=${window.localStorage.currentDataItemId}&foreignId=&theData=${lookUps}`
-        xhrcall(1, url, "", "json", "", getMainTableDone, token)
-    } else {
-        //build the json
-        getTableData();
-    }
+        //set a url array
+        let urls = [];
 
-    //show the body
-    document.getElementById('showBody').classList.remove('d-none');
-    if (window.localStorage.currentDataItem != "") {
-        if (window.location.pathname != `/${level1name}/`) {
-            let tmpJson = JSON.parse(window.localStorage.currentDataItem);
-            //console.log(tmpJson.name)
-            document.getElementById('recordTitle').innerHTML = tmpJson.name;
+        //check if there is a local look up and add it to the URL table
+        let tmpLookUpUrl = "";
+        if ((theSettings.lookUps != undefined) && (theSettings.lookUps != "")) {
+            //turn it into a string
+            const lookUps = JSON.stringify(theSettings.lookUps)
+            //build the url
+            const tmpUrl = apiUrl + `database/lookUp?theData=${lookUps}`
+            //create the json objecr
+            const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "lookUpDone", "xhrType": 1 }
+            //add it to the array
+            urls.push(tmpXhrCalls)
+            //set the look up url
+            tmpLookUpUrl = `lookUps=${lookUps}`;
         }
 
+        //build the URL for the main table rendering call. 
+        //note : this changes based on where you are level 1 index etc.
+        let tmpUrl = "database/table?"
+        //check if we are doing an admin check
+        let tmpUrlParam = ""
+        if ((theSettings.checkAdmin != undefined) && (theSettings.checkAdmin != ""))
+            tmpUrlParam = `checkAdmin=${theSettings.checkAdmin}&`;
+        //add the check admin
+        tmpUrl = tmpUrl + `${tmpUrlParam}`;
+        //set the table name
+        tmpUrl = tmpUrl + `tablename=${theSettings.table}&`
+        //set the fields
+        tmpUrl = tmpUrl + `fields=${theSettings.fields}&`
+        //set the schema
+        //tmpUrl = tmpUrl + `getOnlyTableSchema=${getOnlyTableSchema}&`
+        //set the id
+        if (theSettings.foreignKey == "")
+            tmpUrl = tmpUrl + `recordId=${window.localStorage.currentDataItemId}`
+        else {
+            tmpUrl = tmpUrl + `foreignKey=${theSettings.foreignKey}&recordId=${window.localStorage.currentDataItemId}`
+        }
+
+        const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getTableDone", "xhrType": 1 }
+        //add it to the url array
+        urls.push(tmpXhrCalls)
+        //console.log(urls);
+        //todo: process the look up done
+        let lookUpDone = (res) => {
+            res = JSON.parse(res);
+            lookUpData = res;
+
+        }
+
+        //loop through the urls and call them
+        for (var i = 0; i < urls.length; ++i) {
+            //console.log(`processing XHR call ${urls[i].url}`)
+            let xhrRes = await xhrcall(urls[i].xhrType, urls[i].url, "", "json", "", eval(urls[i].doneFunction), token)
+        }
+        //show the body
+        document.getElementById('showBody').classList.remove('d-none');
+
     }
+    init(theSettings);
 
 })

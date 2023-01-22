@@ -202,6 +202,7 @@ whenDocumentReady(isReady = () => {
 
     //get the current property
     let dataItem = JSON.parse(window.localStorage.currentDataItem);
+    console.log(dataItem);
     //clean up the name
     let name = dataItem.name.replace(" ", "");
     //get a symbol
@@ -209,7 +210,8 @@ whenDocumentReady(isReady = () => {
     //set the token name
     document.getElementById('inp-name').value = name + 'Token';
     //set the token supply
-    document.getElementById('inp-totalSupply').value = dataItem.localCost;
+    
+    document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
     //set the toekn symbol
     document.getElementById('inp-contractSymbol').value = symbol;
     //set the property id
@@ -217,24 +219,15 @@ whenDocumentReady(isReady = () => {
     //get the deployed value
     document.getElementById('inp-isDeployed').value = "0";
 
-
     if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
     } else {
         showAlert('Please connect Metamask', 2, 1);
     }
-
     let res = isConnected();
-
-
-
-
     //show the body div
     document.getElementById('showBody').classList.remove('d-none');
     //set table name
-    document.getElementById('formTableName').value = theTable;
-
-
-
+    document.getElementById('formTableName').value = theSettings.table;
 
 });

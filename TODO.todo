@@ -1,34 +1,40 @@
 
 GENERAL 
 
- ✔ update the readme @done (23-01-04 00:04)
- ☐ fix the title for tenants / agents
+ ✔ fix the title for tenants / agents @done (23-01-21 23:27)
  ☐ create an upstream script to remove non core files
  ☐ add a view button to each index
  ☐ move the reusable crypto functions to app.js
  ☐ trap the token decoder (in image have to apply to the other endpoints)
+ ☐ add a date selector for date fields
+ ✔ fix property distrbuation new have to get the property from XHR @done (23-01-21 23:11)
+ ✔ fix fornmat function on property cost index, payment index @done (23-01-21 23:12)
+ ✔ fix agents @done (23-01-22 00:17)
+ ✔ fix tenants @done (23-01-22 00:17)
+ ✔ fix admin setting @done (23-01-22 00:17)
+ ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
+ ☐ dist new make it switch connect on meta mask if you are on the wrong one.
+ ☐ add a hide create new button function (this is in adition to allowOnlyOne)
+ ✔ reset passsword click @done (23-01-22 20:55)
 
-
-AMENETIES
 
 PROPERTY
 
   ☐ local currency, drop down to new 
   ☐ local currency, drop down to edit
-  ☐ add internationalCurrency 
+  ✔ add internationalCurrency @done (23-01-22 00:18)
   ☐ internationalCurrency, drop down to new 
   ☐ internationalCurrency, drop down to edit
   ☐ make tranche price / amount fill in automtically from the price on new
-  ✔ images have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
-  ✔ amenities have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
-  ✔ report have to be restricted to an actual image id (id is wrong in drop down) @done (23-01-18 17:31)
 
+PROPERTY OWNER
 
+  ✔ user id lookup @done (23-01-22 00:18)
+  ✔ property token lookup @done (23-01-22 00:18)
 
 
 PROPERTY LEADS
 
- ✔ show the property leads @done (23-01-12 15:37)
  ☐ create a property payment link
  ☐ create a lead status
 
@@ -40,21 +46,16 @@ IMAGES
  ☐ require a token
  ☐ delete the preview when you uplaod a second image
  ☐ allow multipile uploads
+ ☐ add breadcrumbs
 
 
- PROPERTY TOKEN NEW
+PROPERTY TOKEN NEW
 
  ☐ if you click no need to deploy it should make the disabled fields enabled
 
 
-TABLES
-
- ✔ Make the table render render hyper links clicable @done (22-12-10 19:33)
-
 ACCOUNT
 
- ✔ refactor forgot password @done (23-01-17 14:18)
- ✔ refactor reset password @done (23-01-17 14:18)
  ☐ encrypt password
 
 SETTINGS
@@ -66,12 +67,6 @@ API
  ☐ port setting to d1 
  ☐ port forgot password to d1
 
-FUNCTIONS API
-
- 
-SECOND LEVEL CREATES (PROPERTY COSTS)
-
-
 
 LOOK UP
 
@@ -81,9 +76,6 @@ GETFORMDATA
 
  ☐ check integer fields has only integers
 
-PROPERTY TOKENS
-
-
 CRYPTO 
 
  ☐ test deploy on live net
@@ -92,12 +84,6 @@ CRYPTO
  ☐ add matic
  ☐ load the abi from an env var
 
- PROPERTY 
-
-
- TABLE INDEX JS
-
- ✔ add look up to render out the foreign data @done (23-01-08 21:58)
 
 
  

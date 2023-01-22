@@ -3,10 +3,8 @@ layout: layout.njk
 permalink: /tenant/new/
 ---
 <script>
-    let theTable = "tenant";
     let theFields = "name,email,phone";
-    let foreignKeys = "";
-    //set the loop up table
-    let lookUps = []
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localLookUp":"","localReplace":"","table":"tenant","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","overRideTitle":""}  
 </script>
 {% include "admin/table-new.njk" %}

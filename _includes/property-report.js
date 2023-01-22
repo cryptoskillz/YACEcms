@@ -10,6 +10,13 @@ let propId = 1;
 let url = "";
 
 whenDocumentReady(isReady = () => {
+        //this is for testing 
+
+    if ((window.localStorage.currentDataItemId == "") || (window.localStorage.currentDataItemId == undefined))
+        if (envMode == "local")
+            window.localStorage.currentDataItemId = 1;
+
+        console.log(window.localStorage.currentDataItemId)
     document.getElementById('showBody').classList.remove('d-none')
 
 

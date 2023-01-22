@@ -148,6 +148,7 @@ CREATE TABLE "property_owner" (
 	"id"	INTEGER,
 	"tokenAmount" REAL,
 	"propertyTokenId" INTEGER,
+	"propertyId" INTEGER,
 	"userId" INTEGER,
 	"isDeleted" INTEGER DEFAULT 0,
 	"createdAt" TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -158,9 +159,9 @@ CREATE TABLE "property_owner" (
 );
 
 
-INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId") VALUES (1000000,1,1);
-INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId") VALUES (800000,1,2);
-INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId") VALUES (800000,2,2);
+INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId","propertyId") VALUES (1000000,1,1,1);
+INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId","propertyId") VALUES (800000,1,2,1);
+INSERT INTO "property_owner" ("tokenAmount","propertyTokenId","userId","propertyId") VALUES (800000,2,2,2);
 
 
 
