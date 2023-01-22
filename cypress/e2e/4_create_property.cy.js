@@ -1,0 +1,32 @@
+it("crete property", () => {
+    cy.visit("http://localhost:8789/login/")
+    cy.get("#inp-login-email").type('test@orbitlabs.xyz');
+    cy.get("#inp-login-password1").type('test');
+    cy.get("#btn-login").click();
+    cy.get("#projects-cy").click();
+    cy.get("#btn-create-cy").click();
+    cy.get("#inp-name").type('ace property');
+    cy.get("#inp-paymentAddress").type('0x960f470cE20Bfb519facA30b770474BBCdF78ef8');
+    cy.get("#inp-address_1").type('Address 1');
+    cy.get("#inp-address_2").type('Address 2');
+    cy.get("#inp-address_3").type('Address 3');
+    cy.get("#inp-address_4").type('Address 4');
+    cy.get("#inp-address_5").type('Address 5');
+    cy.get("#inp-address_6").type('Address 6');
+    cy.get("#inp-bathrooms").select('1');
+    cy.get("#inp-bedrooms").select('2');
+    cy.get("#inp-localCurrency").type('฿');
+    cy.get("#inp-LocalTaxesCost").type('1000');
+    cy.get("#inp-internationalTaxesCost").type('10000');
+    cy.get("#inp-internationalSuggestedRentalPrice").type('19000');
+    cy.get("#inp-localSuggestedRentalPrice").type('9000');
+    cy.get("#inp-internationalCost").type('54000');
+    cy.get("#inp-localCost").type('1800000');
+    cy.get("#inp-currentlyRented").select('0');
+    cy.get("#inp-state").select('0');
+    cy.get("#inp-tranchePrice").type('1000');
+    cy.get("#inp-tranches").type('10');
+    cy.get("#btn-create").click();
+    cy.get("#btn-back-cy").click();
+    cy.contains("td", "ace property");
+});

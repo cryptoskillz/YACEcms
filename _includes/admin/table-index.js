@@ -106,8 +106,8 @@ whenDocumentReady(isReady = () => {
             if (user.isAdmin == 1) {
                 //build the edit and delete button
                 //note now we have the hide delete and hide edit buttpn we may not require this admin check
-                editButton = `<a href="${theSettings.crumb}edit?id=${theData.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>`
-                deleteButton = `<a href="javascript:deleteTableItem(${theData.id},'database/table/','${theSettings.table}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
+                editButton = `<a id="edit-${i}-cy" href="${theSettings.crumb}edit?id=${theData.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>`
+                deleteButton = `<a id="delete-${i}-cy" href="javascript:deleteTableItem(${theData.id},'database/table/','${theSettings.table}')" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Delete</a>`
                 if (theSettings.editButton == 0)
                     editButton = "";
                 if (theSettings.deleteButton == 0)
