@@ -17,8 +17,12 @@ permalink: /{{env.LEVEL2NAME}}/new/
         "displayValues": ['No','Yes']},
         {"field": "state",
         "values": ['0','1','2'],
-        "displayValues": ['Crowdfund','Sold','Rented']}
+        "displayValues": ['Crowdfund','Sold','Rented']},
+        {"field": "localCurrency",
+        "values": ['฿','$','£'],
+        "displayValues": ['฿','$','£']}
     ]
+
     //main settings array to handle all the variations of rendering.
     const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"property","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","title":""}
 </script>

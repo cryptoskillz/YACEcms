@@ -1,28 +1,40 @@
 
 GENERAL 
 
- ✔ fix the title for tenants / agents @done (23-01-21 23:27)
  ☐ create an upstream script to remove non core files
  ☐ add a view button to each index
  ☐ move the reusable crypto functions to app.js
  ☐ trap the token decoder (in image have to apply to the other endpoints)
  ☐ add a date selector for date fields
- ✔ fix property distrbuation new have to get the property from XHR @done (23-01-21 23:11)
- ✔ fix fornmat function on property cost index, payment index @done (23-01-21 23:12)
- ✔ fix agents @done (23-01-22 00:17)
- ✔ fix tenants @done (23-01-22 00:17)
- ✔ fix admin setting @done (23-01-22 00:17)
  ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
  ☐ dist new make it switch connect on meta mask if you are on the wrong one.
  ☐ add a hide create new button function (this is in adition to allowOnlyOne)
- ✔ fix token new (get the data item) @done (23-01-24 15:08)
- ✔ reset passsword click @done (23-01-22 20:55)
  ☐ need a way to set the correct id for cypress testing think we can just hard code a property Id in each of index / edit / new js files, we could also put it in the api side and pass up a flag. 
+ ☐ add a select item in proprety amenity does not add it (assume this is the case for all submits)
+ ☐ rental payment should auto fill autotmaic amount
+ ☐ set the exhange rates
 
+
+PROPERTY REPORT
+
+ ☐ currency is null 
+ ☐ shows all sellers not just the one related to the property
+ ☐ paid in does not show name and says type in column head
+ ☐ paid out does not show name 
+ ☐ taxes seems to be wrong (need to double check)
+
+PROPERTY TOKEN NEW
+
+ ☐ if you click no need to deploy it should make the disabled fields enabled
+
+PROPERTY DIST
+
+ ☐ shows all the sellers not just the one realted to the property
+ ☐ send email to tell the payment has been made
 
 PROPERTY
 
-  ☐ local currency, drop down to new 
+  ✔ local currency, drop down to new @done (23-01-24 17:13)
   ☐ local currency, drop down to edit
   ✔ add internationalCurrency @done (23-01-22 00:18)
   ☐ internationalCurrency, drop down to new 
@@ -31,8 +43,8 @@ PROPERTY
 
 PROPERTY OWNER
 
-  ✔ user id lookup @done (23-01-22 00:18)
-  ✔ property token lookup @done (23-01-22 00:18)
+ ☐ property owner new just show the tokens related to that property
+ ☐ perpoty owner set it to the amount of remaining tokens
 
 
 PROPERTY LEADS
@@ -51,9 +63,6 @@ IMAGES
  ☐ add breadcrumbs
 
 
-PROPERTY TOKEN NEW
-
- ☐ if you click no need to deploy it should make the disabled fields enabled
 
 
 ACCOUNT

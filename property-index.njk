@@ -15,16 +15,16 @@ title :
     let customSelect = `
             <select onchange="propertySelectChange([id],this)" class="form-select" aria-label="Property select" name="propertySelect-[counter]" id="propertySelect-[counter]">
                 <option value="0">Please select</option>
+                <option value="${crowdFundUrl}?id=[id]&target=_blank">Crowdfund Url</option>
+                <option value="/property/report">Report</option>
                 <option value="/property/images">Images</option>
                 <option value="/property/amenities">Amenities</option>
-                <option value="/property/report">Report</option>
                 <option value="/property/rental-agreements/">Rental agreements</option>
                 <option value="/property/tokens/">Token</option>
                 <option value="/property/owners/">Owners</option>
-                <option value="/property/distributions/">Distributions</option>
                 <option value="/property/costs/">Costs</option>
                 <option value="/property/payments/">Payments</option>
-                <option value="${crowdFundUrl}?id=[id]&target=_blank">Crowdfund Url</option>
+                <option value="/property/distributions/">Distributions</option>
                 <option value="/property/leads/">Leads</option>
 
         </select>`;

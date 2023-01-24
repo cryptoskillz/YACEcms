@@ -140,7 +140,7 @@ whenDocumentReady(isReady = () => {
                 //check if its a hyperlink 
                 let res = isValidHttpUrl(tmpValue);
                 if (res == true) {
-                    tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
+                    tmpValue = `<a href="${tmpValue}" target="_blank">${theData.name}</a>`
                 }
 
                 tmpValue = processlocalReplace(key, theSettings.localReplace, tmpValue)
