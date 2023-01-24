@@ -571,7 +571,7 @@ let clearCache = (clearUser = 0) => {
     //window.localStorage.level1selecteditem = ""
     //window.localStorage.level1selecteditem = ""
     //window.localStorage.level1selectedid = ""
-    window.localStorage.level2selectedid = ""
+   // window.localStorage.level2selectedid = ""
     if (clearUser == 1) {
         window.localStorage.token = ""
         window.localStorage.user = ""
@@ -627,6 +627,8 @@ let tableRowId = 0;
 let deleteMethod = "";
 let tableName = "";
 let deleteTableName = "";
+
+
 //check the password
 /*
 note this this the password checker curently it checks to the following rule set.
@@ -818,7 +820,7 @@ let checkLogin = () => {
                 window.location = '/login'
             } else {
                 //clear the cache 
-                clearCache();
+                //clearCache();
                 //set the jwt and user
                 getToken();
                 if (checkElement("user-account-header") == true) {

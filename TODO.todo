@@ -15,7 +15,9 @@ GENERAL
  ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
  ☐ dist new make it switch connect on meta mask if you are on the wrong one.
  ☐ add a hide create new button function (this is in adition to allowOnlyOne)
+ ✔ fix token new (get the data item) @done (23-01-24 15:08)
  ✔ reset passsword click @done (23-01-22 20:55)
+ ☐ need a way to set the correct id for cypress testing think we can just hard code a property Id in each of index / edit / new js files, we could also put it in the api side and pass up a flag. 
 
 
 PROPERTY

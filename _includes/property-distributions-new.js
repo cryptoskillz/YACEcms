@@ -311,28 +311,6 @@ document.getElementById('btn-pay').addEventListener('click', async function() {
 whenDocumentReady(isReady = () => {
     //set a url array
     let urls = [];
-    /*
-        //process the data item.
-        let getMainTableDone = (disResults) => {
-            //store it
-            disResults = JSON.parse(disResults);
-            //console.log(disResults);
-            property = JSON.parse(window.localStorage.currentDataItem);
-            if (typeof window.ethereum !== 'undefined') {
-                //console.log('MetaMask is installed!');
-                let res = isConnected(disResults);
-
-            } else {
-                showAlert('Please connect Metamask', 2, 1);
-            }
-        }
-        document.getElementById("spinner").classList.remove("d-none");
-        showAlert('Please be patient we doing Blockchain stuff', 1)
-        url = apiUrl + `properties/distributions?id=${window.localStorage.currentDataItemId}`
-        xhrcall(1, url, "", "json", "", getMainTableDone, token);
-
-
-    */
     let getDistDone = (res) => {
         //store it
         disResults = JSON.parse(res);

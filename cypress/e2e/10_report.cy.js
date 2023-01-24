@@ -5,4 +5,5 @@ it("edit amenities", () => {
     cy.get("#inp-login-password1").type('test');
     cy.get("#btn-login").click();
     cy.visit("http://localhost:8789/property/report");
+    cy.contains("td", "DCONDO");
  })

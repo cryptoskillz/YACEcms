@@ -172,8 +172,6 @@ let skipDeploy = () => {
 
 
 document.getElementById('btn-token-deploy').addEventListener('click', async function() {
-
-
     let res = await isConnected();
     if (res == false) {
         showAlert('Please connect Metamask', 1);

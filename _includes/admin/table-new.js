@@ -6,6 +6,13 @@ let lookUpData;
 let schemaData;
 
 whenDocumentReady(isReady = () => {
+        //this is for testing 
+        /*
+    if ((window.localStorage.currentDataItemId == "") || (window.localStorage.currentDataItemId == undefined))
+        if (envMode == "local")
+            window.localStorage.currentDataItemId = 1;
+    */
+    
     //set a url array
     let urls = [];
     //process the schema

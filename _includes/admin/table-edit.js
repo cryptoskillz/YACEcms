@@ -6,6 +6,7 @@
  let lookUpData;
  let schemaData;
 
+
  whenDocumentReady(isReady = () => {
      //set a url array
      let urls = [];

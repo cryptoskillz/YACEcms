@@ -69,8 +69,4 @@
  whenDocumentReady(isReady = () => {
      //show the body
      document.getElementById('showBody').classList.remove('d-none');
-
-
-
-
- });
+});
