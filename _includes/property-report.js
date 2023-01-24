@@ -10,18 +10,6 @@ let propId = 1;
 let url = "";
 
 whenDocumentReady(isReady = () => {
-        //this is for testing 
-
-    if ((window.localStorage.currentDataItemId == "") || (window.localStorage.currentDataItemId == undefined))
-        if (envMode == "local")
-            window.localStorage.currentDataItemId = 1;
-
-        console.log(window.localStorage.currentDataItemId)
-    document.getElementById('showBody').classList.remove('d-none')
-
-
-
-
     //get the main property details
     let propertyDone = (res) => {
         res = JSON.parse(res);
@@ -132,7 +120,7 @@ whenDocumentReady(isReady = () => {
             total = total + tmp.amountInternational;
             let famount = formatCurencyUSD(tmp.amountInternational);
             var rowNode = table
-                .row.add([tmp.id, tmp.name, tmp.description, famount, tmp.datePaid])
+                .row.add([tmp.id, tmp.name, famount, tmp.datePaid])
                 .draw()
                 .node().id = tmp.id;
         }
@@ -143,10 +131,7 @@ whenDocumentReady(isReady = () => {
         document.getElementById("totalleft").innerHTML = formatCurencyUSD(nettotal);
         //show it
         document.getElementById("propertydiv").classList.remove("d-none");
-
+        document.getElementById('showBody').classList.remove('d-none')
     }
     xhrcall(1, apiUrl + `properties/report?id=${window.localStorage.currentDataItemId}`, "", "json", "", propertyDone, "")
-
-
-
 })

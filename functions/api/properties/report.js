@@ -17,7 +17,6 @@ export async function onRequestGet(context) {
     //check if there is a property id.
     if (id == null)
         return new Response(JSON.stringify({ error: "no property id" }), { status: 400 });
-
     //get the property
     const property = context.env.DB.prepare(`SELECT * from property where id = ${id}`);
     const propertyresult = await property.first();

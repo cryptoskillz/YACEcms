@@ -40,7 +40,18 @@ export async function onRequestGet(context) {
         let theSQL = `SELECT id,name from ${theData[i].table}`;
         //check for a foreign key
         if (theData[i].foreignKey != "")
+        {
             theSQL = theSQL+` where ${theData[i].foreignKey} = ${theData[i].value}`;
+            //add the is Deleted 
+            theSQL = theSQL +` and isDeleted = 0`
+        }
+        else
+        {
+            //add the is Deleted 
+            theSQL = theSQL +` where isDeleted = 0`
+        }
+
+        
         console.log(theSQL)
         //run it
         query = context.env.DB.prepare(theSQL);

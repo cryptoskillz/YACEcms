@@ -85,7 +85,8 @@ let clearFormData = () => {
     let theElements = document.getElementsByClassName('form-control-user');
     //loop through the elements
     for (var i = 0; i < theElements.length; ++i) {
-        theElements[i].value = "";
+        if (theElements[i].disabled == false)
+            theElements[i].value = "";
     }
 }
 
@@ -418,6 +419,7 @@ let getFormData = (smartValidate = 0) => {
         }
         //check if we want to smart validation 
         if (smartValidate == 1) {
+
             //chekc if the field type is an email
             if (elementName == "inp-email") {
                 if (validateEmail(theElements[i].value) == false) {
@@ -432,8 +434,6 @@ let getFormData = (smartValidate = 0) => {
                 }
 
             }
-
-
             //check if its an integer field
 
             //check if its a password field 
@@ -444,6 +444,7 @@ let getFormData = (smartValidate = 0) => {
         else
             theJson = theJson + `,"${fieldName}":"${theElements[i].value}"`
     }
+
     let theTable = document.getElementById('formTableName').value;
     //check is isAdmin and the it is one of the tables we want to add attach to the admin
     if ((user.isAdmin == 1) && (theTable == "user")) {
@@ -493,7 +494,6 @@ This function handles the input of a create form
 */
 if (checkElement("btn-create") == true) {
     document.getElementById('btn-create').addEventListener('click', function() {
-
         //process the API call
         let xhrDone = (res) => {
             //parse the response

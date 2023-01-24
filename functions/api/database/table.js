@@ -231,7 +231,7 @@ export async function onRequestGet(context) {
         let sqlWhere = `where ${tableName}.isDeleted = 0 `;
 
         //if ((recordId != "") && (foreignId == ""))
-        console.log(recordId)
+        //console.log(recordId)
         //check if we have a record ID but not a foreign Id the we just want to check against the id.
         if ((recordId != "") && (foreignKey == ""))
             sqlWhere = sqlWhere + ` and id = ${recordId}`
@@ -254,8 +254,8 @@ export async function onRequestGet(context) {
         let theQuery = ""
         if (tmp.length == 1) {
             theQuery = `SELECT * from ${tableName} ${sqlWhere} `
-            console.log("theQuery a")
-            console.log(theQuery)
+            //console.log("theQuery a")
+            //console.log(theQuery)
             query = context.env.DB.prepare(theQuery);
         } else {
             let fields = "";
@@ -267,14 +267,13 @@ export async function onRequestGet(context) {
             }
 
             theQuery = `SELECT ${fields} from ${tableName} ${sqlWhere}`
-                        console.log("theQuery b")
-
-            console.log(theQuery)
+            //console.log("theQuery b")
+            //console.log(theQuery)
             query = context.env.DB.prepare(theQuery);
         }
 
         queryResults = await query.all();
-        console.log(queryResults.results)
+        //console.log(queryResults.results)
         queryFin.data = queryResults.results;
 
         return new Response(JSON.stringify(queryFin), { status: 200 });

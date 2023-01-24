@@ -149,7 +149,7 @@ async function deployIt() {
         document.getElementById("btn-create").classList.remove('d-none');
         showAlert("Contract deployed", 1, 1);
     } catch (e) {
-        document.getElementById('btn-pay').disabled = false;
+        document.getElementById('btn-token-deploy').disabled = false;
         showAlert(e.message, 2);
         //console.error(e);
     } finally {}
@@ -163,6 +163,12 @@ let skipDeploy = () => {
         document.getElementById("inp-isDeployed").value = "1"
         document.getElementById("btn-token-deploy").classList.add('d-none');
         document.getElementById("btn-create").classList.remove('d-none');
+        document.getElementById('inp-contractAddress').disabled = false;
+        document.getElementById('inp-blockExplorerUrl').disabled = false;
+        document.getElementById('inp-mintedAddress').disabled = false;
+        document.getElementById('inp-isDeployed').disabled = false;
+        let tmpUser = JSON.parse(window.localStorage.user);
+        document.getElementById("inp-mintedUserId").value = `${tmpUser.id}`;
     } else {
         document.getElementById("inp-isDeployed").value = "0"
         document.getElementById("btn-token-deploy").classList.remove('d-none');
@@ -201,6 +207,8 @@ whenDocumentReady(isReady = () => {
     //get the current property
     let dataItem = JSON.parse(window.localStorage.currentDataItem);
     console.log(dataItem);
+    console.log(dataItem.id);
+
     //clean up the name
     let name = dataItem.name.replace(" ", "");
     //get a symbol
@@ -208,7 +216,6 @@ whenDocumentReady(isReady = () => {
     //set the token name
     document.getElementById('inp-name').value = name + 'Token';
     //set the token supply
-    
     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
     //set the toekn symbol
     document.getElementById('inp-contractSymbol').value = symbol;

@@ -57,6 +57,17 @@
              document.getElementById('data-header').innerHTML = `edit the ${tmpName}`
          }
 
+        //get the record Id
+         let recordId = getUrlParamater('id');
+         //if its blank get it from local storage
+         if (recordId == "")
+             recordId = window.localStorage.currentDataItemId
+         //end it.
+         if (recordId == "") {
+             showAlert('Property ID not set', 2, 0)
+             return;
+         }
+
          //build the schema URL
          let tmpUrl = apiUrl + `database/schema?tablename=${theSettings.table}&fields=${theSettings.fields}&id=${window.localStorage.currentDataItemId}`
          let tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getSchemaDone", "xhrType": 1 }
@@ -74,17 +85,6 @@
              urls.push(tmpXhrCalls)
              //set the look up url
              //tmpLookUpUrl = `lookUps=${lookUps}`;
-         }
-
-         //ge the record Id
-         let recordId = getUrlParamater('id');
-         //if its blank get it from local storage
-         if (recordId == "")
-             recordId = window.localStorage.currentDataItemId
-         //end it.
-         if (recordId == "") {
-             showAlert('Property ID not set', 2, 0)
-             return;
          }
 
          //build the table call

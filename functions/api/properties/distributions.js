@@ -23,7 +23,7 @@ export async function onRequestGet(context) {
     const dist = context.env.DB.prepare(`SELECT SUM(amountInternational) as total from property_distribution where propertyId = '${id}'`);
     const distResults = await dist.first();
     //get the token for the property
-    const token = context.env.DB.prepare(`SELECT * from property_token where propertyId = ${id}`);
+    const token = context.env.DB.prepare(`SELECT * from property_token where propertyId = ${id} and isDeleted = 0`);
     const tokenResult = await token.first();
     //get the property owners
     const owners = context.env.DB.prepare(`SELECT property_owner.id,property_owner.tokenAmount,user.name,user.email,user.cryptoAddress from property_owner LEFT JOIN user ON property_owner.userId = user.id where property_owner.propertyTokenId = ${tokenResult.id}`);
