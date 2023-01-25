@@ -978,6 +978,4 @@ let xhrcall = async (type = 1, method, bodyObj = "", setHeader = "", redirectUrl
     }
 };
 
-
-
 checkLogin()

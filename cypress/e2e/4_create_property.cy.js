@@ -15,7 +15,8 @@ it("crete property", () => {
     cy.get("#inp-address_6").type('Address 6');
     cy.get("#inp-bathrooms").select('1');
     cy.get("#inp-bedrooms").select('2');
-    cy.get("#inp-localCurrency").type('฿');
+    cy.get("#inp-localCurrency").select('฿');
+    cy.get("#inp-internationalCurrency").select('$');
     cy.get("#inp-LocalTaxesCost").type('1000');
     cy.get("#inp-internationalTaxesCost").type('10000');
     cy.get("#inp-internationalSuggestedRentalPrice").type('19000');

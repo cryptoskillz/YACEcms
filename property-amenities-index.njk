@@ -12,7 +12,4 @@ title : amenities
     let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
     const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localReplace":"","table":"property_amenities","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"propertyId","lookUps":"","title":title}
 </script>
-{% set theJs %}
-    {% include 'admin/table-index.js' %}
-{% endset %}
 {%  include "admin/table-index.njk" %}

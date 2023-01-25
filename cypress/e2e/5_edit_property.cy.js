@@ -15,7 +15,8 @@ it("edit property", () => {
     cy.get("#inp-address_6").type('Address 6x');
     cy.get("#inp-bathrooms").select('1');
     cy.get("#inp-bedrooms").select('2');
-    cy.get("#inp-localCurrency").type('฿');
+    cy.get("#inp-localCurrency").select('฿');
+    cy.get("#inp-internationalCurrency").select('$');
     cy.get("#inp-LocalTaxesCost").type('10000');
     cy.get("#inp-internationalTaxesCost").type('100000');
     cy.get("#inp-internationalSuggestedRentalPrice").type('190000');
@@ -29,4 +30,5 @@ it("edit property", () => {
     cy.get("#btn-update").click();
     cy.get("#btn-back-cy").click();
     cy.contains("td", "ace propertyx");
+
 });
