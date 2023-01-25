@@ -3,11 +3,11 @@ GENERAL
 
 
  ☐ need a way to set the correct id for cypress testing think we can just hard code a property Id in each of index / edit / new js files, we could also put it in the api side and pass up a flag. 
+ ☐ if you click on an owner product without a token it shows the seller from record 1 in owners and dist
  ✔ add a select item in proprety amenity does not add it (assume this is the case for all submits) @done (23-01-25 00:09)
  ✔ when you add a record it shoud jump back to the top. @done (23-01-25 17:39)
- ☐ add the property to the breadcrumb
- ☐ if you click on an owner product without a token it shows the seller from record 1 in owners and dist
- ☐  property image url
+ ✔ add the property to the breadcrumb @done (23-01-25 18:02)
+ ✔  property image url @done (23-01-25 18:02)
 
 
 PROPERTY DIST
