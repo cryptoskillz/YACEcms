@@ -70,6 +70,7 @@ whenDocumentReady(isReady = () => {
             document.getElementById('recordTitle').innerHTML = theSettings.title
         }
 
+
         //parse json results
         res = JSON.parse(res)
         level1Data = res;
@@ -139,8 +140,13 @@ whenDocumentReady(isReady = () => {
                 //note this is checking the field name we could use the scheam and check if it is real 
                 //check if its a hyperlink 
                 let res = isValidHttpUrl(tmpValue);
+                console.log(theData)
                 if (res == true) {
-                    tmpValue = `<a href="${tmpValue}" target="_blank">${theData.name}</a>`
+                    if (theData.name != undefined)
+                        tmpValue = `<a href="${tmpValue}" target="_blank">${theData.name}</a>`
+                    else
+                        tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
+
                 }
 
                 tmpValue = processlocalReplace(key, theSettings.localReplace, tmpValue)

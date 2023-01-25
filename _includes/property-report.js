@@ -18,6 +18,10 @@ whenDocumentReady(isReady = () => {
         //console.log(res.agreements.length);
         //formatCurencyUSD
 
+        //set the title
+        document.getElementById('propertyNameTitle').innerHTML = res.property.name;
+        document.getElementById('propertyNameTitle').href = "javascript:history.back()";
+
         //main property details
         let table = `<table class="table">`
         table = addTableRow("Name", res.property.name, table);

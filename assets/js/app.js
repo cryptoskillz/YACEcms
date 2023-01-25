@@ -499,6 +499,7 @@ if (checkElement("btn-create") == true) {
             //parse the response
             res = JSON.parse(res);
             //show the message
+
             showAlert(res.message, 1, 0, 1);
             //clear the header
             document.getElementById('data-header').innerHTML = "";
@@ -765,6 +766,8 @@ let showAlert = (message, alertType, timeoutBool = 1) => {
     alertEl.innerHTML = message
     //remove the class
     alertEl.classList.remove('d-none');
+    alertEl.offsetTop; //Getting Y of target element
+    window.scrollTo(0, top);  
     //clear it after 5 seconds
     if (timeoutBool == 1)
         alertTimeout = setTimeout(function() { alertEl.classList.add('d-none') }, 5000);

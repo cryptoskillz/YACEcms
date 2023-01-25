@@ -7,8 +7,8 @@ headerFields : ["id","Owner","Token","Amount","Created At"]
 title : owners
 ---
 <script>
-   let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span>{{title}}</span>`;
-   let lookUps = [{"table":"user","key":"userId","foreignKey":"","value":""},{"table":"property_token","key":"propertyTokenId","foreignKey":"","value":""}]
+   const di = JSON.parse(window.localStorage.currentDataItem)
+   let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / ${di.name} / <span>{{title}}</span>`;   let lookUps = [{"table":"user","key":"userId","foreignKey":"","value":""},{"table":"property_token","key":"propertyTokenId","foreignKey":"","value":""}]
    let formatFields = [{"field":"tokenAmount","function":"formatNumber(tmpValue)"}]
    let customSelect = "";
    let localLookUp = "";

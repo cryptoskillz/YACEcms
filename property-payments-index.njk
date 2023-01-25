@@ -7,8 +7,8 @@ headerFields : ["id","Name","Amount","Paid By","Date Paid","Created At"]
 title : payments
 ---
 <script>
-    let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / <span>{{title}}</span>`;
-    let lookUps = [{"table":"payment_types","key":"paidBy","foreignKey":"name","value":""}]
+    const di = JSON.parse(window.localStorage.currentDataItem)
+    let title = `<a id="" href="/{{env.LEVEL1NAME}}/">{{env.LEVEL1NAME | capitalize }}</a> / ${di.name} / <span>{{title}}</span>`;    let lookUps = [{"table":"payment_types","key":"paidBy","foreignKey":"name","value":""}]
     let formatFields = [{"field":"amountInternational","function":"formatCurencyUSD(tmpValue)"}]
     let customSelect = "";
     let localLookUp = "";

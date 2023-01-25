@@ -6,6 +6,7 @@
  //upload the image
  let uploadIt = () => {
 
+
      //process the one time url from the server
      let oneTimeUrlDone = (res) => {
          res = JSON.parse(res);
@@ -67,6 +68,11 @@
 
 
  whenDocumentReady(isReady = () => {
+
+     //set the title
+     const di = JSON.parse(window.localStorage.currentDataItem)
+     document.getElementById('propertyNameTitle').innerHTML = di.name;
+     document.getElementById('propertyNameTitle').href = "javascript:history.back()";
      //show the body
      document.getElementById('showBody').classList.remove('d-none');
 });

@@ -4,7 +4,7 @@ permalink: /{{env.LEVEL2NAME}}/new/
 ---
 <script>
 
-  let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
+  let theFields = "adminId,name,paymentAddress,address_1,address_2,address_3,address_4,address_5,address_6,bathrooms,bedrooms,internationalCurrency,internationalCost,localCurrency,localCost,internationalTaxesCost,LocalTaxesCost,localSuggestedRentalPrice,internationalSuggestedRentalPrice,currentlyRented,state,tranches,tranchePrice";
   let localDropDown =  [
         {"field": "bathrooms",
         "values": ['1','2','3','4','5'],
@@ -19,6 +19,9 @@ permalink: /{{env.LEVEL2NAME}}/new/
         "values": ['0','1','2'],
         "displayValues": ['Crowdfund','Sold','Rented']},
         {"field": "localCurrency",
+        "values": ['฿','$','£'],
+        "displayValues": ['฿','$','£']},
+        {"field": "internationalCurrency",
         "values": ['฿','$','£'],
         "displayValues": ['฿','$','£']}
     ]
