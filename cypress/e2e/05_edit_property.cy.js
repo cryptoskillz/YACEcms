@@ -4,7 +4,7 @@ it("edit property", () => {
     cy.get("#inp-login-password1").type('test');
     cy.get("#btn-login").click();
     cy.get("#projects-cy").click();
-    cy.get("#edit-2-cy").click();
+    cy.get("#edit-0-cy").click();
     cy.get("#inp-name").type('ace propertyx');
     cy.get("#inp-paymentAddress").type('0x960f470cE20Bfb519facA30b770474BBCdF78ef8x');
     cy.get("#inp-address_1").type('Address 1x');
@@ -30,5 +30,4 @@ it("edit property", () => {
     cy.get("#btn-update").click();
     cy.get("#btn-back-cy").click();
     cy.contains("td", "ace propertyx");
-
 });

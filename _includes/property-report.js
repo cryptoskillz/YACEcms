@@ -13,7 +13,7 @@ whenDocumentReady(isReady = () => {
     /*
         This is for the unit testing it basically tells us that we are using cypress and to hard code the localstorage.
     */
-    if (window.location.pathname != `/${level1name}/`) {
+    if (window.location.pathname != `/${level1name}/`)  {
         var ua = window.navigator.userAgent;
         if (ua == `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/10.11.0 Chrome/106.0.5249.51 Electron/21.0.0 Safari/537.36`) {
             window.localStorage.currentDataItem = `{"id":1,"name":"DCONDO","currentlyRented":1,"state":0,"internationalCost":52087,"createdAt":"2023-01-24 13:08:31"}`

@@ -4,6 +4,6 @@ it("delete property", () => {
     cy.get("#inp-login-password1").type('test');
     cy.get("#btn-login").click();
     cy.get("#projects-cy").click();
-    cy.get("#delete-2-cy").click();
+    cy.get("#delete-0-cy").click();
     cy.get("#confirmation-modal-delete-button").click();    
 });

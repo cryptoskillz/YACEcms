@@ -7,6 +7,19 @@ GENERAL
  ✔ when you add a record it shoud jump back to the top. @done (23-01-25 17:39)
  ✔ add the property to the breadcrumb @done (23-01-25 18:02)
  ✔  property image url @done (23-01-25 18:02)
+ ☐ for some reason the rendering breaks on cypress on the index js.  I think it may be an aysnc issue. I can hack around it for now but it has to be looked at some point to give us more accurate tests. 
+ ☐ token edit lookups
+ ☐ look up in index break looks up in new as it gets record id from the currentdata item which is not set in cypress as it does not exist. We have to set in the JS then it will be golden.  Not an issue if we dont do unit testings, but we doing unit testing so thems the breaks. 
+ ☐ 17-create-owners.cy.js 
+ ☐ 18-edit-owners.cy.js 
+ ☐ 20_create_costs.cy.js     
+ ☐ 25_crowdfund.cy.js 
+ ☐ forgot password
+
+CYPRESS TESTS
+
+ ☐ create account
+
 
 
 PROPERTY DIST
