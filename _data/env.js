@@ -27,6 +27,8 @@ module.exports = {
     CRYPTOSALT: process.env.CRYPTOSALT,
     BLOCKEXPLORER: process.env.BLOCKEXPLORER,
     NETWORK: process.env.NETWORK,
-    CROWDFUNDURL: process.env.CROWDFUNDURL
+    CROWDFUNDURL: process.env.CROWDFUNDURL,
+    PAYMEURL: process.env.PAYMEURL,
+    PAYMEUSERID: process.env.PAYMEUSERID
 
 }

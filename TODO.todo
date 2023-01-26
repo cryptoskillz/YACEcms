@@ -21,24 +21,14 @@ CYPRESS TESTS
  ☐ create account
 
 
+GENERAL
+
+ ☐ crowdfund on mobile
+
 
 PROPERTY DIST
 
  ☐ send email to tell the payment has been made
-
-PROPERTY
-
-  ✔ local currency, drop down to new @done (23-01-24 17:13)
-  ✔ local currency, drop down to edit @done (23-01-25 17:40)
-  ✔ add internationalCurrency @done (23-01-22 00:18)
-  ✔ internationalCurrency, drop down to new @done (23-01-25 17:42)
-  ✔ internationalCurrency, drop down to edit @done (23-01-25 17:42)
-
-
-PROPERTY LEADS
-
- ☐ create a property payment link
- ☐ create a lead status
 
 
 NEXT VERSION

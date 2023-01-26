@@ -76,6 +76,57 @@ let checkElement = (element) => {
 START OF TABLE PROCESSING FUCNTIONS
 */
 
+let createPaymentLink = (userId, leadId, tranchesRequested, email) => {
+    let leadPropertyDone = (res) => {
+        res = JSON.parse(res);
+        const theData = res.data[0]
+        const amount = theData.tranchePrice * tranchesRequested;
+        const xhr = new XMLHttpRequest();
+        const name = `payment of ${tranchesRequested} tranche(s) for ${theData.name}`
+        xhr.open('POST', `${payMeUrl}api/crypto/payment?userId=${userId}&foreignId=${leadId}&amount=${amount}&name=${name}`, true);
+        xhr.onload = function() {
+            //check it was ok
+
+            let resMes = JSON.parse(this.response);
+            if (this.status === 200) {
+
+                let updateLeadDone = (res) => {
+                    //send the email
+                    let sendEmailDone = (res) => {
+                        showAlert(`Payment Link: ${payMeUrl}payment/?orderId=${resMes.orderId}`, 1, 0, 1);
+                    }
+                    url = apiUrl + `admin/email?emailType=paymentLead&email=${email}&orderId=${resMes.orderId}&tranches=${tranchesRequested}&name=${theData.name}&total=${amount}`
+                    xhrcall(1, url, "", "json", "", sendEmailDone, token)
+                }
+
+                //build the JSON
+                let theJson = {
+                    id: leadId,
+                    orderId: resMes.orderId,
+                    orderUrl: `${payMeUrl}payment/?orderId=${resMes.orderId}`,
+                    state: 1
+                }
+                //set the body
+                let bodyObj = {
+                    table: "property_leads",
+                    tableData: theJson,
+                }
+                //make the body object
+                let bodyObjectJson = JSON.stringify(bodyObj);
+                //update the lead
+                xhrcall(4, apiUrl + `database/table/`, bodyObjectJson, "json", "", updateLeadDone, token)
+            }
+        };
+        xhr.send();
+    }
+    //get the property
+    url = apiUrl + `database/table?tablename=property&fields=tranchePrice&recordId=${window.localStorage.currentDataItemId}`
+    xhrcall(1, url, "", "json", "", leadPropertyDone, token)
+
+
+
+}
+
 let addTableRow = (name, value, table) => {
     table = table + `<tr><th scope="row">${name}:</th><td>${value}</td></tr>`
     return (table)
@@ -572,7 +623,7 @@ let clearCache = (clearUser = 0) => {
     //window.localStorage.level1selecteditem = ""
     //window.localStorage.level1selecteditem = ""
     //window.localStorage.level1selectedid = ""
-   // window.localStorage.level2selectedid = ""
+    // window.localStorage.level2selectedid = ""
     if (clearUser == 1) {
         window.localStorage.token = ""
         window.localStorage.user = ""
@@ -767,7 +818,7 @@ let showAlert = (message, alertType, timeoutBool = 1) => {
     //remove the class
     alertEl.classList.remove('d-none');
     alertEl.offsetTop; //Getting Y of target element
-    window.scrollTo(0, top);  
+    window.scrollTo(0, top);
     //clear it after 5 seconds
     if (timeoutBool == 1)
         alertTimeout = setTimeout(function() { alertEl.classList.add('d-none') }, 5000);

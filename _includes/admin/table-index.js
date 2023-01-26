@@ -50,7 +50,7 @@ whenDocumentReady(isReady = () => {
     /*
         This is for the unit testing it basically tells us that we are using cypress and to hard code the localstorage.
     */
-    if (window.location.pathname != `/${level1name}/`)  {
+    if (window.location.pathname != `/${level1name}/`) {
         var ua = window.navigator.userAgent;
         if (ua == `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/10.11.0 Chrome/106.0.5249.51 Electron/21.0.0 Safari/537.36`) {
             window.localStorage.currentDataItem = `{"id":1,"name":"DCONDO","currentlyRented":1,"state":0,"internationalCost":52087,"createdAt":"2023-01-24 13:08:31"}`
@@ -115,9 +115,27 @@ whenDocumentReady(isReady = () => {
             if (theSettings.customButton != "") {
                 //parse the custom select
                 let tmpcustomButton = theSettings.customButton;
-                tmpcustomButton = tmpcustomButton.replaceAll("[id]", theData.id);
-                tmpcustomButton = tmpcustomButton.replaceAll("[name]", theData.name);
-                tmpcustomButton = tmpcustomButton.replaceAll("[counter]", i);
+                //get the fields
+                let thefields = theSettings.fields.split(",")
+                //loop through them
+                for (var i2 = 0; i2 < thefields.length; ++i2) {
+                    //loop through the returned JSON object
+                    for (const key in theData) {
+                        //check if there is a match
+                        if (`[${key}]` == `[${thefields[i2]}]`) {
+                            //build the search 
+                            const theSearch = `[${thefields[i2]}]`
+                            //replace it
+                            tmpcustomButton = tmpcustomButton.replaceAll(theSearch, theData[key]);
+                        }
+                    }
+
+                   // tmpcustomButton = tmpcustomButton.replaceAll(`[${theFields[i2]}]`, theData.id);
+
+                }
+                //tmpcustomButton = tmpcustomButton.replaceAll("[id]", theData.id);
+                //tmpcustomButton = tmpcustomButton.replaceAll("[name]", theData.name);
+                ///tmpcustomButton = tmpcustomButton.replaceAll("[counter]", i);
                 customButton = tmpcustomButton;
             }
 
