@@ -82,7 +82,7 @@ CREATE TABLE "property_leads" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
-INSERT INTO "property_leads" ("propertyId","email","tranchesRequested") VALUES(1, 'test@test.com','3');
+INSERT INTO "property_leads" ("propertyId","email","tranchesRequested") VALUES(1, 'info@cjmtrading.xyz','3');
 
 
 CREATE TABLE "property_amenities" (
