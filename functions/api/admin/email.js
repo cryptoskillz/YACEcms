@@ -3,7 +3,6 @@ const jwt = require('@tsndr/cloudflare-worker-jwt');
 //decode the jwt token
 let decodeJwt = async (req, secret) => {
     let bearer = req.get('authorization')
-    console.log(bearer);
     let details = "";
     if (bearer != null) {
         bearer = bearer.replace("Bearer ", "");
@@ -52,8 +51,9 @@ export async function onRequestGet(context) {
             };
 
         }
-        //console.log("emailData")
-        //console.log(emailData)
+        console.log("emailData")
+        console.log(emailData);
+        console.log(context.env.EMAILAPIURL)
         //console.log(data)
         //call the cloudflare API for a one time URL
         const responseEmail = await fetch(context.env.EMAILAPIURL, {
@@ -64,7 +64,7 @@ export async function onRequestGet(context) {
             body: JSON.stringify(emailData)
         });
         const emailResponse = await responseEmail.json();
-
+        console.log(emailResponse)
         return new Response(JSON.stringify({ status: "ok" }), { status: 200 });
 
     } else {

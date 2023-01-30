@@ -165,7 +165,7 @@ export async function onRequestPost(context) {
             }
             //compile the query
             theQuery = theQuery + theQueryFields + " ) VALUES ( " + theQueryValues + " ); "
-            //console.log(theQuery)
+            console.log(theQuery)
             //run the query
             const info = await context.env.DB.prepare(theQuery)
                 .run();
@@ -268,7 +268,7 @@ export async function onRequestGet(context) {
 
             theQuery = `SELECT ${fields} from ${tableName} ${sqlWhere}`
             //console.log("theQuery b")
-            //console.log(theQuery)
+            console.log(theQuery)
             query = context.env.DB.prepare(theQuery);
         }
 
