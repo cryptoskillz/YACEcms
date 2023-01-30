@@ -1,233 +1,219 @@
-# BUILDING BLOCKS
+# Management Portal
+
+# Installation
 
 
+## Github
+
+If you do not have a GitHub account sign up for one [here](https://github.com/).
+
+create a new repository using this [guide](https://docs.github.com/en/get-started/quickstart/create-a-repo)
+
+Once you have done this simply add it as a remote
+
+`git remote add <youroriginname> <githuburl>`
 
 
-wrangler d1 execute DB --local --command='SELECT * from property_amenities where property_amenities.isDeleted = 0  and id = 1 '
-wrangler d1 execute DB --local --command='SELECT * from property_token'
+## Clone
 
-## ABOUT
-
-BUILDING BLOCKS is open sourced framework to use (any) crypto to manage ownership of a property.
-
-
-## SETUP
-
-
-clone BUILDING BLOCKS into your directory
+clone the BuildingBlock management portal onto your local machine.
 
 git clone  https://github.com/OrbitLabsDAO/buildingblocksreporting.git 
 
-run  the following 2 commands
+then run  the following 2 commands
 
 `npm install --save-dev @11ty/eleventy`
+
 `npm install `
 
+This will set up the BuildingBlock management portal locally on your machine.
 
-### Change variables:
+finally push it to the repo you set up earlier
 
-open _data/env.js and change the vars to whatever you want.
-
-### create .env
-
-rename _.env to .env to allow dotenv to see the local environment variables 
-
-API = The API is set to the local host but you should change it to your domain route in most cases
-SECRET = Change the secret to something else, this is the Key that JWT uses. 
-CANCREATEACCOUNT = 1 on 2 off.  This allows you to disable the create account
-CLOUDFLAREURL=https://api.cloudflare.com/client/v4/accounts/8851e575353a23f4511fbe2d1a74505e/images/v2/direct_upload
-BEARERTOKEN=PbgI1GP3zctBx7U6rV1xlWzdJvzvg64X6EPuZBd9
-EMAILAPIURL=http://127.0.0.1:8787
-PRODUCTNAME=Building Blocks
-ADMINURL=http://localhost:8789/
-SENDEREMAILNAME=cryptoskillz
-SIGNUPEMAILTEMPLATEID=30429839
-FORGOTPASSWORDEMAILTEMPLATEID=30458239
-ADMINURL=http://localhost:8789/
-SECRET=974this is the stupid secret that no will ever be able to guess344342!
-CANCREATEACCOUNT=0
-APIURL=http://localhost:8789/api/
-COMPLEXPASSWORD=0
-RPCURL=https://bsc-dataseed.binance.org
-FACTORYCONTRACTADDRESS=0xbf86927f6ce7946608b3e64c91775e4845bc78dd
-FACTORYCONTRACTABI=[{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"bytes32","name":"_salt","type":"bytes32"}],"name":"deploy","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"payable","type":"function"}]
-BLOCKCHAINNETWORK=BNB
-CRYPTOSALT=fdsfhsjdfhsdufysdufyu8ewyfefwefe
-BLOCKEXPLORER=https://testnet.bscscan.com/
-NETWORK=testnet
-CROWDFUNDURL=http://localhost:8788/
-EMAILAPIURL=https://email.cryptoskillz.workers.dev
-PRODUCTNAME=Building Blocks
-SIGNUPEMAILTEMPLATEID=30429839
-SENDEREMAILNAME=cryptoskillz
-SIGNUPEMAILTEMPLATEID=30429839
-FORGOTPASSWORDEMAILTEMPLATEID=30458239
-
-### Javascript
-
-All the reusable javascript is in /assets/app.js and 
-Each file has its js file in _includes ie dashoard.njk has an accompanying _includes/dashboard.js file 
+git push github master
 
 
-## Building 
+## Cloudflare
 
-The build script is a script you can locally to test the CMS before you deploy it.
-
-`./build.sh local`   
-
-`./build.sh prod`
-
-`./build.sh cypress`
-
-The first command will build a local version the second command will use production api and the cypress will run the tests
-
-Note you will have to modify build.js and add your cypress key and cypress.config.js to add your project it more information can be found here 
-
-https://www.cypress.io/
+If you do not yet have a Cloudflare account please sign up by clicking on this [link](https://dash.cloudflare.com/sign-up?lang=en-US).
 
 
-## API
+Click Pages from the menu on the left. 
 
-The API endpoints are all in the functions/API directory
+![](https://imagedelivery.net/9dYZtR12J2uzlEZe4Joa5w/5c590986-f70c-46d5-7540-46cd284f0d00/public)
 
-## DEPLOY TO CLOUDFLARE 
+Once you are there you can use the following [guide](https://developers.cloudflare.com/pages/get-started/) to connect your git and add the project you just pushed.
 
-create a repo and push the code to it
+Select 11.ty as the framework as shown in the image below
 
-`git init`
+![](https://imagedelivery.net/9dYZtR12J2uzlEZe4Joa5w/77ae9dc2-d46a-4eb6-0480-85be2803b900/public)
 
-`git remote add cms <GIT URL>`
+then add the ENV vars by going clicking on pages/buildingblocks/settings/environment variables and adding them as shown in the screenshot below
 
-* Login into Cloudflare and click on workers and set the domain
-* Click on KV 
-* Click on create namespace give it a name and click add
-* Click on pages from the left menu
-* Click create the project and connect to git
-* Connect your git hub and chose the repo
-* Set the framework to eleventy
-* Click Deploy
-
-Click on setting and then environment variables and add the following
-
-`	API: the root of your project`
-`	SECRET: A secret phrase for JWT`
-`	CANCREATEACCOUNT: 1 on 2 off.  This allows you to disable the create account`
-
-Click on functions and scroll down to the KV datastore
-click add and add the following details
-
-	`kvdata : <namesapce>`
+![](https://imagedelivery.net/9dYZtR12J2uzlEZe4Joa5w/ebd4fd7d-6c9b-45ce-e993-63d7ec6c6600/public)
 
 
-## USING 
 
+## Wrangler
+
+The next thing you need to do is install Wrangler.  You can find the current documentation for this [here](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
+
+## D1 database
+D1 is the Cloudflare database that we are using you can find out more information about it [here](https://developers.cloudflare.com/d1/).
+
+
+click on workers/d1 and create a new database as shown in the image below
+
+![](https://imagedelivery.net/9dYZtR12J2uzlEZe4Joa5w/4eec15e1-0c5c-4675-5d51-f2b384180c00/public)
+
+then we have to add it to add a D1 database binding called DB and point it to the D1 database you created as shown below 
+
+![](https://imagedelivery.net/9dYZtR12J2uzlEZe4Joa5w/62dc6c22-bddd-402b-8144-53e491a38c00/public)
+
+The last thing we have to do is run the SQL file to create the tables
 
 wrangler d1 execute DB --local  --file=./scripts/sql/schema.sql
 sudo wrangler d1 execute DB --file=./scripts/sql/schema.sql
 
-## SETTINGS OBJECT
-
-The settings object is what controls the rendering of the index / add and edit pages and its basic structure is as shown below.
-
- const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":customSelect,"localLookUp":localLookUp,"table":"property","formatFields":""}
-
-### checkAdmin : boolean
-
-This adds a isAdmin = 1 to any SQL query 
-
-### tableSchema : boolean
-
-This returns the table Schema so we can build edit form etc. 
-
-### allowOnlyOne : boolean
-
-This hides or shows the create new button 
-
-### editButton : boolean
-
-Show or hide the edit button
-
-### deleteButton : boolean
-
-Show or hide the delete button
-
-### customButton : HTML
-
-A custom html button that renders out in the actions column it also accepts 3 variabels [id],[name],[counter] which will be replaced with the data
-
-### customSelect : HTML
-
-A custom html select that renders out in the actions column it also accepts 3 variabels [id],[name],[counter] which will be replaced with the data
-
-### localReplace : JSON Object
-
-This will replace data with something that makes more sense ie 0 = no and 1 = yes
-
-example object
-
-    [
-        {"field": "state",
-        "values": ['0','1','2'],
-        "replaceValues": ['Crowdfund','Sold','Rented']},
-        {"field": "currentlyRented",
-        "values": ['0','1'],
-        "replaceValues": ['No','Yes']}
-    ]
 
 
-### table : text
+## Create environment variables 
 
-The table to get the data from
+We have to rename two files at the root of the project. These files contain the following environment variables.
 
-formatFields : JSON object
 
-This will call a custom function on a field in the data 
+_.env
 
-example object
+_.dev.vars
 
-[
-{"field":"amountInternational",
-"function":"formatCurencyUSD(tmpValue)"}
-]
+to 
 
-function it calls 
+.env
 
-let formatCurencyUSD = (code, digits = 2) => {
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: digits
-    })
-    let currency = formatter.format(code)
-    return (currency)
-}
+.dev.vars
 
-### foreignKey : foreign id
+Both of these files are the same but for some reason, Cloudflare decided not to use the industry standard .env for their functions so we have to replicate it to get it working locally.  In production, we only have one set of environment variables.
 
-This function allows us to to get fields that match the level 1 data
+ADMINURL=http://localhost:8789/
 
-### lookUps :JSON object
+The admin URL (the root)
 
-This function calls the look up endpoint to get the foreign data
+APIURL=http://localhost:8789/api/
 
-example object
+The API URL
 
-[{
-    "table":"user",
-    "key":"userId",
-    "foreignKey":"",
-    "value":""
-},
-{
-    "table":"property_token",
-    "key":"propertyTokenId",
-    "foreignKey":"",
-    "value":""
-}]
+BEARERTOKEN=
 
-### overRideTitle : Text
+The JWT token to encode with
 
-hold a new title so we dont use the dynamic one
+BLOCKCHAINNETWORK=BNB
+
+The Chain to the user
+
+BLOCKEXPLORER=https://testnet.bscscan.com/
+
+The chains block explorer
+
+CANCREATEACCOUNT=0
+
+Set if you want your users to be able to create accounts or from the admin
+
+CLOUDFLAREURL=
+
+The image upload URL.  Note this is paid service from Cloudflare more information can be found [here](https://www.cloudflare.com/products/cloudflare-images/) 
+
+COMPLEXPASSWORD=0
+
+Set if you want to enforce a complex password or now
+
+CROWDFUNDURL=http://localhost:8788/
+
+The main URL for the crowdfund URL
+
+CRYPTOSALT=fdsfhsjdfhsdufysdufyu8ewyfefwefe
+
+The salt for crypto contracts
+
+EMAILAPIURL=
+
+The email worker, you have to deploy this and it is found in the scripts/workers/email directory [here](https://github.com/OrbitLabsDAO/buildingblocksreporting/tree/master/scripts/workers/email)
+
+FACTORYCONTRACTABI=[{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"bytes32","name":"_salt","type":"bytes32"}],"name":"deploy","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"payable","type":"function"}]
+FACTORYCONTRACTADDRESS=0xbf86927f6ce7946608b3e64c91775e4845bc78dd
+
+this is not used yet it currently hard-coded into the web3.js scripts
+
+FORGOTPASSWORDEMAILTEMPLATEID=
+
+the template ID for the forgotten password
+
+NETWORK=testnet
+
+The network to use
+
+PAYMENTLINKTEMPLATEID=
+
+the template ID for the invoice
+
+PAYMEURL=http://localhost:8790/
+
+The URL for the payme application
+
+PAYMEUSERID=1
+
+Your payme user id (1 by default)
+
+PRODUCTNAME=Building Blocks
+
+Name of the product
+
+RPCURL=https://bsc-dataseed.binance.org
+
+the RPC URL for your chosen chain
+
+SECRET=974this is the stupid secret that no one will ever be able to guess344342!
+
+the secret used for hashing
+
+SENDEREMAILNAME=
+
+name that we will send emails 
+
+SIGNUPEMAILTEMPLATEID=
+
+the template ID for signup
+
+## Run it
+
+run the command
+
+`./build.sh
+
+open a browser and go to the following [URL](http://localhost:8789/) and login in with the following details
+
+`test@orbitlabs.xyz`
+
+`test`
+
+You will see 2 properties, these are test properties so you can see the system running. Feel free to delete these if you want.
+
+## cypress testing
+
+It comes with a full test suite that you can access by running the following command 
+
+`./build.sh cypress`
+
+
+# Production
+
+Pushing the site to production requires a few more steps the first thing you have to do is push the project to your GitHub account if you make any code changes is easy just push 
+
+git push origin master and it will update it on Cloudflare for you 
+
+
+
+
+
 
 
 
