@@ -102,18 +102,7 @@ export async function onRequestPost(context) {
                 if (user.isDeleted == 1)
                     return new Response(JSON.stringify({ error: "user does not exist" }), { status: 400 });
 
-                if (user.isAdmin == 1) {
-                    //prepare the query
-                    const query2 = context.env.DB.prepare(`SELECT COUNT(*) as total from property where isDeleted = 0`);
-                    const queryResult2 = await query2.first();
-                    user.foreignCount = queryResult2.total;
-                } else {
-
-                    //prepare the query
-                    const query2 = context.env.DB.prepare(`SELECT COUNT(*) as total from property_owner where userId = ${user.id} and isDeleted = 0 `);
-                    const queryResult2 = await query2.first();
-                    user.foreignCount = queryResult2.total;
-                }
+                
                 //sign the token
                 const token = await jwt.sign({ id: user.id, password: user.password, username: user.username, isAdmin: user.isAdmin }, env.SECRET)
                 // Verifing token
@@ -122,7 +111,7 @@ export async function onRequestPost(context) {
                 if (isValid == true) {
                     //note: we are sending down the isAdmin status the reason for this is it makese certain front end tasks easier but for any 
                     //      read / writes to the database we will always check the entry we have for them before we allow it to happebn.
-                    return new Response(JSON.stringify({ "jwt": token, "user": { "id": user.id, "name": user.name, "username": user.username, "email": user.email, "phone": user.phone, "isAdmin": user.isAdmin, "foreignCount": user.foreignCount, "secret": user.apiSecret } }), { status: 200 });
+                    return new Response(JSON.stringify({ "jwt": token, "user": { "id": user.id, "name": user.name, "username": user.username, "email": user.email, "phone": user.phone, "isAdmin": user.isAdmin, "secret": user.apiSecret } }), { status: 200 });
                 } else {
                     return new Response(JSON.stringify({ error: "invalid login" }), { status: 400 });
 

@@ -7,8 +7,8 @@ GENERAL
  ☐ add the site id to the edit content part
  ☐ get the kv name from D1 to make it a little more secure
  ☐ add kv data store to build api function
-
-
+ ☐ update wrangler db in docs
+ ☐ clean up tables
 
 CYPRESS TESTS
 

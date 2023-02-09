@@ -1,4 +1,4 @@
 [[ d1_databases ]]
 binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "database"
-database_id = "fd43ef25-73e3-4c1d-88ca-0ffddb1ad6d7"
+database_name = "cms"
+database_id = "c4b1ef5c-44ca-499c-9b3a-06b2ee46fb6c"
