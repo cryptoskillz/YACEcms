@@ -9,25 +9,19 @@ let _YEAR = todaysDate.getFullYear();
 
 module.exports = {
     YEAR: _YEAR,
-    TITLE: "Building block ADMIN",
+    TITLE: "YACE V2",
     APIURL: process.env.APIURL,
     ADMINURL: process.env.ADMINURL,
     COPYRIGHT: "CRYPTOSKILLZ " + _YEAR,
     ENVIRONMENT: process.env.ELEVENTY_ENV,
     SECRET: process.env.SECRET,
-    LEVEL1NAME: "properties",
-    LEVEL2NAME: "property",
+    LEVEL1NAME: "sites",
+    LEVEL2NAME: "pages",
     ITEMSDATAMAIN: "items",
     DASHBOARDSTRAP: "Welcome to the content editor.",
     CANCREATEACCOUNT: process.env.CANCREATEACCOUNT,
     COMPLEXPASSWORD: process.env.COMPLEXPASSWORD,
-    RPCURL: process.env.RPCURL,
-    BLOCKCHAINNETWORK: process.env.BLOCKCHAINNETWORK,
-    FACTORYCONTRACTADDRESS: process.env.FACTORYCONTRACTADDRESS,
-    CRYPTOSALT: process.env.CRYPTOSALT,
     BLOCKEXPLORER: process.env.BLOCKEXPLORER,
-    NETWORK: process.env.NETWORK,
-    CROWDFUNDURL: process.env.CROWDFUNDURL,
     PAYMEURL: process.env.PAYMEURL,
     PAYMEUSERID: process.env.PAYMEUSERID
 

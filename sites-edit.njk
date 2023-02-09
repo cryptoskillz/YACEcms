@@ -1,0 +1,13 @@
+---
+layout: layout.njk
+permalink: /{{env.LEVEL1NAME}}/edit/
+---
+<script>
+    //the fields
+    let theFields = "id,adminId,name,buildUrl,apiKey";
+    //the drop down arrray
+    let localDropDown =  []
+    //main settings array to handle all the variations of rendering.
+    const theSettings = {"checkAdmin":1,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":"","customSelect":"","localDropDown":localDropDown,"localReplace":"","table":"site","formatFields":"","fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","title":""}
+</script>
+{% include "admin/table-edit.njk" %}

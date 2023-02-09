@@ -11,10 +11,24 @@ let lookUpData = "";
 //hold the results
 let level1Data;
 
+let publishSite = (id) => {
+
+    //console.log(theUrl)
+    let publishDone = (res) => {
+        console.log("res");
+        console.log(res);
+        showAlert("Site published", 1)
+    }
+
+    xhrcall(1, `publish?id=${id}`, "", "", "", publishDone, token)
+
+}
+
+
 /*
-This function handles the property select
+This function handles the property selectd
 */
-let propertySelectChange = (id, theElement) => {
+let theSelectChange = (id, theElement) => {
     //clear the current element
     //note : Not sure why we cleared it here previoulsy as we need it.  Could be related to the caching we used to do I will leave it here as a reminder
     //       until iam sure I have not broken anything further down the chain.
@@ -32,15 +46,22 @@ let propertySelectChange = (id, theElement) => {
     window.localStorage.mainTable = theSettings.table;
     //load the URL
     if (theElement.value != 0) {
-        //check if we want it in a new window
-        if (theElement.value.indexOf("&target=_blank") > 0) {
-            //remove the blank
-            const result = theElement.value.replace("&target=_blank", "");
-            //open it
-            window.open(result, '_blank');
-        } else {
-            //set the href
-            window.location.href = theElement.value;
+
+        //check if it a site to publish
+        if (theElement.value == "publishsite")
+            publishSite(id)
+        else {
+
+            //check if we want it in a new window
+            if (theElement.value.indexOf("&target=_blank") > 0) {
+                //remove the blank
+                const result = theElement.value.replace("&target=_blank", "");
+                //open it
+                window.open(result, '_blank');
+            } else {
+                //set the href
+                window.location.href = theElement.value;
+            }
         }
 
     }
@@ -96,6 +117,7 @@ whenDocumentReady(isReady = () => {
         for (var i = 0; i < res.data.length; ++i) {
             //set the data 
             let theData = res.data[i];
+            //console.log(theData);
             //build the buttons
             deleteButton = "";
             editButton = "";
@@ -130,7 +152,7 @@ whenDocumentReady(isReady = () => {
                         }
                     }
 
-                   // tmpcustomButton = tmpcustomButton.replaceAll(`[${theFields[i2]}]`, theData.id);
+                    // tmpcustomButton = tmpcustomButton.replaceAll(`[${theFields[i2]}]`, theData.id);
 
                 }
                 //tmpcustomButton = tmpcustomButton.replaceAll("[id]", theData.id);
@@ -158,21 +180,31 @@ whenDocumentReady(isReady = () => {
             let famount = 0;
             //loop through the keys
             for (const key in theData) {
+                console.log(key)
                 //set the data
                 let tData = theData;
                 //set the value
                 let tmpValue = tData[key];
+                let tmpName = "";
+                if (theData.name != undefined)
+                    tmpName = theData.name
+                else
+                    tmpName = tmpValue;
+
+                if (key == "apiKey")
+                {
+                    tmpValue = `${apiUrl}build?id=${tData[key]}`;
+                    tmpName = "API Url";
+                }
                 //check if we have to format it
                 //note this is checking the field name we could use the scheam and check if it is real 
                 //check if its a hyperlink 
                 let res = isValidHttpUrl(tmpValue);
                 if (res == true) {
-                    if (theData.name != undefined)
-                        tmpValue = `<a href="${tmpValue}" target="_blank">${theData.name}</a>`
-                    else
-                        tmpValue = `<a href="${tmpValue}" target="_blank">${tmpValue}</a>`
-
+                    tmpValue = `<a href="${tmpValue}" target="_blank">${tmpName}</a>`
                 }
+
+
 
                 tmpValue = processlocalReplace(key, theSettings.localReplace, tmpValue)
 

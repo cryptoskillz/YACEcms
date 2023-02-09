@@ -15,7 +15,6 @@ It makes assumpations on our usual data strucutres to save some code if you want
 
 //JWT model
 const jwt = require('@tsndr/cloudflare-worker-jwt');
-var uuid = require('uuid');
 //decode the jwt token
 let decodeJwt = async (req, secret) => {
     let bearer = req.get('authorization')
@@ -137,9 +136,6 @@ export async function onRequestPost(context) {
 
             //console.log(theData)
             //check if it is a user table and generate an API id
-            let apiSecret = "";
-            if (theData.table == "user")
-                apiSecret = uuid.v4();
             //build the query
             let theQuery = `INSERT INTO ${theData.table} (`
             let theQueryFields = "";
@@ -151,10 +147,13 @@ export async function onRequestPost(context) {
                 //note : we could use a more elegant JSON structure and element this check
                 if (key != "table") {
                     //build the fields
+                    
+                    if (key != "")
                     if (theQueryFields == "")
                         theQueryFields = `'${key}'`
                     else
                         theQueryFields = theQueryFields + `,'${key}'`
+
 
                     //build the values
                     if (theQueryValues == "")

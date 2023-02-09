@@ -6,12 +6,38 @@ let whenDocumentReady = (f) => {
 
 
 whenDocumentReady(isReady = () => {
-    //remove the show body
-    document.getElementById('showBody').classList.remove('d-none');
-    //update the page header
-    document.getElementById("content-header").innerHTML = `edit page ${window.localStorage.level2selecteditem} for site ${window.localStorage.level1selecteditem}`
-    let dataitem = getCurrentDataItem();
-    //console.log(dataitem);
+
+
+    let init = async () => {
+        //set a url array
+        let urls = [];
+        let getContentDone = (res) => {
+            theData = JSON.parse(res);
+            let theJson = { "String": "add content" }
+            if (theData.jsonContent != null)
+                theJson = JSON.parse(theData.jsonContent)
+            // set the editor
+            editor.set(theJson);
+
+        }
+
+        const tmpUrl = `content?id=${pageId}`
+        const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getContentDone", "xhrType": 1 }
+        urls.push(tmpXhrCalls);
+
+        //loop through the urls and call them
+        for (var i = 0; i < urls.length; ++i) {
+            //console.log(`processing XHR call ${urls[i].url}`)
+            let xhrRes = await xhrcall(urls[i].xhrType, urls[i].url, "", "json", "", eval(urls[i].doneFunction), token)
+        }
+        //show the body
+        document.getElementById('showBody').classList.remove('d-none');
+
+
+
+    }
+    let pageId = getUrlParamater('id');
+    init();
 
     /*
      *  START OF JSON EDITOR CODE
@@ -21,8 +47,7 @@ whenDocumentReady(isReady = () => {
     const container = document.getElementById("jsoneditor")
     const options = {}
     const editor = new JSONEditor(container, options)
-    // set the editor
-    editor.set(dataitem.content);
+
 
     /*
      *  END OF JSON EDITOR CODE
@@ -68,8 +93,7 @@ whenDocumentReady(isReady = () => {
         //get the json
         let jsonContent = editor.get();
         //check if we have to update (we always should but costs nothing to check)
-        if (oldContent != newContent)
-        {
+        if (oldContent != newContent) {
             //turn the json into a string
             jsonContent = JSON.stringify(jsonContent);
             //replace the content
@@ -104,23 +128,17 @@ whenDocumentReady(isReady = () => {
         let bodyJson = {}
         //add the ids
         bodyJson.content = content;
-        bodyJson.level1id = window.localStorage.level1selectedid;
-        bodyJson.level2id = window.localStorage.level2selectedid;
+        bodyJson.id = pageId
         bodyobjectjson = JSON.stringify(bodyJson);
         //console.log(bodyobjectjson);
-
         let xhrDone = (res) => {
             res = JSON.parse(res)
             let data = JSON.parse(res.data)
             //console.log(data)
-            updateData(2, data, 0)
             showAlert(res.message, 1)
-            storeCurrentDataItem(JSON.stringify(data));
-
         }
-
         //call the put
-        xhrcall(4, `api/content/`, bodyobjectjson, "json", "", xhrDone, token)
+        xhrcall(4, `content/`, bodyobjectjson, "json", "", xhrDone, token)
     })
 
 
