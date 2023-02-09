@@ -16,9 +16,9 @@ Once you have done this simply add it as a remote
 
 ## Clone
 
-clone the BuildingBlock management portal onto your local machine.
+clone the YACE onto your local machine.
 
-git clone  https://github.com/OrbitLabsDAO/buildingblocksreporting.git 
+git clone  https://github.com/cryptoskillz/YACEcms.git
 
 then run  the following 2 commands
 
@@ -26,7 +26,7 @@ then run  the following 2 commands
 
 `npm install `
 
-This will set up the BuildingBlock management portal locally on your machine.
+This will set up the YACE locally on your machine.
 
 finally push it to the repo you set up earlier
 
@@ -126,30 +126,16 @@ COMPLEXPASSWORD=0
 
 Set if you want to enforce a complex password or now
 
-CROWDFUNDURL=http://localhost:8788/
-
-The main URL for the crowdfund URL
-
-CRYPTOSALT=fdsfhsjdfhsdufysdufyu8ewyfefwefe
-
-The salt for crypto contracts
 
 EMAILAPIURL=
 
 The email worker, you have to deploy this and it is found in the scripts/workers/email directory [here](https://github.com/OrbitLabsDAO/buildingblocksreporting/tree/master/scripts/workers/email)
 
-FACTORYCONTRACTABI=[{"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_symbol","type":"string"},{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"bytes32","name":"_salt","type":"bytes32"}],"name":"deploy","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"payable","type":"function"}]
-FACTORYCONTRACTADDRESS=0xbf86927f6ce7946608b3e64c91775e4845bc78dd
-
-this is not used yet it currently hard-coded into the web3.js scripts
 
 FORGOTPASSWORDEMAILTEMPLATEID=
 
 the template ID for the forgotten password
 
-NETWORK=testnet
-
-The network to use
 
 PAYMENTLINKTEMPLATEID=
 
@@ -163,13 +149,10 @@ PAYMEUSERID=1
 
 Your payme user id (1 by default)
 
-PRODUCTNAME=Building Blocks
+PRODUCTNAME=YACE
 
 Name of the product
 
-RPCURL=https://bsc-dataseed.binance.org
-
-the RPC URL for your chosen chain
 
 SECRET=974this is the stupid secret that no one will ever be able to guess344342!
 
