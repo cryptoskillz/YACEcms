@@ -9,6 +9,7 @@ GENERAL
  ☐ add kv data store to build api function
  ☐ update wrangler db in docs
  ☐ clean up tables
+ ✔ in the account login we have somehard coded property counters, remove this and add it to the dashboard / table-index.js call @done (23-02-09 20:07)
 
 CYPRESS TESTS
 

@@ -26,8 +26,8 @@ whenDocumentReady(isReady = () => {
             editor.set(theJson);
 
         }
-
-        const tmpUrl = `content?id=${pageId}&siteId=1`
+        const currentDataItem  = JSON.parse(window.localStorage.currentDataItem);
+        const tmpUrl = `content?id=${pageId}&siteId=${currentDataItem.id}`
         const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getContentDone", "xhrType": 1 }
         urls.push(tmpXhrCalls);
 

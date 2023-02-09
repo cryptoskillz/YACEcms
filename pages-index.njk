@@ -19,7 +19,9 @@ title :
         //these are the fields that we want to return, it gets this from the front matter data at the top of this file. 
         //note : we could do this cleaner
         let theFields = "{% for field in fields %}{% if loop.last %}{{ field }}{% else %}{{ field }},{% endif %}{% endfor %}";
-        let title = `{{env.LEVEL2NAME | capitalize }}`;
+        const currentDataItem  = JSON.parse(window.localStorage.currentDataItem);
+        //console.log(currentDataItem)
+        let title = `<a href="/{{env.LEVEL1NAME}}">site</a> / ${currentDataItem.name} / {{env.LEVEL2NAME | capitalize }}`;
 
         //main settings array to handle all the variations of rendering.
         const theSettings = {"checkAdmin":0,"tableSchema":0,"allowOnlyOne":0,"editButton":1,"deleteButton":1,"customButton":customButton,"customSelect":"","localDropDown":"","localReplace":localReplace,"table":"page","formatFields":formatFields,"fields":theFields,"crumb":"{{ crumb }}","foreignKey":"","lookUps":"","title":title}
