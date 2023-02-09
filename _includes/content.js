@@ -12,22 +12,28 @@ whenDocumentReady(isReady = () => {
         //set a url array
         let urls = [];
         let getContentDone = (res) => {
+            //alert('ddd')
             theData = JSON.parse(res);
-            let theJson = { "String": "add content" }
-            if (theData.jsonContent != null)
-                theJson = JSON.parse(theData.jsonContent)
+            //set a json  object
+            let theJson = [{}]
+            //check it is not blank
+            if ((theData != null) && (theData != ""))
+            {
+                //save it
+                theJson = JSON.parse(theData)
+            }
             // set the editor
             editor.set(theJson);
 
         }
 
-        const tmpUrl = `content?id=${pageId}`
+        const tmpUrl = `content?id=${pageId}&siteId=1`
         const tmpXhrCalls = { "url": `${tmpUrl}`, "doneFunction": "getContentDone", "xhrType": 1 }
         urls.push(tmpXhrCalls);
 
         //loop through the urls and call them
         for (var i = 0; i < urls.length; ++i) {
-            //console.log(`processing XHR call ${urls[i].url}`)
+            //console.log(`processing XHR call ${urls[i].url} :  ${urls[i].doneFunction}`)
             let xhrRes = await xhrcall(urls[i].xhrType, urls[i].url, "", "json", "", eval(urls[i].doneFunction), token)
         }
         //show the body
@@ -129,16 +135,15 @@ whenDocumentReady(isReady = () => {
         //add the ids
         bodyJson.content = content;
         bodyJson.id = pageId
+        bodyJson.siteId = 1;
         bodyobjectjson = JSON.stringify(bodyJson);
         //console.log(bodyobjectjson);
-        let xhrDone = (res) => {
+        let jsonSaveDone = (res) => {
             res = JSON.parse(res)
-            let data = JSON.parse(res.data)
-            //console.log(data)
             showAlert(res.message, 1)
         }
         //call the put
-        xhrcall(4, `content/`, bodyobjectjson, "json", "", xhrDone, token)
+        xhrcall(4, `content/`, bodyobjectjson, "json", "", jsonSaveDone, token)
     })
 
 

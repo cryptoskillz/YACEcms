@@ -53,12 +53,17 @@ export async function onRequestPut(context) {
     if (contentType != null) {
         //get the payload
         payLoad = await request.json();
-        console.log(payLoad.content)
+        //get the payload content        
         const theJson = JSON.stringify(payLoad.content);
-        console.log(theJson)
-        //get the details
-        let theQuery = `UPDATE page SET jsonContent = '${theJson}' where id = ${payLoad.id}`;
-        console.log(theQuery)
+        //set the KV dats
+        const KV = context.env.kvdata;
+        //get the item
+        const kvName = `${payLoad.siteId}-${payLoad.id}`;
+        //fetch it from the kv datastore
+        await KV.put(kvName, JSON.stringify(theJson));
+        //build the query
+        let theQuery = `UPDATE page SET jsonContent = '${kvName}' where id = ${payLoad.id}`;
+        //console.log(theQuery)
         const info = await context.env.DB.prepare(theQuery).run();
         return new Response(JSON.stringify({ message: `Page content has been updated` }), { status: 200 })
     }
@@ -82,23 +87,29 @@ export async function onRequestGet(context) {
     let theToken = await decodeJwt(request.headers, env.SECRET);
     //get the search paramaters
     const { searchParams } = new URL(request.url);
-    //get the tables
     //get the id 
-    let id = searchParams.get('id');
+    const pageId = searchParams.get('id');
+    //get the site id
+    let siteId = searchParams.get('siteId');
     //hold the query
     let query;
     //hold the results for the lookups
     let theResults = [];
     //build the query
-    let theSQL = `SELECT id,name,jsonContent from page where id = ${id}`;
+    //let theSQL = `SELECT id,name,jsonContent from page where id = ${pageId}`;
     //console.log(theSQL)
     //run it
-    query = context.env.DB.prepare(theSQL);
-    let queryResult = await query.first();
-    //console.log(queryResult)
-
-
+    //query = context.env.DB.prepare(theSQL);
+    //let queryResult = await query.first();
+    //set the env data
+    const KV = context.env.kvdata;
+    //get the env data
+    const kvName = `${siteId}-${pageId}`;
+    //get the data
+    let jsonContent = await KV.get(kvName);
+    //parse it
+    jsonContent = JSON.parse(jsonContent)
     ///return the response
-    return new Response(JSON.stringify(queryResult), { status: 200 });
+    return new Response(JSON.stringify(jsonContent), { status: 200 });
 
 }

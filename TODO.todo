@@ -1,110 +1,20 @@
 
 GENERAL 
 
+ ☐ Add image functionality
+ ☐ we currently use the kv to store the actual json content still it would appear that there is a size limit on  the text objects you can store.  Will have to research this deeper. 
+ ☐ fix breadcrumbs
+ ☐ add the site id to the edit content part
+ ☐ get the kv name from D1 to make it a little more secure
+ ☐ add kv data store to build api function
 
- ✔ need a way to set the correct id for cypress testing think we can just hard code a property Id in each of index / edit / new js files, we could also put it in the api side and pass up a flag. @done (23-01-25 19:30)
- ✔ add a select item in proprety amenity does not add it (assume this is the case for all submits) @done (23-01-25 00:09)
- ✔ when you add a record it shoud jump back to the top. @done (23-01-25 17:39)
- ✔ add the property to the breadcrumb @done (23-01-25 18:02)
- ✔  property image url @done (23-01-25 18:02)
- ☐ for some reason the rendering breaks on cypress on the index js.  I think it may be an aysnc issue. I can hack around it for now but it has to be looked at some point to give us more accurate tests. 
- ☐ token edit lookups
- ☐ look up in index break looks up in new as it gets record id from the currentdata item which is not set in cypress as it does not exist. We have to set in the JS then it will be golden.  Not an issue if we dont do unit testings, but we doing unit testing so thems the breaks. 
- ☐ 17-create-owners.cy.js 
- ☐ 18-edit-owners.cy.js 
- ☐ 20_create_costs.cy.js     
- ☐ 25_crowdfund.cy.js 
- ☐ forgot password
+
 
 CYPRESS TESTS
 
- ☐ create account
+ ☐ create test
 
 
-GENERAL
-
- ✔ crowdfund on mobile @done (23-01-30 22:43)
- ☐ add workers to the docs
-
-
-PROPERTY DIST
-
- ☐ send email to tell the payment has been made
-
-
-NEXT VERSION
-
-PROPERTY OWNER
-
- ☐ property owner new just show the tokens related to that property
- ☐ property owner set it to the amount of remaining tokens
-
-PROPERTY 
-
- ☐ make tranche price / amount fill in automtically from the price on new
-
-GENERAL 
-
- ☐ if you click on an owner product without a token it shows the seller from record 1 in owners and dist
- ☐ create an upstream script to remove non core files
- ☐ add a view button to each index
- ☐ move the reusable crypto functions to app.js
- ☐ add a date selector for date fields
- ☐ in property token new decide if we want to use international or local cost (both have merits)     document.getElementById('inp-totalSupply').value = dataItem.internationalCost;
- ☐ dist new make it switch connect on meta mask if you are on the wrong one.
- ☐ rental payment should auto fill autotmaic amount
- ☐ set the exhange rates
- ☐ update lookups to have ability to only show records with the correct property id
- ☐ if there is no token dont allow owners to be added.
- ☐ add a hide create new button function (this is in adition to allowOnlyOne)
- 
-
-
-
-IMAGES
-
- ☐ delete image deletes from cloudflare (may have to do this with a worker)
- ☐ when you delete a property delete the images we need a way to remove from look up tables on delete
- ☐ require a token
- ☐ delete the preview when you uplaod a second image
- ☐ allow multipile uploads
- ☐ add breadcrumbs
-
-
-ACCOUNT
-
- ☐ encrypt password
-
-SETTINGS
-
- ☐ add the settings layout.
-
-API
- 
- ☐ port setting to d1 
- ☐ port forgot password to d1
-
-
-LOOK UP
-
- ☐ get the main id from the token this would make it more secure
-
-GETFORMDATA
-
- ☐ check integer fields has only integers
-
-CRYPTO 
-
- ☐ test deploy on live net
- ☐ deploy live factory
- ☐ add eth
- ☐ add matic
- ☐ load the abi from an env var
-
-
-
-
- 
 
 
 

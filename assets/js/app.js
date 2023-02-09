@@ -1049,6 +1049,7 @@ let xhrcall = async (type = 1, method, bodyObj = "", setHeader = "", redirectUrl
                 //console.log(res)
                 //res = JSON.parse(res)
                 //console.log(res)
+                //console.log(callback)
                 eval(callback(res));
             }
         }
