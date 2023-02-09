@@ -14,8 +14,10 @@ export async function onRequestGet(context) {
         next, // used for middleware or to fetch assets
         data, // arbitrary space for passing data between middlewares
     } = context;
-    //get the token
-    //let theToken = await decodeJwt(request.headers, env.SECRET);
+    //set the data array
+    let theDataArray = { site: [], data: [] }
+    //set the env data
+    const KV = context.env.kvdata;
     //get the search paramaters
     const { searchParams } = new URL(request.url);
     //get the tables
@@ -32,19 +34,31 @@ export async function onRequestGet(context) {
     //run it
     query = context.env.DB.prepare(theSQL);
     let queryResult = await query.first();
+    theDataArray.site.push(queryResult)
     //console.log(queryResult)
     //build the query
-    theSQL = `SELECT name,jsonContent from page where siteId = ${queryResult.id}`;
+    theSQL = `SELECT name,jsonContent as data from page where siteId = ${queryResult.id}`;
     //console.log(theSQL)
     //run it
     query = context.env.DB.prepare(theSQL);
     let queryResults = await query.all();
-    console.log(queryResults)
-
-    let theDataArray = { site: [], data: [] }
-    theDataArray.site.push(queryResult)
-
-    theDataArray.data.push(queryResults.results)
+    //console.log(queryResults)
+    //loop through the results
+    for (var i = 0; i < queryResults.results.length; ++i) {
+        //get the result
+        const theData = queryResults.results[i];
+        //console.log(theData);
+        //get the env data from the pointer in d1
+        const kvName = `${theData.data}`;
+        //get the data from kv
+        let jsonContent = await KV.get(kvName);
+        //parse it
+        jsonContent = JSON.parse(jsonContent);
+        //put the back in the object
+        queryResults.results[i].data = jsonContent;
+        //add it to the results array
+        theDataArray.data.push(queryResults.results);
+    }
     ///return the response
     return new Response(JSON.stringify(theDataArray), { status: 200 });
 }
